@@ -42,13 +42,6 @@ in
     targets.grub.enable = false;
   };
 
-  # loads base theme options then overlays
-  # user-selected theme from identity.nix
-  imports = [
-    ./themes/default.nix
-    (./themes + "/${identity.theme}/default.nix")
-  ];
-
   home-manager.users.${identity.username} = { config, lib, ... }: {
     # these apps have custom theming or stylix breaks them
     stylix.targets = {

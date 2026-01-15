@@ -23,7 +23,7 @@ in
       Using default timezone "UTC"
       Set your timezone in identity.nix: timezone = "Asia/Jakarta";
     ''
-    ++ lib.optional (identity.theme == "default") ''
+    ++ lib.optional (config.theme.preset == "default") ''
       Using default theme;
     '';
 }

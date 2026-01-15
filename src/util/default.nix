@@ -2,6 +2,7 @@
 let
   lib = inputs.nixpkgs.lib;
   identity = import (self + "/cfg/identity.nix");
+  themeConfig = import (self + "/cfg/theme.nix") { inherit lib; };
 in
 {
   mkHost =
@@ -76,8 +77,8 @@ in
               sharedModules = [
                 # Theme schema (defines options)
                 (self + "/src/lib/display/themes.nix")
-                # Theme preset (sets values)
-                (self + "/cfg/themes/${identity'.theme}/default.nix")
+                # Theme preset (sets values from cfg/theme.nix)
+                (self + "/cfg/themes/${themeConfig.theme.preset}/default.nix")
               ];
               users.${username} = import (self + "/cfg/users/${username}/home.nix");
               backupFileExtension = "backup";

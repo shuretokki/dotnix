@@ -1,54 +1,51 @@
 # validation assertions for early misconfiguration detection
 # these run at nix evaluation time, before any build starts.
 
-{ lib, config, identity, repo, alias, ... }:
+{ config, lib, identity, repo, alias, ... }:
 let
-  # usernames that should not be used as primary user
-  reservedUsernames = [
-    "root"
-    "bin"
-    "daemon"
-    "sys"
-    "nobody"
-    "www-data"
-    "lp"
-    "games"
-    "mail"
-    "sync"
-    "shutdown"
-    "halt"
+  validGroups = [
+    "wheel"
+    "networkmanager"
+    "video"
+    "audio"
+    "input"
+    "libvirtd"
+    "adbusers"
+    "docker"
+    "tss"
     "uucp"
     "operator"
   ];
 
-  # Theme path in cfg/themes
-  themePath = ../../../../cfg/themes + "/${identity.theme}/default.nix";
+  # Theme path validation - theme now comes from config.theme.preset (cfg/theme.nix)
+  themePreset = config.theme.preset or "default";
+  themePath = ../../../../cfg/themes + "/${themePreset}/default.nix";
 in
 {
   config.assertions = [
     {
       assertion = identity.username != "";
-      message = "identity.username must not be empty";
+      message = "identity.username must be set";
     }
-
     {
       assertion = builtins.match "^[a-z_][a-z0-9_-]{0,31}$" identity.username != null;
       message = "identity.username '${identity.username}' is not a valid UNIX username (lowercase, start with letter/underscore, max 32 chars)";
     }
-
     {
-      assertion = !builtins.elem identity.username reservedUsernames;
-      message = "identity.username '${identity.username}' is a reserved system username. Choose a different name.";
+      assertion = identity.locale != "";
+      message = "identity.locale must be set (e.g., 'en_US.UTF-8')";
     }
-
     {
-      assertion = identity.theme != "";
-      message = "identity.theme must be set";
+      assertion = identity.timezone != "";
+      message = "identity.timezone must be set (e.g., 'America/New_York')";
     }
-
+    {
+      assertion = themePreset != "";
+      message = "theme.preset must be set in cfg/theme.nix";
+    }
     {
       assertion = builtins.pathExists themePath;
-      message = "Theme '${identity.theme}' does not exist. Expected path: ${toString themePath}";
+      message = "Theme '${themePreset}' does not exist. Expected path: ${toString themePath}";
     }
 
     {
