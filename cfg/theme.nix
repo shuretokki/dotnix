@@ -4,7 +4,7 @@
   imports = [ ./themes/base.nix ];
 
   # Select theme preset (loads from ./themes/<name>/)
-  theme.preset = "sh";
+  theme.preset = "dark";
 
   # Override specific theme values if needed
   # theme.visual.rounding = 12;
