@@ -14,6 +14,6 @@
   ];
 
   home-manager.users.${identity.username} = {
-    imports = [ ../../home/bundlers/cli ];
+    imports = [ inputs.self.homeModules.appsCli ];
   };
 }

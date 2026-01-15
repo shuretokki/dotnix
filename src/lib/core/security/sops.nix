@@ -22,7 +22,7 @@ in
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   config.sops = {
-    defaultSopsFile = lib.mkDefault ../../secrets/secrets.yaml;
+    defaultSopsFile = lib.mkDefault ../../../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
 
     age = {

@@ -92,13 +92,13 @@ pkgs.writeShellScriptBin "${alias}-init-host" ''
        esac
     fi
 
-    content="{ config, pkgs, ... }: {
+    content="{ config, pkgs, inputs, ... }: {
     imports = [
       ./hardware-configuration.nix
       ./gpu.nix
       ./boot.nix
-      ../../library/core
-      ../../library/profiles/''${profile}
+      inputs.self.nixosModules.core
+      inputs.self.nixosModules.profile''${profile^}
     ];
 
     system.stateVersion = \"$CURRENT_VERSION\";
