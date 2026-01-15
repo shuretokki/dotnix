@@ -93,7 +93,7 @@
       alias = "sdn";
       repo = "dotnix";
       identity = import ./identity.nix;
-      utils = import ./utils { inherit inputs; };
+      utils = import ./src/util { inherit inputs; };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import ./src/flake/systems.nix;
