@@ -17,8 +17,7 @@
       size = 24;
     };
 
-    # Wallpaper directory
-    wallpaperDir = ./wallpapers or ../../default/wallpapers;
+    wallpaperDir = if builtins.pathExists ./wallpapers then ./wallpapers else ../../default/wallpapers;
 
     # Visual settings
     visual = {

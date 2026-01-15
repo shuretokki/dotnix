@@ -3,16 +3,20 @@
 
 { config, lib, identity, repo, alias, ... }:
 let
-  validGroups = [
-    "wheel"
-    "networkmanager"
-    "video"
-    "audio"
-    "input"
-    "libvirtd"
-    "adbusers"
-    "docker"
-    "tss"
+  # usernames that should not be used as primary user
+  reservedUsernames = [
+    "root"
+    "bin"
+    "daemon"
+    "sys"
+    "nobody"
+    "www-data"
+    "lp"
+    "games"
+    "mail"
+    "sync"
+    "shutdown"
+    "halt"
     "uucp"
     "operator"
   ];
@@ -25,11 +29,16 @@ in
   config.assertions = [
     {
       assertion = identity.username != "";
-      message = "identity.username must be set";
+      message = "identity.username must not be empty";
     }
+
     {
       assertion = builtins.match "^[a-z_][a-z0-9_-]{0,31}$" identity.username != null;
       message = "identity.username '${identity.username}' is not a valid UNIX username (lowercase, start with letter/underscore, max 32 chars)";
+    }
+    {
+      assertion = !builtins.elem identity.username reservedUsernames;
+      message = "identity.username '${identity.username}' is a reserved system username. Choose a different name.";
     }
     {
       assertion = identity.locale != "";
