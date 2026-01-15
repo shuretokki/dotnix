@@ -14,8 +14,16 @@ window#waybar {
     background: transparent;
 }
 
-.modules-left { margin-left: 0px; }
-.modules-right { margin-right: 0px; }
+.modules-left { margin-left: 0px; margin-top: 2px; }
+.modules-center {
+    background: @base00;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 2px;
+}
+.modules-right { margin-right: 0px; margin-top: 2px; }
 
 #workspaces {
     border-radius: 0px;
@@ -80,3 +88,10 @@ tooltip {
     border-radius: 0px;
 }
 tooltip label { color: @base05; }
+
+#cpu, #memory, #battery {
+    background: transparent;
+    box-shadow: none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}

@@ -15,6 +15,8 @@ in
 
   decoration = {
     rounding = config.theme.hyprland.rounding;
+    active_opacity = lib.mkForce 0.88;
+    inactive_opacity = lib.mkForce 0.88;
     blur = {
       enabled = config.theme.hyprland.blur;
       size = 5;

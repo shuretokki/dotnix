@@ -75,6 +75,7 @@
       clean = "nh clean all --keep 5";
       why = "nix why-depends";
       search = "nh search";
+      vpnstats = "curl https://www.cloudflare.com/cdn-cgi/trace";
 
       mkdir = "mkdir -pv";
       cp = "cp -iv";

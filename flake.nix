@@ -10,13 +10,13 @@
     ];
     extra-trusted-public-keys = [
       "shuredotnix.cachix.org-1:rmlHcxqncZqjzGscGzHhYUctuGc3bQEte7Lh1PkO0Xc="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypflake-parts8PwtkuGc="
       "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
     ];
   };
 
   inputs = {
-    fp.url = "github:hercules-ci/flake-parts";
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -61,18 +61,17 @@
   };
 
   outputs =
-    { fp, nixpkgs, ... }@inputs:
+    { flake-parts, nixpkgs, ... }@inputs:
     let
       alias = "sdn";
       repo = "dotnix";
       identity = import ./identity.nix;
       utils = import ./utils { inherit inputs; };
       overlays = import ./overlays { inherit inputs repo alias; };
-    in fp.lib.mkFlake { inherit inputs; } {
+    in flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
         "x86_64-darwin"
-        "aarch64-darwin"
       ];
 
       perSystem = { system, pkgs, ... }: {

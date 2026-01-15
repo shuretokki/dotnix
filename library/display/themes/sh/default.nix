@@ -1,13 +1,13 @@
 { pkgs, ... }: {
   theme = {
     hyprland = {
-      rounding = 12;
-      gaps-in = 6;
-      gaps-out = 10;
+      rounding = 0;
+      gaps-in = 4;
+      gaps-out = 4;
       blur = true;
       shadows = true;
-      active-border-col = "rgba(1e1e1eff) rgba(0a84ffff) 45deg";
-      inactive-border-col = "rgba(595959aa)";
+      active-border-col = "rgba(3c3c3cff)";
+      inactive-border-col = "rgba(1e1e1eff)";
     };
 
     hyprlock = {

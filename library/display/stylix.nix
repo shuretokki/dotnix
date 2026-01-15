@@ -12,7 +12,7 @@ in
     autoEnable = true;
 
     base16Scheme = config.theme.scheme;
-    image = config.theme.wallpaper;
+    # image = config.theme.wallpaper;
     polarity = config.theme.polarity;
 
     fonts = {
@@ -52,8 +52,7 @@ in
   home-manager.users.${identity.username} = { config, lib, ... }: {
     # these apps have custom theming or stylix breaks them
     stylix.targets = {
-      vscode.enable = lib.mkDefault false;
-      hyprpaper.enable = lib.mkDefault false;
+      vscode.enable = lib.mkForce false;
       spicetify.enable = false;
       waybar.enable = false;
       swaync.enable = false;

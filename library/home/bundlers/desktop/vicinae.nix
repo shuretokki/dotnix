@@ -85,16 +85,16 @@
       };
       theme = {
         light = {
-          name = "sync";
+          name = lib.mkForce "sync";
           icon_theme = "default";
         };
         dark = {
-          name = "sync";
+          name = lib.mkForce "sync";
           icon_theme = "default";
         };
       };
       launcher_window = {
-        opacity = 0.88;
+        opacity = lib.mkForce 0.44;
       };
 
       providers = {

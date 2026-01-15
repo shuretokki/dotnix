@@ -4,6 +4,7 @@
 # add users to 'networkmanager' group to allow managing connections
 
 { pkgs, ... }: {
+
   networking.networkmanager = {
     enable = true;
 
@@ -41,6 +42,8 @@
     # interfaces to exclude from NetworkManager management
     # unmanaged = [ "docker0" "br-*" ];
   };
+
+  services.cloudflare-warp.enable = true;
 
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/firewall.nix
@@ -80,5 +83,7 @@
     # false = silently drop packets (default)
     # true = send ICMP "port unreachable" (faster feedback but easier to scan)
     # rejectPackets = false;
+
+    checkReversePath = false;
   };
 }

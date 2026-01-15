@@ -30,6 +30,7 @@
   environment.systemPackages = (with pkgs; [
     wget2 curl git unzip zip sd
     nil nixfmt-rfc-style direnv
+    cloudflare-warp
 
     blueman wireplumber pamixer
     pavucontrol networkmanagerapplet
