@@ -1,7 +1,7 @@
 { inputs, self }:
 let
   lib = inputs.nixpkgs.lib;
-  identity = import (self + "/identity.nix");
+  identity = import (self + "/cfg/identity.nix");
 in
 {
   mkHost =
@@ -29,8 +29,8 @@ in
         inherit system;
         specialArgs = { inherit inputs repo alias; identity = identity'; };
         modules = [
-          (self + "/hosts/${hostname}")
-          (self + "/users/${username}/nixos.nix")
+          (self + "/cfg/hosts/${hostname}")
+          (self + "/cfg/users/${username}/nixos.nix")
 
           { nixpkgs.overlays = overlays; }
 
@@ -52,7 +52,7 @@ in
               {
                 # check if user directory exists
                 # prevent confusing "file not found" errors
-                assertion = builtins.pathExists (self + "/users/${username}");
+                assertion = builtins.pathExists (self + "/cfg/users/${username}");
                 message = ''
                   [USER CONFIG MISSING] - BUILD BLOCKED
 
@@ -79,7 +79,7 @@ in
                 # Theme preset (sets values)
                 (self + "/cfg/themes/${identity'.theme}/default.nix")
               ];
-              users.${username} = import (self + "/users/${username}/home.nix");
+              users.${username} = import (self + "/cfg/users/${username}/home.nix");
               backupFileExtension = "backup";
             };
           }

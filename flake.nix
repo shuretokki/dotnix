@@ -92,7 +92,7 @@
     let
       repo = "dotnix";
       alias = "sdn";
-      identity = import ./identity.nix;
+      identity = import ./cfg/identity.nix;
       utils = import ./src/util { inherit inputs self; };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {

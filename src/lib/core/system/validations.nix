@@ -21,6 +21,7 @@ let
     "operator"
   ];
 
+  # Theme path in cfg/themes
   themePath = ../../../../cfg/themes + "/${identity.theme}/default.nix";
 in
 {

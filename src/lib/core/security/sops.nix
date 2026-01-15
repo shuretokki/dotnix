@@ -22,7 +22,8 @@ in
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   config.sops = {
-    # Points to root/secrets/secrets.yaml from src/lib/core/security/\n    defaultSopsFile = lib.mkDefault ../../../../secrets/secrets.yaml;
+    # Points to cfg/secrets/secrets.yaml
+    defaultSopsFile = lib.mkDefault ../../../../cfg/secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
 
     age = {

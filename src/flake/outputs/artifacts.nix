@@ -8,7 +8,7 @@ in
   nixosConfigurations =
     let
       # auto-discover hosts from hosts/ directory
-      hosts = inputs.nixpkgs.lib.filterAttrs (n: v: v == "directory") (builtins.readDir (self + "/hosts"));
+      hosts = inputs.nixpkgs.lib.filterAttrs (n: v: v == "directory") (builtins.readDir (self + "/cfg/hosts"));
       mkHost = hostname: _: utils.mkHost {
         inherit hostname repo alias overlays;
         username = identity.username;
