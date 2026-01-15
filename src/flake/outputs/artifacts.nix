@@ -1,5 +1,9 @@
-{ inputs, repo, alias, identity, utils }: {
+{ inputs, repo, alias, identity, utils }:
+let
   overlays = import ../../overlays { inherit inputs repo alias; };
+in
+{
+  inherit overlays;
 
   # Auto-discover hosts from hosts/ directory
   nixosConfigurations =

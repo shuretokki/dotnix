@@ -74,8 +74,10 @@ in
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs repo alias; identity = identity'; };
               sharedModules = [
-                ../library/display/themes/default.nix
-                (../library/display/themes + "/${identity'.theme}/default.nix")
+                # Theme schema (defines options)
+                (../src/lib/display/themes.nix)
+                # Theme preset (sets values)
+                (../cfg/themes + "/${identity'.theme}/default.nix")
               ];
               users.${username} = import ../users/${username}/home.nix;
               backupFileExtension = "backup";

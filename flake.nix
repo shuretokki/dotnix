@@ -15,108 +15,91 @@
     ];
   };
 
+  # Inputs organized by category (from src/flake/inputs.nix pattern)
   inputs = {
+    # Core infrastructure
     flake-parts.url = "github:hercules-ci/flake-parts";
-
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # System configuration
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
+    # Pre-commit hooks
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Desktop environment
     hyprland.url = "github:hyprwm/Hyprland";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
-    hyprland-plugins.inputs.hyprland.follows = "hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    stylix.url = "github:danth/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    # Secrets management
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    vicinae-extensions.url = "github:vicinaehq/extensions";
-    vicinae-extensions.inputs.nixpkgs.follows = "nixpkgs";
-
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
-    zen-browser.inputs.home-manager.follows = "home-manager";
-
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixcord.url = "github:kaylorben/nixcord";
-    nixcord.inputs.nixpkgs.follows = "nixpkgs";
-
-    youtube-music.url = "github:h-banii/youtube-music-nix";
-    youtube-music.inputs.nixpkgs.follows = "nixpkgs";
-
-    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
-    apple-fonts.inputs.nixpkgs.follows = "nixpkgs";
-
-    antigravity.url = "github:jacopone/antigravity-nix";
-    antigravity.inputs.nixpkgs.follows = "nixpkgs";
-
-    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-    firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
+    # Applications
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    youtube-music = {
+      url = "github:h-banii/youtube-music-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    antigravity = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { flake-parts, nixpkgs, ... }@inputs:
+    { flake-parts, ... }@inputs:
     let
       alias = "sdn";
       repo = "dotnix";
       identity = import ./identity.nix;
       utils = import ./utils { inherit inputs; };
-      overlays = import ./overlays { inherit inputs repo alias; };
-    in flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "x86_64-darwin"
-      ];
-
-      perSystem = { system, pkgs, ... }: {
-        formatter = pkgs.nixfmt-rfc-style;
-        devShells = import ./shells.nix {
-          inherit repo alias pkgs;
-        };
-
-        # merges custom packages (pkgs/) with system builds (hosts/).
-        # custom: `nix build .#<pkg>` (e.g. `nix build .#sdn-update`)
-        # system: `nix build .#desktop` (used by ci to verify builds)
-        # TODO: research nix-fast-build or devour-flake
-        packages =
-          let
-            pkgs' = import inputs.nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
-            };
-            sdnpkgs = import ./pkgs { pkgs = pkgs'; inherit repo alias; };
-            syspkgs = inputs.nixpkgs.lib.mapAttrs (
-              hostname: config: config.config.system.build.toplevel) (
-                inputs.nixpkgs.lib.filterAttrs (n: v: v.pkgs.system == system) (
-                  inputs.self.nixosConfigurations or {}
-                )
-              );
-          in
-          sdnpkgs // syspkgs;
-      };
-
-      flake = {
-        inherit overlays;
-
-        # auto-discovers hosts by reading directories in hosts/.
-        # adding a new host only requires creating hosts/<name>/default.nix,
-        # no need to manually register it here.
-        nixosConfigurations =
-          let hosts = nixpkgs.lib.filterAttrs (n: v: v == "directory") (builtins.readDir ./hosts);
-          in nixpkgs.lib.genAttrs (builtins.attrNames hosts) (hostname: utils.mkHost {
-              inherit hostname repo alias;
-              username = identity.username;
-              overlays = [
-                overlays.additions
-                overlays.modifications
-              ];
-            });
-        };
-      };
-    }
+    in
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = import ./src/flake/systems.nix;
+      perSystem = import ./src/flake/outputs/workspace.nix { inherit repo alias inputs; };
+      flake = (import ./src/flake/outputs/artifacts.nix {
+        inherit inputs repo alias identity utils;
+      }) // (import ./src/flake/modules.nix);
+    };
+}
