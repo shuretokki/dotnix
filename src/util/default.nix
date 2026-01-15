@@ -1,7 +1,7 @@
 { inputs }:
 let
   lib = inputs.nixpkgs.lib;
-  identity = import ../identity.nix;
+  identity = import ../../identity.nix;
 in
 {
   mkHost =
