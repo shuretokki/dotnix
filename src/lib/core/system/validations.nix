@@ -21,7 +21,6 @@ let
     "operator"
   ];
 
-  # Theme path validation - actual path resolved in util/default.nix via root
   themePath = ../../../../cfg/themes + "/${identity.theme}/default.nix";
 in
 {

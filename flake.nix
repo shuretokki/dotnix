@@ -88,19 +88,18 @@
   };
 
   outputs =
-    { flake-parts, ... }@inputs:
+    { self, flake-parts, ... }@inputs:
     let
-      root = ./.;
       repo = "dotnix";
       alias = "sdn";
       identity = import ./identity.nix;
-      utils = import ./src/util { inherit inputs root; };
+      utils = import ./src/util { inherit inputs self; };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import ./src/flake/systems.nix;
-      perSystem = import ./src/flake/outputs/workspace.nix { inherit repo alias inputs root; };
+      perSystem = import ./src/flake/outputs/workspace.nix { inherit repo alias inputs self; };
       flake = (import ./src/flake/outputs/artifacts.nix {
-        inherit inputs repo alias identity utils root;
+        inherit inputs repo alias identity utils self;
       }) // (import ./src/flake/modules.nix);
     };
 }
