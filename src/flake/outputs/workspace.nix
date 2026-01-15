@@ -24,6 +24,6 @@
     '';
   };
 
-  # TODO: Re-enable in Phase 2 after basic structure works
-  # packages = custom packages + system builds
+  # Custom packages from src/pkg/
+  packages = import ../../../src/pkg { inherit pkgs repo alias; };
 }
