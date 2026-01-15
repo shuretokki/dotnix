@@ -1,9 +1,9 @@
-{ repo, alias, inputs }: { config, system, pkgs, ... }: {
+{ repo, alias, inputs, root }: { config, system, pkgs, ... }: {
   formatter = pkgs.nixfmt-rfc-style;
 
   # Pre-commit hooks check (temporarily disabled - will re-enable in next iteration)
   # checks.pre-commit = inputs.pre-commit-hooks.lib.${system}.run {
-  #   src = ./../../..;
+  #   src = root;
   #   hooks = {
   #     nixfmt-rfc-style.enable = true;
   #     statix.enable = true;
@@ -25,5 +25,5 @@
   };
 
   # Custom packages from src/pkg/
-  packages = import ../../../src/pkg { inherit pkgs repo alias; };
+  packages = import (root + "/src/pkg") { inherit pkgs repo alias; };
 }

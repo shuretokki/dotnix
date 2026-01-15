@@ -1,23 +1,18 @@
-{ inputs, repo, alias, identity, utils }:
+{ inputs, repo, alias, identity, utils, root }:
 let
-  overlays = import ../../overlays { inherit inputs repo alias; };
+  overlays = import (root + "/src/overlays") { inherit inputs repo alias; };
 in
 {
   inherit overlays;
 
-  # Auto-discover hosts from hosts/ directory
   nixosConfigurations =
     let
-      hosts = inputs.nixpkgs.lib.filterAttrs (n: v: v == "directory") (builtins.readDir ./../../../hosts);
-    in
-    inputs.nixpkgs.lib.genAttrs (builtins.attrNames hosts) (
-      hostname: utils.mkHost {
-        inherit hostname repo alias;
+      # auto-discover hosts from hosts/ directory
+      hosts = inputs.nixpkgs.lib.filterAttrs (n: v: v == "directory") (builtins.readDir (root + "/hosts"));
+      mkHost = hostname: _: utils.mkHost {
+        inherit hostname repo alias overlays;
         username = identity.username;
-        overlays = [
-          overlays.additions
-          overlays.modifications
-        ];
-      }
-    );
+      };
+    in
+    builtins.mapAttrs mkHost hosts;
 }

@@ -12,6 +12,7 @@
     ./direnv.nix
     ./tools.nix
     ./fastfetch.nix
+    # From src/lib/home/apps/cli → src/lib/home/programs/gpg
     ../../../home/programs/gpg
   ];
 }

@@ -90,16 +90,17 @@
   outputs =
     { flake-parts, ... }@inputs:
     let
-      alias = "sdn";
+      root = ./.;
       repo = "dotnix";
+      alias = "sdn";
       identity = import ./identity.nix;
-      utils = import ./src/util { inherit inputs; };
+      utils = import ./src/util { inherit inputs root; };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import ./src/flake/systems.nix;
-      perSystem = import ./src/flake/outputs/workspace.nix { inherit repo alias inputs; };
+      perSystem = import ./src/flake/outputs/workspace.nix { inherit repo alias inputs root; };
       flake = (import ./src/flake/outputs/artifacts.nix {
-        inherit inputs repo alias identity utils;
+        inherit inputs repo alias identity utils root;
       }) // (import ./src/flake/modules.nix);
     };
 }
