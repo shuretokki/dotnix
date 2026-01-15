@@ -37,6 +37,10 @@ in
 
           inputs.stylix.nixosModules.stylix
 
+          (self + "/cfg/theme.nix")
+          (self + "/src/lib/display/themes.nix")
+          (self + "/cfg/themes/${themeConfig.theme.preset}/default.nix")
+
           ({ config, ... }: {
             assertions = [
               {
