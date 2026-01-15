@@ -6,7 +6,7 @@
 
 { config, pkgs, inputs, identity, ... }: {
   imports = [
-    ../../library/home/global # base home config shared by all users
+    inputs.self.homeModules.home
   ];
 
   # user preferences consumed by bundlers.
