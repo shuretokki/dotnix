@@ -33,7 +33,7 @@ in
           (self + "/cfg/hosts/${hostname}")
           (self + "/cfg/users/${username}/nixos.nix")
 
-          { nixpkgs.overlays = overlays; }
+          { nixpkgs.overlays = [ overlays.additions overlays.modifications ]; }
 
           inputs.stylix.nixosModules.stylix
 
