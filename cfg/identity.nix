@@ -6,7 +6,4 @@
   username = "shure";
   locale = "en_US.UTF-8";
   timezone = "Asia/Jakarta";
-
-  # corresponds to themes/<name>/ in cfg/themes/
-  theme = "dark";
 }
