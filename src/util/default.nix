@@ -78,12 +78,7 @@ in
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs repo alias; identity = identity'; };
-              sharedModules = [
-                # Theme schema (defines options)
-                (self + "/src/lib/display/themes.nix")
-                # Theme preset (sets values from cfg/theme.nix)
-                (self + "/cfg/themes/${themeConfig.theme.preset}/default.nix")
-              ];
+              sharedModules = [];
               users.${username} = import (self + "/cfg/users/${username}/home.nix");
               backupFileExtension = "backup";
             };
