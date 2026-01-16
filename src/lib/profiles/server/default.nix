@@ -4,7 +4,7 @@
 # explicitly disables display to prevent accidental gui activation.
 # only cli bundler is imported for home-manager.
 
-{ config, lib, pkgs, identity, ... }: {
+{ config, lib, pkgs, identity, inputs, ... }: {
   library.display.sddm.enable = false;
   library.display.hyprland.enable = false;
 
