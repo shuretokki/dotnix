@@ -5,6 +5,7 @@
 { lib, pkgs, identity, config, ... }:
 let
   wpBase = config.theme.wallpaperDir;
+  excludedApps = config.theme.stylixExclude;
 in
 {
   stylix = {
@@ -12,15 +13,11 @@ in
     autoEnable = true;
 
     base16Scheme = config.theme.scheme;
-    # image = config.theme.wallpaper;
     polarity = config.theme.polarity;
 
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
-
-        # stylix auto-sets name from package
-        # but we want theme override
         name = lib.mkForce config.theme.fonts.mono;
       };
       sansSerif = {
@@ -42,11 +39,7 @@ in
     targets.grub.enable = false;
   };
 
-  home-manager.users.${identity.username} = { config = hmConfig, lib, ... }:
-  let
-    # Get excluded apps from theme config (accessed via NixOS config, not HM config)
-    excludedApps = config.theme.stylixExclude;
-  in {
+  home-manager.users.${identity.username} = { config, lib, ... }: {
     # Dynamically disable stylix for apps in theme.stylixExclude
     stylix.targets = lib.genAttrs excludedApps (_: { enable = false; }) // {
       zen-browser.profileNames = [ "default" ];
@@ -54,7 +47,7 @@ in
 
     # bootstrap awww wallpapers directory with base wallpapers
     home.activation.bootstrapWallpapers = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      DIR="${hmConfig.home.homeDirectory}/.local/share/awww"
+      DIR="${config.home.homeDirectory}/.local/share/awww"
       mkdir -p "$DIR"
 
       # copy base wallpapers (if they don't exist)
