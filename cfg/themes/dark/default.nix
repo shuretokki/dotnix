@@ -19,9 +19,6 @@
       size = 24;
     };
 
-    # Wallpaper
-    wallpaperDir = if builtins.pathExists ./wallpapers then ./wallpapers else ../default/wallpapers;
-
     # Visual
     visual = {
       rounding = 0;

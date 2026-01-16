@@ -59,12 +59,6 @@
       };
     };
 
-    # Wallpaper
-    wallpaperDir = lib.mkOption {
-      type = lib.types.path;
-      description = "Directory containing wallpapers";
-    };
-
     # Visual settings shared across components
     visual = {
       rounding = lib.mkOption {
@@ -170,6 +164,15 @@
         type = lib.types.nullOr lib.types.path;
         default = null;
         description = "Path to waybar config.jsonc file";
+      };
+    };
+
+    # SDDM login manager
+    sddm = {
+      wallpaper = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+        description = "Wallpaper for SDDM login screen";
       };
     };
 

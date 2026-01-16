@@ -9,7 +9,7 @@ let
   # override injects theme settings at build time (not runtime).
   theme = pkgs.where-is-my-sddm-theme.override {
     themeConfig.General = {
-      background = builtins.toString config.theme.wallpaper;
+      background = builtins.toString config.theme.sddm.wallpaper;
       backgroundMode = "fill"; # none|fill|aspect|cover
     };
   };

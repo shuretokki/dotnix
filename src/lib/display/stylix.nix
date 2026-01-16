@@ -4,7 +4,6 @@
 
 { lib, pkgs, identity, config, ... }:
 let
-  wpBase = config.theme.wallpaperDir;
   excludedApps = config.theme.stylixExclude;
 in
 {
@@ -44,17 +43,5 @@ in
     stylix.targets = lib.genAttrs excludedApps (_: { enable = false; }) // {
       zen-browser.profileNames = [ "default" ];
     };
-
-    # bootstrap awww wallpapers directory with base wallpapers
-    home.activation.bootstrapWallpapers = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      DIR="${config.home.homeDirectory}/.local/share/awww"
-      mkdir -p "$DIR"
-
-      # copy base wallpapers (if they don't exist)
-      for f in ${wpBase}/*; do
-        name=$(basename "$f")
-        [ ! -e "$DIR/$name" ] && cp "$f" "$DIR/$name"
-      done
-    '';
   };
 }
