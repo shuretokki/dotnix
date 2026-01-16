@@ -149,7 +149,6 @@ in
     };
   };
 
-  # Auto-import preset when theme.preset is set
-  imports = lib.optional (cfg.preset != null)
-    (./. + "/${cfg.preset}/default.nix");
+  # NOTE: Preset auto-loading cannot be done here (causes infinite recursion)
+  # Preset is loaded in src/util/default.nix via sharedModules
 }
