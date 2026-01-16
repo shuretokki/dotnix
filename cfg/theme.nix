@@ -1,12 +1,12 @@
 # Theme selection and overrides
-# This file selects which theme preset to use and allows per-user customization
+# Imports base schema and selects which preset to use
 { lib, ... }: {
   imports = [ ./themes/base.nix ];
 
-  # Select theme preset (loads from ./themes/<name>/)
+  # Select theme preset (auto-loads from ./themes/<name>/)
   theme.preset = "dark";
 
-  # Override specific theme values if needed
+  # Override specific values if needed:
   # theme.visual.rounding = 12;
-  # theme.hyprland.gaps = 6;
+  # theme.hyprland.gapsIn = 6;
 }

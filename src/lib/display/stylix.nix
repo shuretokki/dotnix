@@ -42,19 +42,19 @@ in
     targets.grub.enable = false;
   };
 
-  home-manager.users.${identity.username} = { config, lib, ... }: {
-    # these apps have custom theming or stylix breaks them
-    stylix.targets = {
-      vscode.enable = lib.mkForce false;
-      spicetify.enable = false;
-      waybar.enable = false;
-      swaync.enable = false;
+  home-manager.users.${identity.username} = { config = hmConfig, lib, ... }:
+  let
+    # Get excluded apps from theme config (accessed via NixOS config, not HM config)
+    excludedApps = config.theme.stylixExclude;
+  in {
+    # Dynamically disable stylix for apps in theme.stylixExclude
+    stylix.targets = lib.genAttrs excludedApps (_: { enable = false; }) // {
       zen-browser.profileNames = [ "default" ];
     };
 
     # bootstrap awww wallpapers directory with base wallpapers
     home.activation.bootstrapWallpapers = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      DIR="${config.home.homeDirectory}/.local/share/awww"
+      DIR="${hmConfig.home.homeDirectory}/.local/share/awww"
       mkdir -p "$DIR"
 
       # copy base wallpapers (if they don't exist)

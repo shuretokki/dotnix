@@ -1,6 +1,8 @@
+# Dark theme preset
+# Sets values for theme.* options defined in base.nix
 { pkgs, ... }: {
   theme = {
-    # Base16 color scheme
+    # Color scheme
     scheme = ./scheme.yaml;
     polarity = "dark";
 
@@ -17,24 +19,26 @@
       size = 24;
     };
 
-    wallpaperDir = if builtins.pathExists ./wallpapers then ./wallpapers else ../../default/wallpapers;
+    # Wallpaper
+    wallpaperDir = if builtins.pathExists ./wallpapers then ./wallpapers else ../default/wallpapers;
 
-    # Visual settings
+    # Visual
     visual = {
       rounding = 0;
       opacity = 0.9;
       blur = true;
     };
 
-    # Hyprland-specific
+    # Hyprland (using camelCase to match schema)
     hyprland = {
+      gapsIn = 4;
+      gapsOut = 4;
+      borderSize = 2;
       rounding = 0;
-      gaps-in = 4;
-      gaps-out = 4;
+      activeBorder = "rgba(3c3c3cff)";
+      inactiveBorder = "rgba(1e1e1eff)";
       blur = true;
       shadows = true;
-      active-border-col = "rgba(3c3c3cff)";
-      inactive-border-col = "rgba(1e1e1eff)";
     };
 
     # Hyprlock
@@ -42,5 +46,13 @@
       fontFamily = "SF Pro Rounded";
       fontSize = 64;
     };
+
+    # Apps with custom styling (excluded from Stylix)
+    stylixExclude = [
+      "vscode"
+      "spicetify"
+      "waybar"
+      "swaync"
+    ];
   };
 }

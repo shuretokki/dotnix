@@ -1,26 +1,27 @@
 { repo, alias, inputs, self }: { config, system, pkgs, ... }: {
-  formatter = pkgs.nixfmt-rfc-style;
+  formatter = pkgs.nixfmt;
 
-  # Pre-commit hooks check (temporarily disabled - will re-enable in next iteration)
-  # checks.pre-commit = inputs.pre-commit-hooks.lib.${system}.run {
-  #   src = self;
-  #   hooks = {
-  #     nixfmt-rfc-style.enable = true;
-  #     statix.enable = true;
-  #     deadnix.enable = true;
-  #   };
-  # };
+  # Nix-managed pre-commit hooks
+  checks.pre-commit = inputs.pre-commit-hooks.lib.${system}.run {
+    src = self;
+    hooks = {
+      nixfmt-rfc-style.enable = true;
+      statix.enable = true;
+      deadnix.enable = true;
+    };
+  };
 
   devShells.default = pkgs.mkShell {
     packages = with pkgs; [
       nil
-      nixfmt-rfc-style
+      nixfmt
       statix
       deadnix
     ];
 
     shellHook = ''
       echo "${repo} development environment"
+      ${config.checks.pre-commit.shellHook or ""}
     '';
   };
 
