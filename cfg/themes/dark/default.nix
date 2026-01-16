@@ -29,16 +29,15 @@
       blur = true;
     };
 
-    # Hyprland (using camelCase to match schema)
+    # Hyprland (kebab-case to match schema)
     hyprland = {
-      gapsIn = 4;
-      gapsOut = 4;
-      borderSize = 2;
+      gaps-in = 4;
+      gaps-out = 4;
       rounding = 0;
-      activeBorder = "rgba(3c3c3cff)";
-      inactiveBorder = "rgba(1e1e1eff)";
       blur = true;
       shadows = true;
+      active-border-col = "rgba(3c3c3cff)";
+      inactive-border-col = "rgba(1e1e1eff)";
     };
 
     # Hyprlock

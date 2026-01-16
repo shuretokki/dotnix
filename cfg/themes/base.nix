@@ -1,11 +1,7 @@
 # Base theme options schema
 # Defines theme.* options used by all theme presets and display modules
 # Values are set by presets in ./dark/, etc.
-{ config, lib, ... }:
-let
-  cfg = config.theme;
-in
-{
+{ lib, ... }: {
   options.theme = {
     preset = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
@@ -27,15 +23,20 @@ in
 
     # Fonts
     fonts = {
-      mono = lib.mkOption {
+      serif = lib.mkOption {
         type = lib.types.str;
-        default = "JetBrainsMono Nerd Font";
-        description = "Monospace font for terminals and code";
+        default = "New York";
+        description = "Serif font family";
       };
       sans = lib.mkOption {
         type = lib.types.str;
         default = "SF Pro Rounded";
-        description = "Sans-serif font for UI";
+        description = "Sans-serif font family";
+      };
+      mono = lib.mkOption {
+        type = lib.types.str;
+        default = "JetBrainsMono Nerd Font";
+        description = "Monospace font for terminals";
       };
       size = lib.mkOption {
         type = lib.types.int;
@@ -83,37 +84,22 @@ in
       };
     };
 
-    # Hyprland-specific (using camelCase to match plan)
+    # Hyprland-specific (kebab-case to match existing code)
     hyprland = {
-      gapsIn = lib.mkOption {
+      gaps-in = lib.mkOption {
         type = lib.types.int;
         default = 4;
         description = "Inner gaps between windows";
       };
-      gapsOut = lib.mkOption {
+      gaps-out = lib.mkOption {
         type = lib.types.int;
         default = 4;
         description = "Outer gaps to screen edge";
       };
-      borderSize = lib.mkOption {
-        type = lib.types.int;
-        default = 2;
-        description = "Window border width";
-      };
       rounding = lib.mkOption {
         type = lib.types.int;
         default = 0;
-        description = "Window corner rounding (separate from visual.rounding)";
-      };
-      activeBorder = lib.mkOption {
-        type = lib.types.str;
-        default = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        description = "Active window border color";
-      };
-      inactiveBorder = lib.mkOption {
-        type = lib.types.str;
-        default = "rgba(595959aa)";
-        description = "Inactive window border color";
+        description = "Window corner rounding";
       };
       blur = lib.mkOption {
         type = lib.types.bool;
@@ -124,6 +110,16 @@ in
         type = lib.types.bool;
         default = true;
         description = "Enable window shadows";
+      };
+      active-border-col = lib.mkOption {
+        type = lib.types.str;
+        default = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        description = "Active window border color";
+      };
+      inactive-border-col = lib.mkOption {
+        type = lib.types.str;
+        default = "rgba(595959aa)";
+        description = "Inactive window border color";
       };
     };
 
@@ -163,6 +159,6 @@ in
     };
   };
 
-  # NOTE: Preset auto-loading cannot be done here (causes infinite recursion)
-  # Preset is loaded in src/util/default.nix via sharedModules
+  # NOTE: Preset auto-loading causes infinite recursion if done here
+  # Presets are loaded in src/util/default.nix
 }
