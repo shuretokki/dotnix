@@ -135,6 +135,28 @@
         default = 64;
         description = "Lock screen font size";
       };
+      input-field = {
+        size = lib.mkOption {
+          type = lib.types.str;
+          default = "300, 50";
+          description = "Input field size (width, height)";
+        };
+        outline_thickness = lib.mkOption {
+          type = lib.types.int;
+          default = 2;
+          description = "Input field outline thickness";
+        };
+        dots_size = lib.mkOption {
+          type = lib.types.float;
+          default = 0.33;
+          description = "Password dot size";
+        };
+        dots_spacing = lib.mkOption {
+          type = lib.types.float;
+          default = 0.15;
+          description = "Password dot spacing";
+        };
+      };
     };
 
     # Waybar
