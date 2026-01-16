@@ -141,6 +141,20 @@ in
       };
     };
 
+    # Waybar
+    waybar = {
+      styleFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+        description = "Path to waybar style.css file";
+      };
+      configFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+        description = "Path to waybar config.jsonc file";
+      };
+    };
+
     # Apps excluded from Stylix theming
     stylixExclude = lib.mkOption {
       type = lib.types.listOf lib.types.str;
