@@ -81,7 +81,7 @@
   },
   "mpris": {
     "format": "{artist} / {title}  {player_icon}",
-    "format-paused": "{player_icon} Paused",
+    "format-paused": "Paused  {player_icon}",
     "player-icons": {
       "default": "▶",
       "mpv": "🎵",

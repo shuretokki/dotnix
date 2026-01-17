@@ -75,7 +75,7 @@ window#waybar {
     margin-right: 5px;
 }
 
-#mpris { padding: 0px 32px; }
+#mpris { padding: 0px 4px; }
 #clock { font-weight: 700; }
 
 #battery.charging, #battery.plugged { color: @base0B; }
