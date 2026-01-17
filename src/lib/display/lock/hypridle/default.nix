@@ -1,10 +1,8 @@
 # https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/
 # https://home-manager-options.extranix.com/?query=services.hypridle
-
 # locks after 5 min
 # turns off display after 5.5 min.
-
-{ pkgs, ... }: {
+{pkgs, ...}: {
   services.hypridle = {
     enable = true;
     settings = {

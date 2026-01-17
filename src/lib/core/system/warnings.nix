@@ -3,13 +3,11 @@
   config,
   identity,
   ...
-}:
-let
+}: let
   # expected state version for this system configuration
   # should only be updated when intentionally upgrading NixOS state
   expectedStateVersion = "25.11";
-in
-{
+in {
   warnings =
     lib.optional (config.system.stateVersion != expectedStateVersion) ''
       [STATEVERSION MISMATCH] system.stateVersion != ${expectedStateVersion}

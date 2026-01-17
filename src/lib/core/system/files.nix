@@ -1,12 +1,14 @@
 # https://wiki.nixos.org/wiki/GVFS
 # https://search.nixos.org/options?query=services.gvfs
 # https://search.nixos.org/options?query=xdg.portal
-
-{ config, lib, pkgs, ... }:
-let
-  cfg = config.library.core.files;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.library.core.files;
+in {
   options.library.core.files = {
     enable = lib.mkEnableOption "File manager integrations";
   };
@@ -39,7 +41,7 @@ in
 
       # using the GTK portal (works well for GNOME/Wayland/Hyprland)
       # provides the actual dialog windows for file picking, etc.
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
       # common portals:
       # - pkgs.xdg-desktop-portal-gtk (GNOME/GTK-based)

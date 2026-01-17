@@ -1,8 +1,7 @@
 # https://kaylorben.github.io/nixcord/
 # TODO: consider migrating to vesktop
-
-{ inputs, ... }: {
-  imports = [ inputs.nixcord.homeModules.nixcord ];
+{inputs, ...}: {
+  imports = [inputs.nixcord.homeModules.nixcord];
 
   programs.nixcord = {
     enable = true;

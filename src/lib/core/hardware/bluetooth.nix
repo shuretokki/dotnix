@@ -1,11 +1,13 @@
 # https://wiki.nixos.org/wiki/Bluetooth
 # https://search.nixos.org/options?query=hardware.bluetooth
-
-{ config, lib, pkgs, ... }:
-let
-  cfg = config.library.core.bluetooth;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.library.core.bluetooth;
+in {
   options.library.core.bluetooth = {
     enable = lib.mkEnableOption "Bluetooth hardware support";
   };
@@ -22,7 +24,7 @@ in
 
       # built-in BlueZ plugins to disable
       # example: [ "sap" ] to disable SIM Access Profile
-      disabledPlugins = [ ];
+      disabledPlugins = [];
 
       # main BlueZ configuration (/etc/bluetooth/main.conf)
       # see: https://github.com/bluez/bluez/blob/master/src/main.conf

@@ -1,11 +1,10 @@
 # https://github.com/sharkdp/bat
 # https://home-manager-options.extranix.com/?query=programs.bat
-
-{ lib
-, pkgs
-, ...
-}:
 {
+  lib,
+  pkgs,
+  ...
+}: {
   programs.bat = {
     enable = lib.mkDefault true;
 
@@ -23,7 +22,7 @@
       batwatch
     ];
 
-    themes = { };
-    syntaxes = { };
+    themes = {};
+    syntaxes = {};
   };
 }

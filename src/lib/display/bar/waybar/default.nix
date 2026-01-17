@@ -1,18 +1,18 @@
 # https://github.com/Alexays/Waybar
 # https://home-manager-options.extranix.com/?query=programs.waybar
-
 # config and style sourced from theme options (theme.waybar.*).
 # colors.css generated from stylix for @import in custom styles.
-
-{ config, pkgs, lib, identity, ... }:
-let
-  cfg = config.theme.waybar;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.theme.waybar;
+in {
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    settings = { };
+    settings = {};
   };
 
   xdg.configFile = {

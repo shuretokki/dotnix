@@ -1,7 +1,10 @@
 # https://github.com/ErikReider/SwayNotificationCenter
 # https://home-manager-options.extranix.com/?query=services.swaync
-
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   services.swaync = {
     enable = true;
     settings = {

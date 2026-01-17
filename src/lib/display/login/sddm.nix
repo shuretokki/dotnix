@@ -1,8 +1,11 @@
 # https://wiki.nixos.org/wiki/SDDM
 # https://search.nixos.org/options?query=services.displayManager.sddm
-
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.library.display.sddm;
 
   # where-is-my-sddm-theme is minimal and supports wallpaper config.
@@ -13,8 +16,7 @@ let
       backgroundMode = "fill"; # none|fill|aspect|cover
     };
   };
-in
-{
+in {
   options.library.display.sddm = {
     enable = lib.mkEnableOption "SDDM display manager with Wayland";
   };
@@ -38,9 +40,9 @@ in
         CursorSize = config.theme.cursor.size;
       };
 
-      extraPackages = [ theme ];
+      extraPackages = [theme];
     };
 
-    environment.systemPackages = [ theme ];
+    environment.systemPackages = [theme];
   };
 }

@@ -1,12 +1,15 @@
 # https://stylix.danth.me/
 # TODO: consider matugen for dynamic color scheme from wallpaper
 #       requires research on current stylix integration and matugen setup
-
-{ lib, pkgs, identity, config, ... }:
-let
-  excludedApps = config.theme.stylixExclude;
-in
 {
+  lib,
+  pkgs,
+  identity,
+  config,
+  ...
+}: let
+  excludedApps = config.theme.stylixExclude;
+in {
   stylix = {
     enable = true;
     autoEnable = true;
@@ -38,10 +41,16 @@ in
     targets.grub.enable = false;
   };
 
-  home-manager.users.${identity.username} = { config, lib, ... }: {
+  home-manager.users.${identity.username} = {
+    config,
+    lib,
+    ...
+  }: {
     # Dynamically disable stylix for apps in theme.stylixExclude
-    stylix.targets = lib.genAttrs excludedApps (_: { enable = false; }) // {
-      zen-browser.profileNames = [ "default" ];
-    };
+    stylix.targets =
+      lib.genAttrs excludedApps (_: {enable = false;})
+      // {
+        zen-browser.profileNames = ["default"];
+      };
   };
 }

@@ -1,14 +1,12 @@
 # https://starship.rs/
 # https://home-manager-options.extranix.com/?query=programs.starship
-
-{ lib
-, config
-, ...
-}:
-let
-  c = config.lib.stylix.colors.withHashtag;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  c = config.lib.stylix.colors.withHashtag;
+in {
   programs.starship = {
     enable = lib.mkDefault true;
     enableBashIntegration = lib.mkDefault true;
@@ -105,33 +103,33 @@ in
         style = "bold ${c.base0B}";
         symbol = " ";
         format = "[$symbol($version)]($style) ";
-        detect_extensions = [ "js" "mjs" "cjs" "ts" "mts" "cts" ];
-        detect_files = [ "package.json" ".node-version" ".nvmrc" ];
-        detect_folders = [ "node_modules" ];
+        detect_extensions = ["js" "mjs" "cjs" "ts" "mts" "cts"];
+        detect_files = ["package.json" ".node-version" ".nvmrc"];
+        detect_folders = ["node_modules"];
       };
 
       python = {
         style = "bold ${c.base0A}";
         symbol = " ";
         format = "[$symbol$pyenv_prefix($version)(\\($virtualenv\\))]($style) ";
-        detect_extensions = [ "py" ];
-        detect_files = [ "requirements.txt" "pyproject.toml" "Pipfile" ".python-version" ];
+        detect_extensions = ["py"];
+        detect_files = ["requirements.txt" "pyproject.toml" "Pipfile" ".python-version"];
       };
 
       rust = {
         style = "bold ${c.base09}";
         symbol = " ";
         format = "[$symbol($version)]($style) ";
-        detect_extensions = [ "rs" ];
-        detect_files = [ "Cargo.toml" ];
+        detect_extensions = ["rs"];
+        detect_files = ["Cargo.toml"];
       };
 
       golang = {
         style = "bold ${c.base0C}";
         symbol = " ";
         format = "[$symbol($version)]($style) ";
-        detect_extensions = [ "go" ];
-        detect_files = [ "go.mod" "go.sum" "go.work" ];
+        detect_extensions = ["go"];
+        detect_files = ["go.mod" "go.sum" "go.work"];
       };
 
       docker_context = {
@@ -139,7 +137,7 @@ in
         symbol = " ";
         format = "[$symbol$context]($style) ";
         only_with_files = true;
-        detect_files = [ "docker-compose.yml" "docker-compose.yaml" "Dockerfile" ];
+        detect_files = ["docker-compose.yml" "docker-compose.yaml" "Dockerfile"];
       };
 
       time = {
@@ -157,7 +155,10 @@ in
         unknown_symbol = "󰁽 ";
         empty_symbol = "󰂎 ";
         display = [
-          { threshold = 20; style = "bold ${c.base08}"; }
+          {
+            threshold = 20;
+            style = "bold ${c.base08}";
+          }
         ];
       };
     };

@@ -1,13 +1,10 @@
 # https://home-manager-options.extranix.com/?query=programs.bash
 # TODO: consider moving wayland auto-start (profileExtra) to display module
-
 {
   lib,
-  pkgs,
   prefs,
   ...
-}:
-{
+}: {
   home.sessionVariables = {
     PAGER = "cat";
     GIT_PAGER = "cat";

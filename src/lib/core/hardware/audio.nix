@@ -1,11 +1,12 @@
 # https://wiki.nixos.org/wiki/PipeWire
 # https://search.nixos.org/options?query=services.pipewire
-
-{ config, lib, pkgs, ... }:
-let
-  cfg = config.library.core.audio;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.library.core.audio;
+in {
   options.library.core.audio = {
     enable = lib.mkEnableOption "PipeWire audio stack";
   };
@@ -67,15 +68,15 @@ in
 
         # Client library configuration (affects most applications)
         # See: https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Config-client
-        client = { };
+        client = {};
 
         # JACK server/client configuration
         # see: https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Config-JACK
-        jack = { };
+        jack = {};
 
         # pulseAudio server emulation configuration
         # see: https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Config-PulseAudio
-        pipewire-pulse = { };
+        pipewire-pulse = {};
       };
 
       # wireplumber session manager (enabled by default)

@@ -1,6 +1,6 @@
 # Dark theme preset
 # Sets values for theme.* options defined in base.nix
-{ pkgs, ... }: {
+{pkgs, ...}: {
   theme = {
     scheme = ./scheme.yaml;
     polarity = "dark";

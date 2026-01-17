@@ -1,12 +1,14 @@
 # https://home-manager-options.extranix.com/?query=programs.vscode
 # TODO: consider adding zed (https://zed.dev/)
-
-{ lib, pkgs, config, prefs, ... }:
-let
-  fonts = config.stylix.fonts;
-  colors = config.lib.stylix.colors;
-in
 {
+  lib,
+  pkgs,
+  config,
+  prefs,
+  ...
+}: let
+  inherit (config.stylix) fonts;
+in {
   programs.vscode = {
     enable = lib.mkDefault true;
     package = lib.mkDefault pkgs.vscode-fhs;
@@ -67,7 +69,7 @@ in
         "editor.acceptSuggestionOnEnter" = "smart";
         "editor.suggestSelection" = "first";
         "editor.suggest.preview" = false;
-        "editor.quickSuggestions" = { "strings" = "on"; };
+        "editor.quickSuggestions" = {"strings" = "on";};
         "editor.accessibilitySupport" = "off";
         "editor.fastScrollSensitivity" = 10;
         "editor.mouseWheelScrollSensitivity" = 2;
@@ -216,104 +218,330 @@ in
         "typescript.inlayHints.variableTypes.enabled" = true;
         "typescript.inlayHints.variableTypes.suppressWhenTypeMatchesName" = false;
 
-        "github.copilot.enable" = { "*" = false; "markdown" = true; };
+        "github.copilot.enable" = {
+          "*" = false;
+          "markdown" = true;
+        };
       };
 
       # https://home-manager-options.extranix.com/?query=programs.vscode.profiles.%3Cname%3E.keybindings
       keybindings = [
         # duplicate line
-        { key = "ctrl+d"; command = "editor.action.copyLinesDownAction"; when = "editorTextFocus && !editorReadonly"; }
-        { key = "shift+alt+down"; command = "-editor.action.copyLinesDownAction"; }
+        {
+          key = "ctrl+d";
+          command = "editor.action.copyLinesDownAction";
+          when = "editorTextFocus && !editorReadonly";
+        }
+        {
+          key = "shift+alt+down";
+          command = "-editor.action.copyLinesDownAction";
+        }
 
         # terminal
-        { key = "ctrl+`"; command = "workbench.action.togglePanel"; }
-        { key = "ctrl+j"; command = "-workbench.action.togglePanel"; }
-        { key = "ctrl+alt+j"; command = "workbench.action.terminal.new"; }
-        { key = "ctrl+shift+j"; command = "workbench.action.terminal.killAll"; }
-        { key = "ctrl+alt+t"; command = "workbench.action.terminal.moveIntoNewWindow"; }
+        {
+          key = "ctrl+`";
+          command = "workbench.action.togglePanel";
+        }
+        {
+          key = "ctrl+j";
+          command = "-workbench.action.togglePanel";
+        }
+        {
+          key = "ctrl+alt+j";
+          command = "workbench.action.terminal.new";
+        }
+        {
+          key = "ctrl+shift+j";
+          command = "workbench.action.terminal.killAll";
+        }
+        {
+          key = "ctrl+alt+t";
+          command = "workbench.action.terminal.moveIntoNewWindow";
+        }
 
         # navigation
-        { key = "ctrl+j"; command = "workbench.action.quickOpenSelectNext"; when = "inQuickOpen"; }
-        { key = "ctrl+k"; command = "workbench.action.quickOpenSelectPrevious"; when = "inQuickOpen"; }
-        { key = "ctrl+j"; command = "selectNextSuggestion"; when = "suggestWidgetVisible && textInputFocus"; }
-        { key = "ctrl+k"; command = "selectPrevSuggestion"; when = "suggestWidgetVisible && textInputFocus"; }
-        { key = "ctrl+l"; command = "acceptSelectedSuggestion"; when = "suggestWidgetVisible && textInputFocus"; }
-        { key = "ctrl+j"; command = "showNextParameterHint"; when = "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"; }
-        { key = "ctrl+k"; command = "showPrevParameterHint"; when = "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"; }
-        { key = "ctrl+j"; command = "selectNextCodeAction"; when = "codeActionMenuVisible"; }
-        { key = "ctrl+k"; command = "selectPrevCodeAction"; when = "codeActionMenuVisible"; }
-        { key = "ctrl+l"; command = "acceptSelectedCodeAction"; when = "codeActionMenuVisible"; }
+        {
+          key = "ctrl+j";
+          command = "workbench.action.quickOpenSelectNext";
+          when = "inQuickOpen";
+        }
+        {
+          key = "ctrl+k";
+          command = "workbench.action.quickOpenSelectPrevious";
+          when = "inQuickOpen";
+        }
+        {
+          key = "ctrl+j";
+          command = "selectNextSuggestion";
+          when = "suggestWidgetVisible && textInputFocus";
+        }
+        {
+          key = "ctrl+k";
+          command = "selectPrevSuggestion";
+          when = "suggestWidgetVisible && textInputFocus";
+        }
+        {
+          key = "ctrl+l";
+          command = "acceptSelectedSuggestion";
+          when = "suggestWidgetVisible && textInputFocus";
+        }
+        {
+          key = "ctrl+j";
+          command = "showNextParameterHint";
+          when = "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible";
+        }
+        {
+          key = "ctrl+k";
+          command = "showPrevParameterHint";
+          when = "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible";
+        }
+        {
+          key = "ctrl+j";
+          command = "selectNextCodeAction";
+          when = "codeActionMenuVisible";
+        }
+        {
+          key = "ctrl+k";
+          command = "selectPrevCodeAction";
+          when = "codeActionMenuVisible";
+        }
+        {
+          key = "ctrl+l";
+          command = "acceptSelectedCodeAction";
+          when = "codeActionMenuVisible";
+        }
 
         # file operations
-        { key = "ctrl+n"; command = "explorer.newFile"; }
-        { key = "ctrl+shift+n"; command = "explorer.newFolder"; }
-        { key = "ctrl+shift+d"; command = "moveFileToTrash"; when = "filesExplorerFocus && !inputFocus"; }
-        { key = "ctrl+shift+r"; command = "renameFile"; when = "filesExplorerFocus && !inputFocus"; }
-        { key = "ctrl+shift+c"; command = "workbench.files.action.collapseExplorerFolders"; }
+        {
+          key = "ctrl+n";
+          command = "explorer.newFile";
+        }
+        {
+          key = "ctrl+shift+n";
+          command = "explorer.newFolder";
+        }
+        {
+          key = "ctrl+shift+d";
+          command = "moveFileToTrash";
+          when = "filesExplorerFocus && !inputFocus";
+        }
+        {
+          key = "ctrl+shift+r";
+          command = "renameFile";
+          when = "filesExplorerFocus && !inputFocus";
+        }
+        {
+          key = "ctrl+shift+c";
+          command = "workbench.files.action.collapseExplorerFolders";
+        }
 
         # cursor home/end
-        { key = "ctrl+1"; command = "cursorHome"; when = "textInputFocus"; }
-        { key = "ctrl+shift+1"; command = "cursorHomeSelect"; when = "textInputFocus"; }
-        { key = "ctrl+3"; command = "cursorEnd"; when = "textInputFocus"; }
-        { key = "ctrl+shift+3"; command = "cursorEndSelect"; when = "textInputFocus"; }
+        {
+          key = "ctrl+1";
+          command = "cursorHome";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+shift+1";
+          command = "cursorHomeSelect";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+3";
+          command = "cursorEnd";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+shift+3";
+          command = "cursorEndSelect";
+          when = "textInputFocus";
+        }
 
         # page navigation
-        { key = "ctrl+up"; command = "cursorPageUp"; when = "textInputFocus"; }
-        { key = "ctrl+down"; command = "cursorPageDown"; when = "textInputFocus"; }
-        { key = "ctrl+shift+up"; command = "cursorPageUpSelect"; when = "textInputFocus"; }
-        { key = "ctrl+shift+down"; command = "cursorPageDownSelect"; when = "textInputFocus"; }
-        { key = "ctrl+alt+up"; command = "cursorTop"; when = "textInputFocus"; }
-        { key = "ctrl+alt+down"; command = "cursorBottom"; when = "textInputFocus"; }
-        { key = "ctrl+shift+alt+up"; command = "cursorTopSelect"; when = "textInputFocus"; }
-        { key = "ctrl+shift+alt+down"; command = "cursorBottomSelect"; when = "textInputFocus"; }
+        {
+          key = "ctrl+up";
+          command = "cursorPageUp";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+down";
+          command = "cursorPageDown";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+shift+up";
+          command = "cursorPageUpSelect";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+shift+down";
+          command = "cursorPageDownSelect";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+alt+up";
+          command = "cursorTop";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+alt+down";
+          command = "cursorBottom";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+shift+alt+up";
+          command = "cursorTopSelect";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+shift+alt+down";
+          command = "cursorBottomSelect";
+          when = "textInputFocus";
+        }
 
         # word navigation
-        { key = "ctrl+left"; command = "cursorWordStartLeft"; }
-        { key = "ctrl+right"; command = "cursorWordStartRight"; }
-        { key = "ctrl+shift+left"; command = "cursorWordStartLeftSelect"; }
-        { key = "ctrl+shift+right"; command = "cursorWordStartRightSelect"; }
-        { key = "ctrl+alt+left"; command = "cursorWordPartLeft"; }
-        { key = "ctrl+alt+right"; command = "cursorWordPartRight"; }
-        { key = "ctrl+shift+alt+left"; command = "cursorWordPartLeftSelect"; }
-        { key = "ctrl+shift+alt+right"; command = "cursorWordPartRightSelect"; }
+        {
+          key = "ctrl+left";
+          command = "cursorWordStartLeft";
+        }
+        {
+          key = "ctrl+right";
+          command = "cursorWordStartRight";
+        }
+        {
+          key = "ctrl+shift+left";
+          command = "cursorWordStartLeftSelect";
+        }
+        {
+          key = "ctrl+shift+right";
+          command = "cursorWordStartRightSelect";
+        }
+        {
+          key = "ctrl+alt+left";
+          command = "cursorWordPartLeft";
+        }
+        {
+          key = "ctrl+alt+right";
+          command = "cursorWordPartRight";
+        }
+        {
+          key = "ctrl+shift+alt+left";
+          command = "cursorWordPartLeftSelect";
+        }
+        {
+          key = "ctrl+shift+alt+right";
+          command = "cursorWordPartRightSelect";
+        }
 
         # line movement
-        { key = "alt+up"; command = "editor.action.moveLinesUpAction"; when = "editorTextFocus && !editorReadonly"; }
-        { key = "alt+down"; command = "editor.action.moveLinesDownAction"; when = "editorTextFocus && !editorReadonly"; }
+        {
+          key = "alt+up";
+          command = "editor.action.moveLinesUpAction";
+          when = "editorTextFocus && !editorReadonly";
+        }
+        {
+          key = "alt+down";
+          command = "editor.action.moveLinesDownAction";
+          when = "editorTextFocus && !editorReadonly";
+        }
 
         # editor groups
-        { key = "ctrl+2"; command = "workbench.action.focusRightGroup"; }
-        { key = "ctrl+shift+2"; command = "workbench.action.focusSecondEditorGroup"; }
-        { key = "ctrl+alt+a"; command = "workbench.action.navigateLeft"; }
-        { key = "ctrl+alt+d"; command = "workbench.action.navigateRight"; }
-        { key = "ctrl+alt+1"; command = "workbench.action.minimizeOtherEditors"; }
-        { key = "ctrl+alt+w"; command = "workbench.action.closeEditorsAndGroup"; }
-        { key = "ctrl+shift+1"; command = "workbench.action.moveActiveEditorGroupLeft"; }
-        { key = "ctrl+shift+2"; command = "workbench.action.moveActiveEditorGroupRight"; }
+        {
+          key = "ctrl+2";
+          command = "workbench.action.focusRightGroup";
+        }
+        {
+          key = "ctrl+shift+2";
+          command = "workbench.action.focusSecondEditorGroup";
+        }
+        {
+          key = "ctrl+alt+a";
+          command = "workbench.action.navigateLeft";
+        }
+        {
+          key = "ctrl+alt+d";
+          command = "workbench.action.navigateRight";
+        }
+        {
+          key = "ctrl+alt+1";
+          command = "workbench.action.minimizeOtherEditors";
+        }
+        {
+          key = "ctrl+alt+w";
+          command = "workbench.action.closeEditorsAndGroup";
+        }
+        {
+          key = "ctrl+shift+1";
+          command = "workbench.action.moveActiveEditorGroupLeft";
+        }
+        {
+          key = "ctrl+shift+2";
+          command = "workbench.action.moveActiveEditorGroupRight";
+        }
 
         # quick actions
-        { key = "ctrl+."; command = "editor.action.showHover"; when = "editorTextFocus"; }
-        { key = "ctrl+'"; command = "editor.action.quickFix"; when = "editorHasCodeActionsProvider && textInputFocus"; }
-        { key = "ctrl+e"; command = "extension.selectDoubleQuote"; when = "editorFocus"; }
-        { key = "ctrl+shift+q"; command = "workbench.action.focusFirstEditorGroup"; }
+        {
+          key = "ctrl+.";
+          command = "editor.action.showHover";
+          when = "editorTextFocus";
+        }
+        {
+          key = "ctrl+'";
+          command = "editor.action.quickFix";
+          when = "editorHasCodeActionsProvider && textInputFocus";
+        }
+        {
+          key = "ctrl+e";
+          command = "extension.selectDoubleQuote";
+          when = "editorFocus";
+        }
+        {
+          key = "ctrl+shift+q";
+          command = "workbench.action.focusFirstEditorGroup";
+        }
 
         # indentation
-        { key = "shift+tab"; command = "editor.action.indentLines"; when = "editorTextFocus && !editorReadonly"; }
+        {
+          key = "shift+tab";
+          command = "editor.action.indentLines";
+          when = "editorTextFocus && !editorReadonly";
+        }
 
         # inline suggestions
-        { key = "ctrl+\\"; command = "editor.action.inlineSuggest.trigger"; when = "editorTextFocus && !editorHasSelection && !inlineSuggestionsVisible"; }
+        {
+          key = "ctrl+\\";
+          command = "editor.action.inlineSuggest.trigger";
+          when = "editorTextFocus && !editorHasSelection && !inlineSuggestionsVisible";
+        }
 
         # bookmarks
-        { key = "alt+."; command = "bookmarks.toggle"; when = "editorTextFocus"; }
-        { key = "ctrl+alt+."; command = "bookmarks.jumpToNext"; when = "editorTextFocus"; }
-        { key = "ctrl+shift+alt+."; command = "bookmarks.jumpToPrevious"; when = "editorTextFocus"; }
-        { key = "alt+backspace"; command = "bookmarks.clear"; }
+        {
+          key = "alt+.";
+          command = "bookmarks.toggle";
+          when = "editorTextFocus";
+        }
+        {
+          key = "ctrl+alt+.";
+          command = "bookmarks.jumpToNext";
+          when = "editorTextFocus";
+        }
+        {
+          key = "ctrl+shift+alt+.";
+          command = "bookmarks.jumpToPrevious";
+          when = "editorTextFocus";
+        }
+        {
+          key = "alt+backspace";
+          command = "bookmarks.clear";
+        }
 
         # misc
-        { key = "ctrl+alt+5"; command = "workbench.action.editor.changeEOL"; }
+        {
+          key = "ctrl+alt+5";
+          command = "workbench.action.editor.changeEOL";
+        }
       ];
     };
-
   };
 
   home.sessionVariables = {

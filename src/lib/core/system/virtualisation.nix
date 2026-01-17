@@ -2,18 +2,15 @@
 # https://wiki.nixos.org/wiki/Podman
 # https://search.nixos.org/options?query=virtualisation.docker
 # https://search.nixos.org/options?query=virtualisation.podman
-
 {
   config,
   lib,
   pkgs,
   identity,
   ...
-}:
-let
+}: let
   cfg = config.library.core.virtualisation;
-in
-{
+in {
   options.library.core.virtualisation = {
     docker.enable = lib.mkEnableOption "Docker container runtime";
     podman.enable = lib.mkEnableOption "Podman container runtime";
@@ -23,7 +20,7 @@ in
     (lib.mkIf cfg.docker.enable {
       virtualisation.docker.enable = true;
       # socket access requires group membership
-      users.users.${identity.username}.extraGroups = [ "docker" ];
+      users.users.${identity.username}.extraGroups = ["docker"];
     })
 
     (lib.mkIf cfg.podman.enable {

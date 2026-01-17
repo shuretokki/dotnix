@@ -1,9 +1,11 @@
 # https://wiki.hypr.land/Configuring/Variables/
-{ config, lib, ... }:
-let
-  colors = config.lib.stylix.colors;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  colors = config.lib.stylix.colors;
+in {
   general = {
     gaps_in = lib.mkForce config.theme.hyprland.gaps-in;
     gaps_out = lib.mkForce config.theme.hyprland.gaps-out;

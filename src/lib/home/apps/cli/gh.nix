@@ -1,7 +1,6 @@
 # https://cli.github.com/
 # https://home-manager-options.extranix.com/?query=programs.gh
-
-{ lib, ... }: {
+{lib, ...}: {
   programs.gh = {
     enable = lib.mkDefault true;
     extensions = [

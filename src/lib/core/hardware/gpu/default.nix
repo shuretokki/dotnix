@@ -1,11 +1,13 @@
-{ config, lib, ... }:
-let
+{
+  config,
+  lib,
+  ...
+}: let
   nvidia = config.library.core.gpu.nvidia.enable;
   amd = config.library.core.gpu.amd.enable;
   prime = config.library.core.gpu.nvidia.prime.enable;
   none = config.library.core.gpu.none;
-in
-{
+in {
   imports = [
     ./nvidia.nix
     ./amd.nix
@@ -41,4 +43,3 @@ in
     "[GPU] both AMD and NVIDIA enabled with prime. Ensure prime.amdBusId is set correctly."
   ];
 }
-

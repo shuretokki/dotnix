@@ -1,14 +1,12 @@
 # https://github.com/junegunn/fzf
 # https://home-manager-options.extranix.com/?query=programs.fzf
-
-{ lib
-, config
-, ...
-}:
-let
-  c = config.lib.stylix.colors.withHashtag;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  c = config.lib.stylix.colors.withHashtag;
+in {
   programs.fzf = {
     enable = lib.mkDefault true;
     enableBashIntegration = true;
@@ -53,7 +51,7 @@ in
 
     tmux = {
       enableShellIntegration = false;
-      shellIntegrationOptions = [ ];
+      shellIntegrationOptions = [];
     };
   };
 }

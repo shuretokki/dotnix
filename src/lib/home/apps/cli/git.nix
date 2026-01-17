@@ -1,7 +1,10 @@
 # https://git-scm.com/
 # https://home-manager-options.extranix.com/?query=programs.git
-
-{ lib, prefs, ... }: {
+{
+  lib,
+  prefs,
+  ...
+}: {
   programs.git = {
     enable = true;
     settings = {

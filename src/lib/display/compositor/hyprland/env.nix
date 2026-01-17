@@ -1,5 +1,5 @@
 # https://wiki.hypr.land/Configuring/Environment-variables/
-{ pkgs, ... }: {
+{pkgs, ...}: {
   env = [
     "XCURSOR_THEME,macOS"
     "XCURSOR_SIZE,24"

@@ -1,10 +1,14 @@
 # https://home-manager-options.extranix.com/?query=home
-
 # user-specific home-manager configuration.
 # this file is imported when building for the "shure" user.
 # _prefs are passed down to bundlers to customize app behavior.
-
-{ config, pkgs, inputs, identity, ... }: {
+{
+  config,
+  pkgs,
+  inputs,
+  identity,
+  ...
+}: {
   imports = [
     inputs.self.homeModules.home
   ];

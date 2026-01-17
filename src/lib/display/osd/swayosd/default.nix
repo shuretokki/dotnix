@@ -1,6 +1,5 @@
 # https://github.com/ErikReider/SwayOSD
 # https://home-manager-options.extranix.com/?query=services.swayosd
-
-{ pkgs, ... }: {
+{pkgs, ...}: {
   services.swayosd.enable = true;
 }

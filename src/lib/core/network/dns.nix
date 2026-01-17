@@ -1,12 +1,13 @@
 # https://wiki.nixos.org/wiki/Encrypted_DNS
 # https://search.nixos.org/options?query=services.dnscrypt-proxy
-
-{ pkgs, config, ... }:
-let
+{
+  pkgs,
+  config,
+  ...
+}: let
   stateDir = "dnscrypt-proxy";
   blocklistFile = "/var/lib/${stateDir}/blocked-names.txt";
-in
-{
+in {
   services.dnscrypt-proxy = {
     enable = true;
 
@@ -16,10 +17,10 @@ in
       # see all the list here https://dnscrypt.info/public-servers
       # quad9 is prioritized for its strong privacy policy and threat intelligence.
       # mullvad-doh added for redundancy
-      server_names = [ "quad9-doh-ip4-nofilter-ecs-pri" "cloudflare" "mullvad-doh" ];
+      server_names = ["quad9-doh-ip4-nofilter-ecs-pri" "cloudflare" "mullvad-doh"];
 
       # listen for incoming dns queries on the local loopback interface.
-      listen_addresses = [ "127.0.0.1:53" ];
+      listen_addresses = ["127.0.0.1:53"];
 
       # enable dns-over-https (doh) for modern encryption.
       doh_servers = true;
@@ -70,7 +71,7 @@ in
   # systemd service to fetch the blocklist
   systemd.services.dnscrypt-blocklist = {
     description = "Update OISD blocklist for dnscrypt-proxy";
-    after = [ "network.target" ];
+    after = ["network.target"];
     serviceConfig = {
       Type = "oneshot";
       User = "root";
@@ -100,7 +101,7 @@ in
 
   # timer to run blocklist update daily
   systemd.timers.dnscrypt-blocklist = {
-    wantedBy = [ "timers.target" ];
+    wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "daily";
       Persistent = true;
@@ -109,7 +110,7 @@ in
   };
 
   # force the system to use the local dnscrypt-proxy instance for all queries.
-  networking.nameservers = [ "127.0.0.1" ];
+  networking.nameservers = ["127.0.0.1"];
 
   # prevent networkmanager from overwriting /etc/resolv.conf with dhcp-provided dns.
   networking.networkmanager.dns = "none";

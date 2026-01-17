@@ -1,11 +1,14 @@
 # https://wiki.nixos.org/wiki/GnuPG
 # https://home-manager-options.extranix.com/?query=programs.gpg
-
 # gpg and agent configuration.
 # sets strong cipher/digest preferences and enables the gpg-agent.
 # pinentry-gnome3 works with hyprland/wayland for password prompts.
-
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.gpg = {
     enable = true;
     settings = {

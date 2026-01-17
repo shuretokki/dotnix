@@ -1,8 +1,11 @@
 # validation assertions for early misconfiguration detection
 # these run at nix evaluation time, before any build starts.
-
-{ config, lib, identity, ... }:
-let
+{
+  config,
+  lib,
+  identity,
+  ...
+}: let
   # usernames that should not be used as primary user
   reservedUsernames = [
     "root"
@@ -24,8 +27,7 @@ let
   # Theme path validation - theme now comes from config.theme.preset (cfg/theme.nix)
   themePreset = config.theme.preset or "default";
   themePath = ../../../../cfg/themes + "/${themePreset}/default.nix";
-in
-{
+in {
   config.assertions = [
     {
       assertion = identity.username != "";
@@ -65,7 +67,7 @@ in
 
   config.systemd.services.sops-key-check = {
     description = "check sops key file exists";
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;

@@ -1,8 +1,11 @@
 # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/zram.nix
 # in-memory compressed swap device for faster swapping than disk.
 # see: https://www.kernel.org/doc/Documentation/blockdev/zram.txt
-
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   zramSwap = {
     enable = true;
 
@@ -34,7 +37,6 @@
   # prevent hanging during rebuild when ZRAM configuration changes
   systemd.services."systemd-zram-setup@zram0".stopIfChanged = false;
 
-
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/sysctl.nix
   # Kernel tunables for ZRAM-optimized swapping behavior
   boot.kernel.sysctl = {
@@ -65,7 +67,6 @@
     # "fs.inotify.max_user_instances" = 524288;
     # "fs.inotify.max_user_watches" = 524288;
   };
-
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/system/earlyoom.nix
   # kills memory-hungry processes before the system freezes

@@ -1,10 +1,14 @@
-{ lib, pkgs, config, inputs, ... }:
-let
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  ...
+}: let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   colorsRaw = config.lib.stylix.colors;
-in
-{
-  imports = [ inputs.spicetify-nix.homeManagerModules.default ];
+in {
+  imports = [inputs.spicetify-nix.homeManagerModules.default];
 
   # Spicetify
   # https://gerg-l.github.io/spicetify-nix
@@ -140,7 +144,6 @@ in
       # "state": "",
       ''
       ''
-
     ];
   };
 
@@ -156,7 +159,7 @@ in
     exec = "spotify-th %U";
     icon = "spotify-client";
     terminal = false;
-    categories = [ "Audio" "Music" "Player" "AudioVideo" ];
-    mimeType = [ "x-scheme-handler/spotify" ];
+    categories = ["Audio" "Music" "Player" "AudioVideo"];
+    mimeType = ["x-scheme-handler/spotify"];
   };
 }

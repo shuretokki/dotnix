@@ -5,12 +5,15 @@
 # 2. get your public key: age-keygen -y ~/.config/sops/age/keys.txt
 # 3. update .sops.yaml with your public key
 # 4. create secrets/secrets.yaml: sops secrets/secrets.yaml
-
-{ inputs, config, lib, identity, ... }:
-let
-  cfg = config.library.core.sops;
-in
 {
+  inputs,
+  config,
+  lib,
+  identity,
+  ...
+}: let
+  cfg = config.library.core.sops;
+in {
   options.library.core.sops = {
     keyFile = lib.mkOption {
       type = lib.types.str;
@@ -19,7 +22,7 @@ in
     };
   };
 
-  imports = [ inputs.sops-nix.nixosModules.sops ];
+  imports = [inputs.sops-nix.nixosModules.sops];
 
   config.sops = {
     # Points to cfg/secrets/secrets.yaml
@@ -42,4 +45,3 @@ in
     # '';
   };
 }
-

@@ -1,16 +1,20 @@
 # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/hardware/video/nvidia.nix
 # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/hardware/graphics.nix
-
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.library.core.gpu.nvidia;
 
   driverPackage =
-    if cfg.legacy == "390" then config.boot.kernelPackages.nvidiaPackages.legacy_390
-    else if cfg.legacy == "470" then config.boot.kernelPackages.nvidiaPackages.legacy_470
+    if cfg.legacy == "390"
+    then config.boot.kernelPackages.nvidiaPackages.legacy_390
+    else if cfg.legacy == "470"
+    then config.boot.kernelPackages.nvidiaPackages.legacy_470
     else config.boot.kernelPackages.nvidiaPackages.stable;
-in
-{
+in {
   options.library.core.gpu.nvidia = {
     enable = lib.mkEnableOption "NVIDIA GPU support";
 
@@ -29,7 +33,7 @@ in
 
     # for older GPUs that need legacy driver branches
     legacy = lib.mkOption {
-      type = lib.types.nullOr (lib.types.enum [ "470" "390" ]);
+      type = lib.types.nullOr (lib.types.enum ["470" "390"]);
       default = null;
       description = ''
         Use legacy driver branch for older GPUs.
@@ -44,7 +48,7 @@ in
       enable = lib.mkEnableOption "Optimus/Prime hybrid graphics for laptops";
 
       mode = lib.mkOption {
-        type = lib.types.enum [ "sync" "offload" ];
+        type = lib.types.enum ["sync" "offload"];
         default = "offload";
         description = ''
           - "sync": NVIDIA always active (best performance, more power)
@@ -74,7 +78,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # load nvidia driver for xorg and wayland
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = ["nvidia"];
 
     hardware.graphics = {
       enable = true;
@@ -105,12 +109,14 @@ in
       package = driverPackage;
 
       prime = lib.mkIf cfg.prime.enable (
-        if cfg.prime.mode == "sync" then {
+        if cfg.prime.mode == "sync"
+        then {
           sync.enable = true;
           nvidiaBusId = cfg.prime.nvidiaBusId;
           intelBusId = lib.mkIf (cfg.prime.intelBusId != "") cfg.prime.intelBusId;
           amdgpuBusId = lib.mkIf (cfg.prime.amdBusId != "") cfg.prime.amdBusId;
-        } else {
+        }
+        else {
           offload = {
             enable = true;
             enableOffloadCmd = true;

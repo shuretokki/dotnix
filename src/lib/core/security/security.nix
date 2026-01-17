@@ -1,8 +1,7 @@
 # https://wiki.nixos.org/wiki/Polkit
 # https://wiki.nixos.org/wiki/SSH
 # https://search.nixos.org/options?query=security
-
-{ config, pkgs, identity, ... }: {
+{config, ...}: {
   # polkit toolkit assists unprivileged processes to speak to privileged processes.
   # essential for GUI operations like mounting drives, rebooting, or managing networks.
   security.polkit = {

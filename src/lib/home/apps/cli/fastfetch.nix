@@ -1,7 +1,6 @@
 # https://github.com/fastfetch-cli/fastfetch
-{ pkgs, ... }:
-{
-  home.packages = [ pkgs.fastfetch ];
+{pkgs, ...}: {
+  home.packages = [pkgs.fastfetch];
 
   # Run fastfetch on shell start
   # optional - uncomment if desired

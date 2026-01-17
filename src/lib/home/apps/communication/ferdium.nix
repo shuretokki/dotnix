@@ -1,9 +1,12 @@
 # https://ferdium.org/
 # https://search.nixos.org/packages?query=ferdium
 # TODO: consider migrating to beeper (https://www.beeper.com/)
-
-{ pkgs, lib, config, ... }:
-let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   c = config.lib.stylix.colors;
 
   sync = ''
@@ -37,7 +40,7 @@ let
   '';
 
   style = pkgs.writeText "sync.css" sync;
-  services = [ "gmail" "whatsapp" ];
+  services = ["gmail" "whatsapp"];
 
   settings = {
     darkMode = true;
@@ -62,9 +65,8 @@ let
 
     sentry = false;
   };
-in
-{
-  home.packages = [ pkgs.ferdium ];
+in {
+  home.packages = [pkgs.ferdium];
 
   xdg.configFile."Ferdium/config/settings.json".text =
     builtins.toJSON settings;
@@ -72,7 +74,7 @@ in
   # injects stylix theme into ferdium service recipes.
   # runs after ferdium creates recipe folders on first service add.
   # both user.css and darkmode.css needed for complete theme coverage.
-  home.activation.injectRecipeStyles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.injectRecipeStyles = lib.hm.dag.entryAfter ["writeBoundary"] ''
     for service in ${lib.concatStringsSep " " services}; do
       if [ -f "$HOME/.config/Ferdium/recipes/$service/package.json" ]; then
         cp -f "${style}" "$HOME/.config/Ferdium/recipes/$service/user.css"

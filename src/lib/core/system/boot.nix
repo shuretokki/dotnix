@@ -1,11 +1,13 @@
 # https://wiki.nixos.org/wiki/Bootloader
 # https://search.nixos.org/options?query=boot.loader
-
-{ lib, config, pkgs, ... }:
-let
-  cfg = config.boot.dualBoot;
-in
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  cfg = config.boot.dualBoot;
+in {
   options.boot.dualBoot = {
     windows = {
       enable = lib.mkEnableOption "Windows Dual Boot";
@@ -76,8 +78,10 @@ in
       # macos warning: ensure launcheroption is disabled in opencore config.plist to prevent boot loops.
       extraEntries = let
         makePrefix = uuid: label:
-          if uuid != null then "uuid(${lib.toUpper uuid}):"
-          else if label != null then "label(${label}):"
+          if uuid != null
+          then "uuid(${lib.toUpper uuid}):"
+          else if label != null
+          then "label(${label}):"
           else "boot():";
 
         winPrefix = makePrefix cfg.windows.uuid cfg.windows.label;
@@ -97,6 +101,6 @@ in
       '';
     };
 
-    environment.systemPackages = [ pkgs.detect-boot-uuids ];
+    environment.systemPackages = [pkgs.detect-boot-uuids];
   };
 }

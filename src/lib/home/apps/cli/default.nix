@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{...}: {
   imports = [
     ./git.nix
     ./shell.nix

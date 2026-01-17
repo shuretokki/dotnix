@@ -1,11 +1,13 @@
 # https://wiki.nixos.org/wiki/Fcitx5
 # https://search.nixos.org/options?query=i18n.inputMethod
-
-{ config, lib, pkgs, ... }:
-let
-  cfg = config.library.core.input;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.library.core.input;
+in {
   options.library.core.input = {
     enable = lib.mkEnableOption "Input method (fcitx5)";
   };

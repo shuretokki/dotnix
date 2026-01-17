@@ -1,7 +1,7 @@
 # Base theme options schema
 # Defines theme.* options used by all theme presets and display modules
 # Values are set by presets in ./dark/, etc.
-{ lib, ... }: {
+{lib, ...}: {
   options.theme = {
     preset = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
@@ -15,7 +15,7 @@
     };
 
     polarity = lib.mkOption {
-      type = lib.types.enum [ "dark" "light" ];
+      type = lib.types.enum ["dark" "light"];
       default = "dark";
       description = "Color scheme polarity";
     };

@@ -1,14 +1,12 @@
 # https://github.com/aristocratos/btop
 # https://home-manager-options.extranix.com/?query=programs.btop
-
-{ lib
-, config
-, ...
-}:
-let
-  c = config.lib.stylix.colors;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  c = config.lib.stylix.colors;
+in {
   programs.btop = {
     enable = lib.mkDefault true;
 

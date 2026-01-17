@@ -2,9 +2,7 @@
 # https://wiki.nixos.org/wiki/NetworkManager
 # https://search.nixos.org/options?query=networking
 # add users to 'networkmanager' group to allow managing connections
-
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   networking.networkmanager = {
     enable = true;
 
@@ -45,7 +43,6 @@
 
   services.cloudflare-warp.enable = true;
 
-
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/firewall.nix
   networking.firewall = {
     enable = true;
@@ -55,8 +52,8 @@
 
     # open ports
     # localsend (cross-platform file sharing)
-    allowedTCPPorts = [ 53317 ];
-    allowedUDPPorts = [ 53317 ];
+    allowedTCPPorts = [53317];
+    allowedUDPPorts = [53317];
 
     # common ports to open:
     # 22 = SSH
@@ -65,8 +62,18 @@
     # 1714:1764 = KDE Connect
 
     # port ranges (e.g., for KDE Connect)
-    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
-    allowedUDPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
 
     # interfaces to trust completely (bypass firewall)
     # trustedInterfaces = [ "tailscale0" ];

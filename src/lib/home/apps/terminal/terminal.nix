@@ -1,22 +1,18 @@
 # https://alacritty.org/
 # https://ghostty.org/
 # https://home-manager-options.extranix.com/?query=programs.alacritty
-
 # terminal emulator configurations.
 # configures alacritty, ghostty, and warp-terminal with stylix colors.
 # prefs.terminal sets the default in $TERMINAL env var.
-
 {
   lib,
   pkgs,
   config,
   prefs,
   ...
-}:
-let
+}: let
   c = config.lib.stylix.colors;
-in
-{
+in {
   # warp-terminal is installed but not managed by home-manager.
   # theme is synced via xdg.configFile below.
   home.packages = with pkgs; [
@@ -72,8 +68,16 @@ in
 
       keyboard = {
         bindings = [
-          { key = "V"; mods = "Control|Shift"; action = "Paste"; }
-          { key = "C"; mods = "Control|Shift"; action = "Copy"; }
+          {
+            key = "V";
+            mods = "Control|Shift";
+            action = "Paste";
+          }
+          {
+            key = "C";
+            mods = "Control|Shift";
+            action = "Copy";
+          }
         ];
       };
     };

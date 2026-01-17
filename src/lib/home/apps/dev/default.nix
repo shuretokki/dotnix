@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   imports = [
     ./editor.nix
   ];

@@ -1,9 +1,7 @@
 # https://direnv.net/
 # https://github.com/nix-community/nix-direnv
 # https://home-manager-options.extranix.com/?query=programs.direnv
-
-{ lib, ... }:
-{
+{lib, ...}: {
   programs.direnv = {
     enable = lib.mkDefault true;
     enableBashIntegration = true;
@@ -20,8 +18,8 @@
         hide_env_diff = false;
       };
       whitelist = {
-        prefix = [ ];
-        exact = [ ];
+        prefix = [];
+        exact = [];
       };
     };
 

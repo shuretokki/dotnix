@@ -1,7 +1,14 @@
-{ inputs, self }: { config, system, pkgs, ... }: {
-  formatter = pkgs.nixfmt;
+{
+  inputs,
+  self,
+}: {
+  config,
+  system,
+  pkgs,
+  ...
+}: {
+  formatter = pkgs.alejandra;
 
-  # Pre-commit hooks for code quality
   checks.pre-commit = inputs.pre-commit-hooks.lib.${system}.run {
     src = self;
     hooks = {
@@ -16,6 +23,7 @@
       nixfmt
       statix
       deadnix
+      alejandra
     ];
 
     shellHook = ''
@@ -23,6 +31,5 @@
     '';
   };
 
-  # Custom packages from src/pkg/
-  packages = import (self + "/src/pkg") { inherit pkgs; };
+  packages = import (self + "/src/pkg") {inherit pkgs;};
 }

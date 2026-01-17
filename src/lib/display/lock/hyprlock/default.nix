@@ -1,13 +1,15 @@
 # https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/
 # https://home-manager-options.extranix.com/?query=programs.hyprlock
-
 # mkForce used: stylix sets defaults that conflict with theme options.
-
-{ config, pkgs, lib, identity, ... }:
-let
-  colors = config.lib.stylix.colors;
-in
 {
+  config,
+  pkgs,
+  lib,
+  identity,
+  ...
+}: let
+  colors = config.lib.stylix.colors;
+in {
   programs.hyprlock = {
     enable = true;
     settings = {

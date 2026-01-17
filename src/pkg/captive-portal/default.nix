@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.writeShellScriptBin "captive-portal" ''
   if [ "$EUID" -ne 0 ]; then
     echo "[ERROR] must be run as root"

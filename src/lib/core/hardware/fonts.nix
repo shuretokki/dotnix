@@ -1,11 +1,14 @@
 # https://wiki.nixos.org/wiki/Fonts
 # https://search.nixos.org/options?query=fonts
-
-{ config, lib, pkgs, inputs, ... }:
-let
-  cfg = config.library.core.fonts;
-in
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
+  cfg = config.library.core.fonts;
+in {
   options.library.core.fonts = {
     enable = lib.mkEnableOption "Font configuration and packages";
   };
@@ -59,10 +62,10 @@ in
       };
 
       defaultFonts = {
-        serif = [ config.theme.fonts.serif "Liberation Serif" "Noto Serif" ];
-        sansSerif = [ config.theme.fonts.sans "SF Pro Rounded" "Inter" "Noto Sans" ];
-        monospace = [ config.theme.fonts.mono "JetBrainsMono Nerd Font" ];
-        emoji = [ "Noto Color Emoji" ];
+        serif = [config.theme.fonts.serif "Liberation Serif" "Noto Serif"];
+        sansSerif = [config.theme.fonts.sans "SF Pro Rounded" "Inter" "Noto Sans"];
+        monospace = [config.theme.fonts.mono "JetBrainsMono Nerd Font"];
+        emoji = ["Noto Color Emoji"];
       };
     };
   };

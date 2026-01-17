@@ -1,18 +1,20 @@
 # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/hardware/amdgpu.nix
 # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/hardware/graphics.nix
-
-{ config, lib, pkgs, ... }:
-let
-  cfg = config.library.core.gpu.amd;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.library.core.gpu.amd;
+in {
   options.library.core.gpu.amd = {
     enable = lib.mkEnableOption "AMD GPU support";
   };
 
   config = lib.mkIf cfg.enable {
     # amdgpu uses open source drivers by default
-    services.xserver.videoDrivers = [ "amdgpu" ];
+    services.xserver.videoDrivers = ["amdgpu"];
 
     hardware.graphics = {
       enable = true;

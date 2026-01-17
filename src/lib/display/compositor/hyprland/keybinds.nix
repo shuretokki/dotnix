@@ -1,6 +1,9 @@
 # https://wiki.hypr.land/Configuring/Binds/
-{ pkgs, prefs, ... }:
-let
+{
+  pkgs,
+  prefs,
+  ...
+}: let
   super = "SUPER";
   alt = "ALT";
   shift = "SHIFT";
@@ -12,9 +15,7 @@ let
   musicPlayer = prefs.musicPlayer;
 
   launch = class: cmd: "exec, hyprctl clients | grep -i 'class: ${class}' && hyprctl dispatch focuswindow 'class:${class}' || ${cmd}";
-
-in
-[
+in [
   "${super}, RETURN, exec, uwsm app -- ${terminal}"
   "${super}, E, exec, uwsm app -- ${fileManager} --new-window"
   "${super}, B, exec, uwsm app -- ${browser}"

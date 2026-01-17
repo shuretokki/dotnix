@@ -1,5 +1,9 @@
-{ lib, pkgs, config, inputs, ... }:
-let
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}: let
   colors = config.lib.stylix.colors.withHashtag;
 
   colorOverrides = ''
@@ -23,15 +27,14 @@ let
   '';
 
   ytmTheme = pkgs.writeText "ytm-stylix.css" (colorOverrides + builtins.readFile ./ytm.css);
-in
-{
-  imports = [ inputs.youtube-music.homeManagerModules.default ];
+in {
+  imports = [inputs.youtube-music.homeManagerModules.default];
 
   # YouTube Music
   # See more: https://h-banii.github.io/youtube-music-nix/pages/home-manager/
   programs.youtube-music = {
     enable = true;
-    options.themes = [ ytmTheme ];
+    options.themes = [ytmTheme];
 
     # Plugins
     # See more: https://github.com/th-ch/youtube-music/wiki/Plugins

@@ -1,10 +1,6 @@
 # https://eza.rocks/
 # https://home-manager-options.extranix.com/?query=programs.eza
-
-{ lib
-, ...
-}:
-{
+{lib, ...}: {
   programs.eza = {
     enable = lib.mkDefault true;
     enableBashIntegration = true;
@@ -17,6 +13,6 @@
       "--header"
     ];
 
-    theme = { };
+    theme = {};
   };
 }

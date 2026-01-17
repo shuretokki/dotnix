@@ -1,12 +1,13 @@
 # Power management module for laptops (TLP)
 # https://linrunner.de/tlp
 # https://search.nixos.org/options?query=services.tlp
-
-{ config, lib, ... }:
-let
-  cfg = config.library.core.power;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.library.core.power;
+in {
   options.library.core.power = {
     enable = lib.mkEnableOption "Power management (TLP) for laptops";
   };

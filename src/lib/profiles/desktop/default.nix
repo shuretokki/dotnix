@@ -8,8 +8,14 @@
 #
 # to customize which features are enabled, override in host config:
 # library.core.bluetooth.enable = false;
-
-{ config, lib, pkgs, identity, inputs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  identity,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.self.nixosModules.display
   ];
@@ -27,22 +33,34 @@
 
   # system-wide packages available in $PATH.
   # prefer home-manager for user apps; these are for system-level tools.
-  environment.systemPackages = (with pkgs; [
-    wget2 curl git unzip zip sd
-    nil nixfmt-rfc-style direnv
-    cloudflare-warp
+  environment.systemPackages =
+    (with pkgs; [
+      wget2
+      curl
+      git
+      unzip
+      zip
+      sd
+      nil
+      nixfmt-rfc-style
+      direnv
+      cloudflare-warp
 
-    blueman wireplumber pamixer
-    pavucontrol networkmanagerapplet
-    qt6Packages.fcitx5-configtool
-    typora
-  ]) ++ [
-    config.boot.loader.limine.package # ensure limine-deploy is avail
-    pkgs.update
-    pkgs.init-host
-    pkgs.detect-gpu
-    pkgs.detect-boot-uuids
-  ];
+      blueman
+      wireplumber
+      pamixer
+      pavucontrol
+      networkmanagerapplet
+      qt6Packages.fcitx5-configtool
+      typora
+    ])
+    ++ [
+      config.boot.loader.limine.package # ensure limine-deploy is avail
+      pkgs.update
+      pkgs.init-host
+      pkgs.detect-gpu
+      pkgs.detect-boot-uuids
+    ];
 
   # https://search.nixos.org/options?query=programs.localsend
   programs.localsend = {

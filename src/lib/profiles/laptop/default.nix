@@ -1,7 +1,10 @@
 # laptop profile: extends desktop with power management.
 # enables TLP by default for battery optimization.
-
-{ config, lib, ... }: {
+{
+  config,
+  lib,
+  ...
+}: {
   imports = [
     ../desktop
   ];

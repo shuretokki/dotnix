@@ -1,8 +1,13 @@
 # https://github.com/0xc000022070/zen-browser-flake
 # https://home-manager-options.extranix.com/?query=programs.chromium
-
-{ lib, pkgs, config, inputs, prefs, ... }: {
-  imports = [ inputs.zen-browser.homeModules.beta ];
+{
+  lib,
+  pkgs,
+  inputs,
+  prefs,
+  ...
+}: {
+  imports = [inputs.zen-browser.homeModules.beta];
 
   programs.zen-browser = {
     enable = lib.mkDefault true;
@@ -62,34 +67,34 @@
         ];
         engines = {
           "NixOS Options" = {
-            urls = [{ template = "https://search.nixos.org/options?query={searchTerms}"; }];
+            urls = [{template = "https://search.nixos.org/options?query={searchTerms}";}];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = [ "@no" ];
+            definedAliases = ["@no"];
           };
           "Nix Packages" = {
-            urls = [{ template = "https://search.nixos.org/packages?query={searchTerms}"; }];
+            urls = [{template = "https://search.nixos.org/packages?query={searchTerms}";}];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = [ "@np" ];
+            definedAliases = ["@np"];
           };
           "GitHub" = {
-            urls = [{ template = "https://github.com/search?q={searchTerms}&type=repositories"; }];
-            definedAliases = [ "@gh" ];
+            urls = [{template = "https://github.com/search?q={searchTerms}&type=repositories";}];
+            definedAliases = ["@gh"];
           };
           "MDN" = {
-            urls = [{ template = "https://developer.mozilla.org/en-US/search?q={searchTerms}"; }];
-            definedAliases = [ "@mdn" ];
+            urls = [{template = "https://developer.mozilla.org/en-US/search?q={searchTerms}";}];
+            definedAliases = ["@mdn"];
           };
           "Arch Wiki" = {
-            urls = [{ template = "https://wiki.archlinux.org/index.php?search={searchTerms}"; }];
-            definedAliases = [ "@aw" ];
+            urls = [{template = "https://wiki.archlinux.org/index.php?search={searchTerms}";}];
+            definedAliases = ["@aw"];
           };
           "Crates.io" = {
-            urls = [{ template = "https://crates.io/search?q={searchTerms}"; }];
-            definedAliases = [ "@crates" ];
+            urls = [{template = "https://crates.io/search?q={searchTerms}";}];
+            definedAliases = ["@crates"];
           };
           "Youtube" = {
-            urls = [{ template = "https://www.youtube.com/results?search_query={searchTerms}"; }];
-            definedAliases = [ "@yt" ];
+            urls = [{template = "https://www.youtube.com/results?search_query={searchTerms}";}];
+            definedAliases = ["@yt"];
           };
           "google".metaData.alias = "@g";
         };
@@ -241,9 +246,9 @@
   programs.chromium = {
     enable = lib.mkDefault true;
     extensions = [
-      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
-      { id = "nngceckbapebfimnlniiiahkandclblb"; } # bitwarden
-      { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # dark reader
+      {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin
+      {id = "nngceckbapebfimnlniiiahkandclblb";} # bitwarden
+      {id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";} # dark reader
     ];
   };
 

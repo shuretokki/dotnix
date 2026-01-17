@@ -3,17 +3,28 @@
 #
 # explicitly disables display to prevent accidental gui activation.
 # only cli bundler is imported for home-manager.
-
-{ config, lib, pkgs, identity, inputs, ... }: {
+{
+  pkgs,
+  identity,
+  inputs,
+  ...
+}: {
   library.display.sddm.enable = false;
   library.display.hyprland.enable = false;
 
   environment.systemPackages = with pkgs; [
-    wget2 curl git unzip zip sd
-    nil nixfmt-rfc-style direnv
+    wget2
+    curl
+    git
+    unzip
+    zip
+    sd
+    nil
+    nixfmt-rfc-style
+    direnv
   ];
 
   home-manager.users.${identity.username} = {
-    imports = [ inputs.self.homeModules.appsCli ];
+    imports = [inputs.self.homeModules.appsCli];
   };
 }
