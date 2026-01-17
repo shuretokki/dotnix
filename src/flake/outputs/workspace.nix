@@ -1,15 +1,14 @@
 { inputs, self }: { config, system, pkgs, ... }: {
   formatter = pkgs.nixfmt;
 
-  # Pre-commit check temporarily disabled - run manually via `nix run .#checks.x86_64-linux.pre-commit`
-  # TODO: Re-enable after formatting all files
-  # checks.pre-commit = inputs.pre-commit-hooks.lib.${system}.run {
-  #   src = self;
-  #   hooks = {
-  #     statix.enable = true;
-  #     deadnix.enable = true;
-  #   };
-  # };
+  # Pre-commit hooks for code quality
+  checks.pre-commit = inputs.pre-commit-hooks.lib.${system}.run {
+    src = self;
+    hooks = {
+      statix.enable = true;
+      deadnix.enable = true;
+    };
+  };
 
   devShells.default = pkgs.mkShell {
     packages = with pkgs; [
