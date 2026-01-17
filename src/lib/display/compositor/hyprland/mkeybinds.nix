@@ -1,8 +1,6 @@
 # https://wiki.hyprland.org/Configuring/Binds/#mouse-binds
-{pkgs, ...}: let
-  super = "SUPER";
+_: let
   alt = "ALT";
-  shift = "SHIFT";
   ctrl = "CTRL";
 in [
   # Mouse Control

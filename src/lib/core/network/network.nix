@@ -2,7 +2,7 @@
 # https://wiki.nixos.org/wiki/NetworkManager
 # https://search.nixos.org/options?query=networking
 # add users to 'networkmanager' group to allow managing connections
-{pkgs, ...}: {
+{...}: {
   networking.networkmanager = {
     enable = true;
 

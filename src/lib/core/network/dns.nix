@@ -1,10 +1,6 @@
 # https://wiki.nixos.org/wiki/Encrypted_DNS
 # https://search.nixos.org/options?query=services.dnscrypt-proxy
-{
-  pkgs,
-  config,
-  ...
-}: let
+{pkgs, ...}: let
   stateDir = "dnscrypt-proxy";
   blocklistFile = "/var/lib/${stateDir}/blocked-names.txt";
 in {
