@@ -23,9 +23,6 @@ in
   "${super}, N, exec, uwsm app -- ${terminal} -e nvim"
   "${super}, T, exec, uwsm app -- ${terminal} -e btop"
 
-  # Toggle launcher (vicinae)
-  "${alt}, SPACE, exec, ${pkgs.vicinae}/bin/vicinae show"
-
   # Wallpaper Grid (AWWW Switcher)
   "${super}, W, exec, ${pkgs.vicinae}/bin/vicinae vicinae://extensions/sovereign/awww-switcher/wpgrid"
 
