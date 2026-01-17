@@ -80,7 +80,30 @@
       };
     };
 
+    # Icons
+    icons = {
+      name = lib.mkOption {
+        type = lib.types.str;
+        default = "Papirus-Dark";
+        description = "Icon theme name";
+      };
+    };
+
+    # Vicinae launcher
+    vicinae = {
+      opacity = lib.mkOption {
+        type = lib.types.float;
+        default = 0.44;
+        description = "Vicinae window opacity";
+      };
+    };
+
     hyprland = {
+      borderSize = lib.mkOption {
+        type = lib.types.int;
+        default = 2;
+        description = "Window border width in pixels";
+      };
       gaps-in = lib.mkOption {
         type = lib.types.int;
         default = 4;
@@ -115,6 +138,19 @@
         type = lib.types.str;
         default = "rgba(595959aa)";
         description = "Inactive window border color";
+      };
+    };
+
+    hypridle = {
+      lockTimeout = lib.mkOption {
+        type = lib.types.int;
+        default = 300;
+        description = "Seconds before screen locks";
+      };
+      dpmsTimeout = lib.mkOption {
+        type = lib.types.int;
+        default = 330;
+        description = "Seconds before display turns off";
       };
     };
 
