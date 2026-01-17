@@ -45,60 +45,62 @@ in {
   };
 
   config = {
-    boot.loader.efi = {
-      # allow installer to modify efi boot variables (required for uefi systems)
-      canTouchEfiVariables = true;
-    };
+    boot.loader = {
+      efi = {
+        # allow installer to modify efi boot variables (required for uefi systems)
+        canTouchEfiVariables = true;
+      };
 
-    boot.loader.systemd-boot.enable = false;
-    boot.loader.grub.enable = false;
+      systemd-boot.enable = false;
+      grub.enable = false;
 
-    # https://search.nixos.org/options?query=boot.loader.limine
-    boot.loader.limine = {
-      enable = true;
+      # https://search.nixos.org/options?query=boot.loader.limine
+      limine = {
+        enable = true;
 
-      # this requires you to already have generated the keys and enrolled them with sbctl.
-      # to create keys use 'sbctl create-keys'.
-      # to enroll them first reset secure boot to “Setup Mode”. this is device specific.
-      # then enroll them using 'sbctl enroll-keys -m -f'.
-      secureBoot.enable = false;
+        # this requires you to already have generated the keys and enrolled them with sbctl.
+        # to create keys use 'sbctl create-keys'.
+        # to enroll them first reset secure boot to “Setup Mode”. this is device specific.
+        # then enroll them using 'sbctl enroll-keys -m -f'.
+        secureBoot.enable = false;
 
-      # maximum number of system generations to display in the boot menu.
-      # a limit prevents the boot partition from running out of space.
-      maxGenerations = lib.mkDefault 10;
+        # maximum number of system generations to display in the boot menu.
+        # a limit prevents the boot partition from running out of space.
+        maxGenerations = lib.mkDefault 10;
 
-      # determines if the limine configuration editor is enabled at boot.
-      # disabling it prevents temporary modification of boot parameters (security).
-      enableEditor = false;
+        # determines if the limine configuration editor is enabled at boot.
+        # disabling it prevents temporary modification of boot parameters (security).
+        enableEditor = false;
 
-      # limine on nixos does not have 'osProber' (unlike grub).
-      # we manually generate entries based on dualBoot config.
-      #
-      # windows warning: bitlocker will detect the boot change on first run and ask for recovery key.
-      # macos warning: ensure launcheroption is disabled in opencore config.plist to prevent boot loops.
-      extraEntries = let
-        makePrefix = uuid: label:
-          if uuid != null
-          then "uuid(${lib.toUpper uuid}):"
-          else if label != null
-          then "label(${label}):"
-          else "boot():";
+        # limine on nixos does not have 'osProber' (unlike grub).
+        # we manually generate entries based on dualBoot config.
+        #
+        # windows warning: bitlocker will detect the boot change on first run and ask for recovery key.
+        # macos warning: ensure launcheroption is disabled in opencore config.plist to prevent boot loops.
+        extraEntries = let
+          makePrefix = uuid: label:
+            if uuid != null
+            then "uuid(${lib.toUpper uuid}):"
+            else if label != null
+            then "label(${label}):"
+            else "boot():";
 
-        winPrefix = makePrefix cfg.windows.uuid cfg.windows.label;
-        macPrefix = makePrefix cfg.macos.uuid cfg.macos.label;
-      in ''
-        ${lib.optionalString cfg.windows.enable ''
-          /Windows
-            protocol: efi_chainload
-            path: ${winPrefix}/EFI/Microsoft/Boot/bootmgfw.efi
-        ''}
-        ${lib.optionalString cfg.macos.enable ''
-          /MacOS
-            protocol: efi_chainload
-            path: ${macPrefix}/EFI/OC/OpenCore.efi
-        ''}
-        ${cfg.extraEntries}
-      '';
+          winPrefix = makePrefix cfg.windows.uuid cfg.windows.label;
+          macPrefix = makePrefix cfg.macos.uuid cfg.macos.label;
+        in ''
+          ${lib.optionalString cfg.windows.enable ''
+            /Windows
+              protocol: efi_chainload
+              path: ${winPrefix}/EFI/Microsoft/Boot/bootmgfw.efi
+          ''}
+          ${lib.optionalString cfg.macos.enable ''
+            /MacOS
+              protocol: efi_chainload
+              path: ${macPrefix}/EFI/OC/OpenCore.efi
+          ''}
+          ${cfg.extraEntries}
+        '';
+      };
     };
 
     environment.systemPackages = [pkgs.detect-boot-uuids];

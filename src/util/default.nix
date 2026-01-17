@@ -2,7 +2,7 @@
   inputs,
   self,
 }: let
-  lib = inputs.nixpkgs.lib;
+  inherit (inputs.nixpkgs) lib;
   identity = import (self + "/cfg/identity.nix");
   themeConfig = import (self + "/cfg/theme.nix") {inherit lib;};
 in {
@@ -79,7 +79,7 @@ in {
                 extraSpecialArgs = {
                   inherit inputs self;
                   identity = identity';
-                  theme = themeConfig.theme;
+                  inherit (themeConfig) theme;
                 };
                 # Load theme options schema in HM context too
                 sharedModules = [(self + "/cfg/themes/base.nix") (self + "/cfg/themes/${themeConfig.theme.preset}/default.nix")];

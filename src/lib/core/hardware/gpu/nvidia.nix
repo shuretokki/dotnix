@@ -91,7 +91,7 @@ in {
       # open source kernel module
       # REQUIRED for RTX 50xx, recommended for RTX 20xx+
       # must be false for GTX 10xx and older
-      open = cfg.open;
+      inherit (cfg) open;
 
       # nvidia-settings gui
       nvidiaSettings = true;

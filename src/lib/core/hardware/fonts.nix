@@ -16,27 +16,29 @@ in {
   config = lib.mkIf cfg.enable {
     # create a directory with links to all fonts
     # at /run/current-system/sw/share/X11/fonts
-    fonts.fontDir.enable = true;
+    fonts = {
+      fontDir.enable = true;
 
-    # enable a basic set of default fonts
-    # Dejavu, FreeFont, Gyre, Liberation, Unifont, Noto Color Emoji.
-    fonts.enableDefaultPackages = true;
+      # enable a basic set of default fonts
+      # Dejavu, FreeFont, Gyre, Liberation, Unifont, Noto Color Emoji.
+      enableDefaultPackages = true;
 
-    fonts.packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk-sans
-      fira
-      source-han-sans
-      source-han-serif
-      inter
-      eb-garamond
+      packages = with pkgs; [
+        noto-fonts
+        noto-fonts-cjk-sans
+        fira
+        source-han-sans
+        source-han-serif
+        inter
+        eb-garamond
 
-      nerd-fonts.jetbrains-mono
+        nerd-fonts.jetbrains-mono
 
-      inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro
-      inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-mono
-      inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.ny
-    ];
+        inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro
+        inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-mono
+        inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.ny
+      ];
+    };
 
     fonts.fontconfig = {
       enable = true;

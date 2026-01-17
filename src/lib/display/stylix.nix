@@ -15,7 +15,7 @@ in {
     autoEnable = true;
 
     base16Scheme = config.theme.scheme;
-    polarity = config.theme.polarity;
+    inherit (config.theme) polarity;
 
     fonts = {
       monospace = {
@@ -41,11 +41,7 @@ in {
     targets.grub.enable = false;
   };
 
-  home-manager.users.${identity.username} = {
-    config,
-    lib,
-    ...
-  }: {
+  home-manager.users.${identity.username} = {lib, ...}: {
     # Dynamically disable stylix for apps in theme.stylixExclude
     stylix.targets =
       lib.genAttrs excludedApps (_: {enable = false;})

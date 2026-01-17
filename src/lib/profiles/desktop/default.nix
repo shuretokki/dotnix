@@ -22,14 +22,20 @@
 
   # all enabled by default for desktop use.
   # mkDefault allows hosts to override if needed.
-  library.core.audio.enable = lib.mkDefault true;
-  library.core.bluetooth.enable = lib.mkDefault true;
-  library.core.fonts.enable = lib.mkDefault true;
-  library.core.input.enable = lib.mkDefault true;
-  library.core.files.enable = lib.mkDefault true;
+  library = {
+    core = {
+      audio.enable = lib.mkDefault true;
+      bluetooth.enable = lib.mkDefault true;
+      fonts.enable = lib.mkDefault true;
+      input.enable = lib.mkDefault true;
+      files.enable = lib.mkDefault true;
+    };
 
-  library.display.sddm.enable = lib.mkDefault true;
-  library.display.hyprland.enable = lib.mkDefault true;
+    display = {
+      sddm.enable = lib.mkDefault true;
+      hyprland.enable = lib.mkDefault true;
+    };
+  };
 
   # system-wide packages available in $PATH.
   # prefer home-manager for user apps; these are for system-level tools.

@@ -15,23 +15,26 @@ in {
 
   config = lib.mkIf cfg.enable {
     # preview files by pressing Spacebar in the file manager
-    services.gnome.sushi.enable = true;
+    # preview files by pressing Spacebar in the file manager
+    services = {
+      gnome.sushi.enable = true;
 
-    # generate thumbnails for images, videos, etc.
-    services.tumbler.enable = true;
+      # generate thumbnails for images, videos, etc.
+      tumbler.enable = true;
+
+      # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/desktops/gvfs.nix
+      # Allows mounting phones (MTP), cameras (PTP), network shares (SMB/FTP) in file manager.
+      gvfs.enable = true;
+
+      # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/hardware/udisks2.nix
+      # allows non-root users to mount removable drives (USB, etc.) via polkit.
+      udisks2.enable = true;
+    };
 
     programs.nautilus-open-any-terminal = {
       enable = true;
       # Terminal choice is set via dconf in Home Manager (bundlers/desktop/files.nix)
     };
-
-    # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/desktops/gvfs.nix
-    # Allows mounting phones (MTP), cameras (PTP), network shares (SMB/FTP) in file manager.
-    services.gvfs.enable = true;
-
-    # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/hardware/udisks2.nix
-    # allows non-root users to mount removable drives (USB, etc.) via polkit.
-    services.udisks2.enable = true;
 
     # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/xdg/portal.nix
     # portals provide secure access to system resources (file picker, screenshare, etc.)

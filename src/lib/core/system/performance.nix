@@ -1,7 +1,7 @@
 # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/zram.nix
 # in-memory compressed swap device for faster swapping than disk.
 # see: https://www.kernel.org/doc/Documentation/blockdev/zram.txt
-{...}: {
+_: {
   zramSwap = {
     enable = true;
 

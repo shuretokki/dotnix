@@ -3,19 +3,17 @@
 # https://home-manager-options.extranix.com/?query=services.udiskie
 # https://home-manager-options.extranix.com/?query=services.playerctld
 # https://home-manager-options.extranix.com/?query=services.kdeconnect
-{
-  lib,
-  pkgs,
-  ...
-}: {
-  services.network-manager-applet.enable = lib.mkDefault true;
-  services.blueman-applet.enable = lib.mkDefault true;
-  services.udiskie.enable = lib.mkDefault true;
-  services.playerctld.enable = lib.mkDefault true;
+{lib, ...}: {
+  services = {
+    network-manager-applet.enable = lib.mkDefault true;
+    blueman-applet.enable = lib.mkDefault true;
+    udiskie.enable = lib.mkDefault true;
+    playerctld.enable = lib.mkDefault true;
 
-  # phone integration (notifications, clipboard, file transfer)
-  services.kdeconnect = {
-    enable = lib.mkDefault true;
-    indicator = true;
+    # phone integration (notifications, clipboard, file transfer)
+    kdeconnect = {
+      enable = lib.mkDefault true;
+      indicator = true;
+    };
   };
 }

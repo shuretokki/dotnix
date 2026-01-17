@@ -4,7 +4,7 @@
   utils,
   self,
 }: let
-  overlays = import (self + "/src/overlays") {inherit inputs;};
+  overlays = import (self + "/src/overlays") {inherit self;};
 in {
   inherit overlays;
 

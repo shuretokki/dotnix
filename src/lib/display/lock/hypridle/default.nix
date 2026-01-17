@@ -2,7 +2,7 @@
 # https://home-manager-options.extranix.com/?query=services.hypridle
 # locks after 5 min
 # turns off display after 5.5 min.
-{pkgs, ...}: {
+_: {
   services.hypridle = {
     enable = true;
     settings = {

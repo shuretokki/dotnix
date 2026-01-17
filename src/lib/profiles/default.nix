@@ -13,16 +13,16 @@ in {
 
   config = lib.mkMerge [
     (lib.mkIf (cfg == "desktop") (import ./desktop {
-      inherit config lib;
-      identity = config.identity;
+      inherit (config) lib;
+      inherit (config) identity;
     }))
     (lib.mkIf (cfg == "laptop") (import ./laptop {
-      inherit config lib;
-      identity = config.identity;
+      inherit (config) lib;
+      inherit (config) identity;
     }))
     (lib.mkIf (cfg == "server") (import ./server {
-      inherit config lib;
-      identity = config.identity;
+      inherit (config) lib;
+      inherit (config) identity;
     }))
   ];
 }

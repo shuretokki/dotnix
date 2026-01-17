@@ -3,9 +3,7 @@
 # mkForce used: stylix sets defaults that conflict with theme options.
 {
   config,
-  pkgs,
   lib,
-  identity,
   ...
 }: let
   colors = config.lib.stylix.colors;
@@ -30,10 +28,13 @@ in {
       input-field = lib.mkForce [
         {
           monitor = "";
-          size = config.theme.hyprlock.input-field.size;
-          outline_thickness = config.theme.hyprlock.input-field.outline_thickness;
-          dots_size = config.theme.hyprlock.input-field.dots_size;
-          dots_spacing = config.theme.hyprlock.input-field.dots_spacing;
+          inherit
+            (config.theme.hyprlock.input-field)
+            size
+            outline_thickness
+            dots_size
+            dots_spacing
+            ;
           dots_center = true;
           outer_color = "rgba(${colors.base0D}ff)";
           inner_color = "rgba(${colors.base00}ff)";
@@ -53,7 +54,7 @@ in {
           text = "$TIME";
           color = "rgba(${colors.base05}ff)";
           font_size = config.theme.hyprlock.fontSize;
-          font_family = config.theme.hyprlock.fontFamily;
+          inherit (config.theme.hyprlock) fontFamily;
           position = "0, 80";
           halign = "center";
           valign = "center";
