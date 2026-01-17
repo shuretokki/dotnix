@@ -2,7 +2,6 @@
 # https://search.nixos.org/options?query=nix.settings
 {
   config,
-  pkgs,
   lib,
   identity,
   inputs,

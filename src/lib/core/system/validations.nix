@@ -2,7 +2,6 @@
 # these run at nix evaluation time, before any build starts.
 {
   config,
-  lib,
   identity,
   ...
 }: let

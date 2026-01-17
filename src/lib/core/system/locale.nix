@@ -1,11 +1,6 @@
 # https://wiki.nixos.org/wiki/Locales
 # https://search.nixos.org/options?query=i18n.defaultLocale
-{
-  lib,
-  pkgs,
-  identity,
-  ...
-}: {
+{identity, ...}: {
   time.timeZone = identity.timezone;
 
   i18n = {
