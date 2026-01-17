@@ -80,7 +80,6 @@
       };
     };
 
-    # Icons
     icons = {
       name = lib.mkOption {
         type = lib.types.str;
@@ -89,7 +88,6 @@
       };
     };
 
-    # Vicinae launcher
     vicinae = {
       opacity = lib.mkOption {
         type = lib.types.float;

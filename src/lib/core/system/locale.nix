@@ -33,7 +33,7 @@
 
     # keyboard mapping for the virtual console
     # "us", "uk", "fr", "de", "dvorak", etc.
-    keyMap = "us";
+    keyMap = identity.keyMap;
 
     # console font
     # use null to let kernel choose built-in font (usually 8x16 or Terminus)
