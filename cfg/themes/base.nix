@@ -9,7 +9,6 @@
       description = "Theme preset to load from cfg/themes/";
     };
 
-    # Base16 color scheme
     scheme = lib.mkOption {
       type = lib.types.path;
       description = "Path to base16 color scheme YAML";
@@ -21,7 +20,6 @@
       description = "Color scheme polarity";
     };
 
-    # Fonts
     fonts = {
       serif = lib.mkOption {
         type = lib.types.str;
@@ -45,7 +43,6 @@
       };
     };
 
-    # Cursor
     cursor = {
       name = lib.mkOption {
         type = lib.types.str;
@@ -59,7 +56,12 @@
       };
     };
 
-    # Visual settings shared across components
+    wallpaper = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      description = "Path to the main wallpaper image";
+    };
+
     visual = {
       rounding = lib.mkOption {
         type = lib.types.int;
@@ -78,7 +80,6 @@
       };
     };
 
-    # Hyprland-specific (kebab-case to match existing code)
     hyprland = {
       gaps-in = lib.mkOption {
         type = lib.types.int;
@@ -117,7 +118,6 @@
       };
     };
 
-    # Hyprlock
     hyprlock = {
       fontFamily = lib.mkOption {
         type = lib.types.str;
@@ -153,7 +153,6 @@
       };
     };
 
-    # Waybar
     waybar = {
       styleFile = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
@@ -167,7 +166,6 @@
       };
     };
 
-    # SDDM login manager
     sddm = {
       wallpaper = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
@@ -176,14 +174,10 @@
       };
     };
 
-    # Apps excluded from Stylix theming
     stylixExclude = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [];
       description = "Apps with custom theming (excluded from Stylix)";
     };
   };
-
-  # NOTE: Preset auto-loading causes infinite recursion if done here
-  # Presets are loaded in src/util/default.nix
 }
