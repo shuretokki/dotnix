@@ -38,8 +38,8 @@
     typora
   ]) ++ [
     config.boot.loader.limine.package # ensure limine-deploy is avail
-    pkgs.sdn-update
-    pkgs.sdn-init-host
+    pkgs.update
+    pkgs.init-host
     pkgs.detect-gpu
     pkgs.detect-boot-uuids
   ];

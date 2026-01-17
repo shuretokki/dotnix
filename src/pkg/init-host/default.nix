@@ -4,11 +4,11 @@
   detect-boot-uuids,
 }:
 
-pkgs.writeShellScriptBin "sdn-init-host" ''
+pkgs.writeShellScriptBin "init-host" ''
     set -euo pipefail
 
     usage() {
-      echo "Usage: sdn-init-host <hostname> [--profile <name>] [--force] [--dry-run]"
+      echo "Usage: init-host <hostname> [--profile <name>] [--force] [--dry-run]"
       exit 1
     }
 

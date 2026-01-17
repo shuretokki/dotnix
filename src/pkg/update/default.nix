@@ -1,5 +1,5 @@
 { pkgs }:
-  pkgs.writeShellScriptBin "sdn-update" ''
+  pkgs.writeShellScriptBin "update" ''
     echo "updating..."
     cd ~/dotnix || exit 1
 
