@@ -1,7 +1,7 @@
 # https://wiki.nixos.org/wiki/Flakes
 # https://search.nixos.org/options?query=nix.settings
 
-{ config, pkgs, lib, identity, inputs, repo, ... }:
+{ config, pkgs, lib, identity, inputs, ... }:
 let
   cfg = config.library.core.system;
 in
@@ -9,7 +9,7 @@ in
   options.library.core.system = {
     flakePath = lib.mkOption {
       type = lib.types.str;
-      default = "/home/${identity.username}/${repo}";
+      default = "/home/${identity.username}/dotnix";
       description = "Path to the NixOS flake for nh";
     };
   };

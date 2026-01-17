@@ -1,6 +1,6 @@
-{ inputs, repo, alias, identity, utils, self }:
+{ inputs, identity, utils, self }:
 let
-  overlays = import (self + "/src/overlays") { inherit inputs repo alias; };
+  overlays = import (self + "/src/overlays") { inherit inputs; };
 in
 {
   inherit overlays;
@@ -10,7 +10,7 @@ in
       # auto-discover hosts from hosts/ directory
       hosts = inputs.nixpkgs.lib.filterAttrs (n: v: v == "directory") (builtins.readDir (self + "/cfg/hosts"));
       mkHost = hostname: _: utils.mkHost {
-        inherit hostname repo alias overlays;
+        inherit hostname overlays;
         username = identity.username;
       };
     in

@@ -9,7 +9,7 @@
 # to customize which features are enabled, override in host config:
 # library.core.bluetooth.enable = false;
 
-{ config, lib, pkgs, identity, alias, inputs, ... }: {
+{ config, lib, pkgs, identity, inputs, ... }: {
   imports = [
     inputs.self.nixosModules.display
   ];
@@ -38,12 +38,10 @@
     typora
   ]) ++ [
     config.boot.loader.limine.package # ensure limine-deploy is avail
-    pkgs."${alias}-update"
-    pkgs."${alias}-init-host"
+    pkgs.sdn-update
+    pkgs.sdn-init-host
     pkgs.detect-gpu
     pkgs.detect-boot-uuids
-    pkgs.menu
-    pkgs.sdn-shell
   ];
 
   # https://search.nixos.org/options?query=programs.localsend

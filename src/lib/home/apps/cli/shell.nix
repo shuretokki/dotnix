@@ -5,8 +5,6 @@
   lib,
   pkgs,
   prefs,
-  repo,
-  alias,
   ...
 }:
 {
@@ -54,14 +52,15 @@
     };
 
     shellAliases = {
-      rebuild = "nh os switch ~/${repo}";
-      rebuild-test = "nh os test ~/${repo}";
-      rebuild-boot = "nh os boot ~/${repo}";
-      rebuild-vm = "nh os build-vm ~/${repo}";
+      # NixOS rebuild commands (hardcoded dotnix path)
+      rebuild = "nh os switch ~/dotnix";
+      rebuild-test = "nh os test ~/dotnix";
+      rebuild-boot = "nh os boot ~/dotnix";
+      rebuild-vm = "nh os build-vm ~/dotnix";
 
-      update = "cd ~/${repo} && nix flake update";
-      check = "cd ~/${repo} && nix flake check";
-      fmt = "cd ~/${repo} && nix fmt";
+      update = "cd ~/dotnix && nix flake update";
+      check = "cd ~/dotnix && nix flake check";
+      fmt = "cd ~/dotnix && nix fmt";
 
       nix-size = "nix path-info -Sh /run/current-system";
       nix-store-size = "du -sh /nix/store";
@@ -69,7 +68,7 @@
       generations = "sudo nix-env --list-generations -p /nix/var/nix/profiles/system";
       gen-diff = "nvd diff /run/current-system /nix/var/nix/profiles/system";
 
-      "cd${alias}" = "cd ~/${repo}";
+      cdsdn = "cd ~/dotnix";
       dev = "nix develop";
 
       clean = "nh clean all --keep 5";

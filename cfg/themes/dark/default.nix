@@ -22,14 +22,14 @@
     # Visual
     visual = {
       rounding = 0;
-      opacity = 0.9;
+      opacity = 0.88;
       blur = true;
     };
 
     # Hyprland (kebab-case to match schema)
     hyprland = {
-      gaps-in = 4;
-      gaps-out = 4;
+      gaps-in = 12;
+      gaps-out = 12;
       rounding = 0;
       blur = true;
       shadows = true;

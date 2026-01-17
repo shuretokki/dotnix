@@ -1,7 +1,7 @@
-{ pkgs, repo, alias }:
-  pkgs.writeShellScriptBin "${alias}-update" ''
+{ pkgs }:
+  pkgs.writeShellScriptBin "sdn-update" ''
     echo "updating..."
-    cd ~/${repo} || exit 1
+    cd ~/dotnix || exit 1
 
     echo "pulling latest changes..."
     ${pkgs.git}/bin/git pull

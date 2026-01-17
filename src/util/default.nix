@@ -8,8 +8,6 @@ in
   mkHost =
     { hostname
     , username
-    , repo
-    , alias
     , system ? "x86_64-linux"
     , extraModules ? [ ]
     , overlays ? [ ]
@@ -18,8 +16,6 @@ in
 
       assert builtins.isString hostname || throw "hostname must be a string";
       assert builtins.isString username || throw "username must be a string";
-      assert builtins.isString repo || throw "repo must be a string";
-      assert builtins.isString alias || throw "alias must be a string";
       assert hostname != "" || throw "hostname cannot be empty";
       assert username != "" || throw "username cannot be empty";
 
@@ -28,7 +24,7 @@ in
       in
       lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs repo alias; identity = identity'; };
+        specialArgs = { inherit inputs self; identity = identity'; };
         modules = [
           (self + "/cfg/hosts/${hostname}")
           (self + "/cfg/users/${username}/nixos.nix")
@@ -79,7 +75,7 @@ in
               useGlobalPkgs = true;
               useUserPackages = true;
               # Pass theme config to HM modules via extraSpecialArgs
-              extraSpecialArgs = { inherit inputs repo alias; identity = identity'; theme = themeConfig.theme; };
+              extraSpecialArgs = { inherit inputs self; identity = identity'; theme = themeConfig.theme; };
               # Load theme options schema in HM context too
               sharedModules = [ (self + "/cfg/themes/base.nix") (self + "/cfg/themes/${themeConfig.theme.preset}/default.nix") ];
               users.${username} = import (self + "/cfg/users/${username}/home.nix");

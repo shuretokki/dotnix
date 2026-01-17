@@ -1,16 +1,14 @@
 {
   pkgs,
-  repo,
-  alias,
   detect-gpu,
   detect-boot-uuids,
 }:
 
-pkgs.writeShellScriptBin "${alias}-init-host" ''
+pkgs.writeShellScriptBin "sdn-init-host" ''
     set -euo pipefail
 
     usage() {
-      echo "Usage: ${alias}-init-host <hostname> [--profile <name>] [--force] [--dry-run]"
+      echo "Usage: sdn-init-host <hostname> [--profile <name>] [--force] [--dry-run]"
       exit 1
     }
 

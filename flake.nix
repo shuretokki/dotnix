@@ -10,7 +10,7 @@
     ];
     extra-trusted-public-keys = [
       "shuredotnix.cachix.org-1:rmlHcxqncZqjzGscGzHhYUctuGc3bQEte7Lh1PkO0Xc="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypflake-parts8PwtkuGc="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
     ];
   };
@@ -90,16 +90,14 @@
   outputs =
     { self, flake-parts, ... }@inputs:
     let
-      repo = "dotnix";
-      alias = "sdn";
       identity = import ./cfg/identity.nix;
       utils = import ./src/util { inherit inputs self; };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import ./src/flake/systems.nix;
-      perSystem = import ./src/flake/outputs/workspace.nix { inherit repo alias inputs self; };
+      perSystem = import ./src/flake/outputs/workspace.nix { inherit inputs self; };
       flake = (import ./src/flake/outputs/artifacts.nix {
-        inherit inputs repo alias identity utils self;
+        inherit inputs identity utils self;
       }) // (import ./src/flake/modules.nix);
     };
 }
