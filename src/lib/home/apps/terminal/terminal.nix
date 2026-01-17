@@ -46,7 +46,7 @@ in {
         normal.family = config.theme.fonts.mono;
         bold.style = "Bold";
         italic.style = "Italic";
-        size = config.theme.fonts.size;
+        inherit (config.theme.fonts) size;
       };
 
       cursor = {

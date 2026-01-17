@@ -6,7 +6,7 @@
   nvidia = config.library.core.gpu.nvidia.enable;
   amd = config.library.core.gpu.amd.enable;
   prime = config.library.core.gpu.nvidia.prime.enable;
-  none = config.library.core.gpu.none;
+  inherit (config.library.core.gpu) none;
 in {
   imports = [
     ./nvidia.nix

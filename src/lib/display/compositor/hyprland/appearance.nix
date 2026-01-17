@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  colors = config.lib.stylix.colors;
+  inherit (config.lib.stylix) colors;
 in {
   general = {
     gaps_in = lib.mkForce config.theme.hyprland.gaps-in;
@@ -16,7 +16,7 @@ in {
   };
 
   decoration = {
-    rounding = config.theme.hyprland.rounding;
+    inherit (config.theme.hyprland) rounding;
     active_opacity = lib.mkForce config.theme.visual.opacity;
     inactive_opacity = lib.mkForce config.theme.visual.opacity;
     blur = {

@@ -25,7 +25,7 @@
   };
 
   home = {
-    username = identity.username;
+    inherit (identity) username;
     homeDirectory = "/home/${identity.username}";
 
     # do not change after initial install.

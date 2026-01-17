@@ -9,10 +9,8 @@
   shift = "SHIFT";
   ctrl = "CTRL";
 
-  terminal = prefs.terminal;
-  browser = prefs.browser;
+  inherit (prefs) terminal browser musicPlayer;
   fileManager = "${pkgs.nautilus}/bin/nautilus";
-  musicPlayer = prefs.musicPlayer;
 
   launch = class: cmd: "exec, hyprctl clients | grep -i 'class: ${class}' && hyprctl dispatch focuswindow 'class:${class}' || ${cmd}";
 in [

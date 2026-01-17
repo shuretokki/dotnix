@@ -15,7 +15,7 @@
   };
 
   dconf.settings."com/github/stunkymonkey/nautilus-open-any-terminal" = {
-    terminal = prefs.terminal;
+    inherit (prefs) terminal;
     keybindings = "<Ctrl><Alt>t";
     new-tab = false;
   };

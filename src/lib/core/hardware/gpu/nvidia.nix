@@ -111,7 +111,7 @@ in {
         if cfg.prime.mode == "sync"
         then {
           sync.enable = true;
-          nvidiaBusId = cfg.prime.nvidiaBusId;
+          inherit (cfg.prime) nvidiaBusId;
           intelBusId = lib.mkIf (cfg.prime.intelBusId != "") cfg.prime.intelBusId;
           amdgpuBusId = lib.mkIf (cfg.prime.amdBusId != "") cfg.prime.amdBusId;
         }
@@ -120,7 +120,7 @@ in {
             enable = true;
             enableOffloadCmd = true;
           };
-          nvidiaBusId = cfg.prime.nvidiaBusId;
+          inherit (cfg.prime) nvidiaBusId;
           intelBusId = lib.mkIf (cfg.prime.intelBusId != "") cfg.prime.intelBusId;
           amdgpuBusId = lib.mkIf (cfg.prime.amdBusId != "") cfg.prime.amdBusId;
         }

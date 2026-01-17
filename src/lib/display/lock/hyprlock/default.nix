@@ -6,7 +6,7 @@
   lib,
   ...
 }: let
-  colors = config.lib.stylix.colors;
+  inherit (config.lib.stylix) colors;
 in {
   programs.hyprlock = {
     enable = true;
