@@ -80,7 +80,7 @@
     "tooltip": false
   },
   "mpris": {
-    "format": "{player_icon} {artist} / {title}",
+    "format": "{artist} / {title}  {player_icon}",
     "format-paused": "{player_icon} Paused",
     "player-icons": {
       "default": "▶",
