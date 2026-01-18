@@ -1,7 +1,5 @@
 # https://wiki.nixos.org/wiki/Docker
 # https://wiki.nixos.org/wiki/Podman
-# https://search.nixos.org/options?query=virtualisation.docker
-# https://search.nixos.org/options?query=virtualisation.podman
 {
   config,
   lib,
@@ -18,19 +16,14 @@ in {
   config = lib.mkMerge [
     (lib.mkIf cfg.docker.enable {
       virtualisation.docker.enable = true;
-      # socket access requires group membership
       users.users.${identity.username}.extraGroups = ["docker"];
     })
 
     (lib.mkIf cfg.podman.enable {
       virtualisation.podman = {
         enable = true;
-        # emulate docker CLI when docker is disabled
         dockerCompat = !cfg.docker.enable;
       };
-
-      # podman typically works rootless or via subuid/subgid,
-      # but adding to group doesn't hurt for socket access if needed
     })
   ];
 }

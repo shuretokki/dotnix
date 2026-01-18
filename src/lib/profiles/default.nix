@@ -1,4 +1,4 @@
-# Profile option - single enum to select system configuration type
+# https://wiki.nixos.org/wiki/NixOS_modules#Option_types
 {
   config,
   lib,
@@ -8,9 +8,15 @@
 in {
   options.library.profile = lib.mkOption {
     type = lib.types.enum ["desktop" "laptop" "server"];
-    description = "System profile type to apply";
+    description = ''
+      System profile type. Determines which hardware/power defaults apply.
+      - `desktop`: Performance-oriented, no power management.
+      - `laptop`: Battery optimization, lid/suspend handling.
+      - `server`: Headless, minimal services.
+    '';
   };
 
+  # Only one profile can be active.
   config = lib.mkMerge [
     (lib.mkIf (cfg == "desktop") (import ./desktop {
       inherit (config) lib;

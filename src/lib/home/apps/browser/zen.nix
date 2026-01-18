@@ -1,5 +1,4 @@
 # https://github.com/0xc000022070/zen-browser-flake
-# https://home-manager-options.extranix.com/?query=programs.chromium
 {
   lib,
   pkgs,

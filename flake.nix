@@ -14,44 +14,34 @@
   };
 
   inputs = {
+    # [ Core ]
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    hyprland.url = "github:hyprwm/Hyprland";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    stylix.url = "github:danth/stylix";
-    sops-nix.url = "github:Mic92/sops-nix";
-    nixcord.url = "github:kaylorben/nixcord";
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    apple-fonts = {
-      url = "github:Lyndeno/apple-fonts.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    antigravity = {
-      url = "github:jacopone/antigravity-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    youtube-music = {
-      url = "github:h-banii/youtube-music-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vicinae-extensions = {
-      url = "github:vicinaehq/extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # [ ... ]
+
+    # [ Desktop Environment ]
+    hyprland.url = "github:hyprwm/Hyprland";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    stylix.url = "github:danth/stylix";
+    # [ ... ]
+
+    # [ Security ]
+    sops-nix.url = "github:Mic92/sops-nix";
+    # [ ... ]
+
+    # [ Applications ]
+    nixcord.url = "github:kaylorben/nixcord";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    youtube-music = {
+      url = "github:h-banii/youtube-music-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
@@ -59,6 +49,33 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    antigravity = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # [ ... ]
+
+    # [ Fonts ]
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # [ ... ]
+
+    # [ Developer Tools ]
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # [ ... ]
   };
 
   outputs = {
@@ -66,12 +83,18 @@
     flake-parts,
     ...
   } @ inputs: let
+    # Centralized to avoid scattering user/host values across multiple files.
     identity = import ./cfg/identity.nix;
+    # Avoids repeating builder logic; shared across host and module definitions.
     utils = import ./src/util {inherit inputs self;};
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = import ./src/flake/systems.nix;
       perSystem = import ./src/flake/outputs/workspace.nix {inherit inputs self;};
+
+      # Separated for maintainability: artifacts are host-specific, modules are reusable.
+      # Modules exposed separately so external flakes can import them without our hosts.
+      # Merged here to provide a unified flake interface for `nix flake show`.
       flake =
         (import ./src/flake/outputs/artifacts.nix {
           inherit inputs identity utils self;

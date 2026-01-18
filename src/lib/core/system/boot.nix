@@ -14,12 +14,12 @@ in {
       uuid = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
         default = null;
-        description = "uuid of the windows efi partition. set this if windows is on a different drive.";
+        description = "UUID of the Windows EFI partition.";
       };
       label = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
         default = null;
-        description = "filesystem label of the windows efi partition.";
+        description = "Filesystem label of the Windows EFI partition.";
       };
     };
 
@@ -28,28 +28,25 @@ in {
       uuid = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
         default = null;
-        description = "uuid of the macos efi partition. set this if opencore is on a different drive.";
+        description = "UUID of the macOS EFI partition.";
       };
       label = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
         default = null;
-        description = "filesystem label of the macos efi partition.";
+        description = "Filesystem label of the macOS EFI partition.";
       };
     };
 
     extraEntries = lib.mkOption {
       type = lib.types.lines;
       default = "";
-      description = "extra limine configuration entries.";
+      description = "Extra Limine configuration entries.";
     };
   };
 
   config = {
     boot.loader = {
-      efi = {
-        # allow installer to modify efi boot variables (required for uefi systems)
-        canTouchEfiVariables = true;
-      };
+      efi.canTouchEfiVariables = true;
 
       systemd-boot.enable = false;
       grub.enable = false;
@@ -58,25 +55,15 @@ in {
       limine = {
         enable = true;
 
-        # this requires you to already have generated the keys and enrolled them with sbctl.
+        # This requires you to already have generated the keys and enrolled them with sbctl.
         # to create keys use 'sbctl create-keys'.
         # to enroll them first reset secure boot to “Setup Mode”. this is device specific.
         # then enroll them using 'sbctl enroll-keys -m -f'.
         secureBoot.enable = false;
-
-        # maximum number of system generations to display in the boot menu.
-        # a limit prevents the boot partition from running out of space.
         maxGenerations = lib.mkDefault 10;
-
-        # determines if the limine configuration editor is enabled at boot.
-        # disabling it prevents temporary modification of boot parameters (security).
         enableEditor = false;
 
-        # limine on nixos does not have 'osProber' (unlike grub).
-        # we manually generate entries based on dualBoot config.
-        #
-        # windows warning: bitlocker will detect the boot change on first run and ask for recovery key.
-        # macos warning: ensure launcheroption is disabled in opencore config.plist to prevent boot loops.
+        # Limine doesn't have os-prober; entries are generated from dualBoot config.
         extraEntries = let
           makePrefix = uuid: label:
             if uuid != null

@@ -1,3 +1,4 @@
+# Bundles all hardware modules.
 {...}: {
   imports = [
     ./audio.nix

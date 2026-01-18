@@ -1,3 +1,4 @@
+# Bundles security modules.
 {...}: {
   imports = [
     ./security.nix

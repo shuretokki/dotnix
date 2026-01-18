@@ -1,3 +1,4 @@
+# Assertions ensure exactly one GPU driver is enabled.
 {
   config,
   lib,

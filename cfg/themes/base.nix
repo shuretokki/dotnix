@@ -1,6 +1,4 @@
-# Base theme options schema
-# Defines theme.* options used by all theme presets and display modules
-# Values are set by presets in ./dark/, etc.
+# Options schema; values set by presets in ./dark/, etc.
 {lib, ...}: {
   options.theme = {
     preset = lib.mkOption {

@@ -1,11 +1,14 @@
+# https://wiki.nixos.org/wiki/NixOS:nixos-rebuild
 {
   inputs,
   self,
 }: let
   inherit (inputs.nixpkgs) lib;
+  # Imported here so mkHost doesn't need these passed as arguments.
   identity = import (self + "/cfg/identity.nix");
   themeConfig = import (self + "/cfg/theme.nix") {inherit lib;};
 in {
+  # Wraps lib.nixosSystem with project conventions; keeps host files minimal.
   mkHost = {
     hostname,
     username,
@@ -13,10 +16,12 @@ in {
     extraModules ? [],
     overlays ? [],
   }:
+  # Fail fast with clear errors rather than cryptic eval failures.
     assert builtins.isString hostname || throw "hostname must be a string";
     assert builtins.isString username || throw "username must be a string";
     assert hostname != "" || throw "hostname cannot be empty";
     assert username != "" || throw "username cannot be empty"; let
+      # Hostname injected here so identity.nix stays host-agnostic.
       identity' = identity // {inherit hostname;};
     in
       lib.nixosSystem {
@@ -34,11 +39,15 @@ in {
 
             inputs.stylix.nixosModules.stylix
 
-            # Theme system: base options + selection + preset values
-            (self + "/cfg/themes/base.nix") # Options schema
-            (self + "/cfg/theme.nix") # Preset selection
-            (self + "/cfg/themes/${themeConfig.theme.preset}/default.nix") # Preset values
+            # [ Theme System ]
+            # schema defines options, selection picks preset, preset provides values.
+            (self + "/cfg/themes/base.nix")
+            (self + "/cfg/theme.nix")
+            (self + "/cfg/themes/${themeConfig.theme.preset}/default.nix")
+            # [ ... ]
 
+            # [ Build-time Assertions ]
+            # Catches config drift before activation; saves debugging time.
             ({config, ...}: {
               assertions = [
                 {
@@ -53,8 +62,6 @@ in {
                   '';
                 }
                 {
-                  # check if user directory exists
-                  # prevent confusing "file not found" errors
                   assertion = builtins.pathExists (self + "/cfg/users/${username}");
                   message = ''
                     [USER CONFIG MISSING] - BUILD BLOCKED
@@ -69,24 +76,28 @@ in {
                 }
               ];
             })
+            # [ ... ]
 
+            # [ Home Manager ]
+            # Inline config avoids a separate flake output; user config stays with host.
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager = {
+                # Shares nixpkgs instance; avoids duplicate package downloads.
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                # Pass theme config to HM modules via extraSpecialArgs
                 extraSpecialArgs = {
                   inherit inputs self;
                   identity = identity';
                   inherit (themeConfig) theme;
                 };
-                # Load theme options schema in HM context too
+                # Theme options available in HM context too; enables per-app theming.
                 sharedModules = [(self + "/cfg/themes/base.nix") (self + "/cfg/themes/${themeConfig.theme.preset}/default.nix")];
                 users.${username} = import (self + "/cfg/users/${username}/home.nix");
                 backupFileExtension = "backup";
               };
             }
+            # [ ... ]
           ]
           ++ extraModules;
       };

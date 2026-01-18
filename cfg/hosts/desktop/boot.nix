@@ -1,3 +1,4 @@
+# Windows dual-boot entry for bootloader.
 _: {
   boot.dualBoot.windows = {
     enable = true;

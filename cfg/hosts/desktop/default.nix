@@ -1,22 +1,16 @@
-# desktop host configuration.
-# imports core modules and desktop profile.
-# hardware-specific toggles (nvidia, docker) set here.
+# Host-specific ; hardware toggles and profile selection.
 {
-  config,
-  pkgs,
-  identity,
   inputs,
   ...
 }: {
   imports = [
-    inputs.self.nixosModules.core
-    inputs.self.nixosModules.profileDesktop
-    ./hardware-configuration.nix
     ./gpu.nix
     ./boot.nix
+    ./hardware-configuration.nix
+    inputs.self.nixosModules.core
+    inputs.self.nixosModules.profileDesktop
   ];
 
-  # library.core.gpu.nvidia.open = false; # Example override
   library.core.virtualisation.docker.enable = true;
 
   system.stateVersion = "25.11";

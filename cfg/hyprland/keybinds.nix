@@ -1,16 +1,11 @@
-# User keybind overrides for Hyprland
-# Use this to revoke default keybinds or add custom ones
+# User overrides; merged with library defaults.
 {
   keybinds = {
     revoke = [
-      # Example: Remove default keybinds you don't want
       # "SUPER, W"
-      # "SUPER, J"
     ];
     add = [
-      # Example: Add your custom keybinds
       # "SUPER, RETURN, exec, warp-terminal"
-      # "ALT, Q, togglefloating,"
     ];
   };
 

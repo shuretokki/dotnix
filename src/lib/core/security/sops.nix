@@ -1,10 +1,5 @@
 # https://github.com/Mic92/sops-nix
-#
-# usage:
-# 1. generate your own age key: age-keygen -o ~/.config/sops/age/keys.txt
-# 2. get your public key: age-keygen -y ~/.config/sops/age/keys.txt
-# 3. update .sops.yaml with your public key
-# 4. create secrets/secrets.yaml: sops secrets/secrets.yaml
+# Setup: age-keygen -o ~/.config/sops/age/keys.txt
 {
   inputs,
   config,
@@ -25,7 +20,6 @@ in {
   imports = [inputs.sops-nix.nixosModules.sops];
 
   config.sops = {
-    # Points to cfg/secrets/secrets.yaml
     defaultSopsFile = lib.mkDefault ../../../../cfg/secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
 
@@ -39,9 +33,5 @@ in {
       # github_token = {};
       # user_password = { neededForUsers = true; };
     };
-
-    # templates."config.toml".content = ''
-    #   password = "${config.sops.placeholder.some_secret}"
-    # '';
   };
 }

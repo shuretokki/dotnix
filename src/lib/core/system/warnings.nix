@@ -1,11 +1,10 @@
+# Build-time warnings for common misconfigurations.
 {
   lib,
   config,
   identity,
   ...
 }: let
-  # expected state version for this system configuration
-  # should only be updated when intentionally upgrading NixOS state
   expectedStateVersion = "25.11";
 in {
   warnings =

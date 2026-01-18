@@ -1,5 +1,4 @@
-# validation assertions for early misconfiguration detection
-# these run at nix evaluation time, before any build starts.
+# Assertions run at eval time before build starts.
 {
   config,
   identity,
@@ -23,7 +22,6 @@
     "operator"
   ];
 
-  # Theme path validation - theme now comes from config.theme.preset (cfg/theme.nix)
   themePreset = config.theme.preset or "default";
   themePath = ../../../../cfg/themes + "/${themePreset}/default.nix";
 in {

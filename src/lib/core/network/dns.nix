@@ -9,20 +9,11 @@ in {
 
     settings = {
       # https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/dnscrypt-proxy/example-dnscrypt-proxy.toml
-      # servers to use for resolution.
-      # see all the list here https://dnscrypt.info/public-servers
-      # quad9 is prioritized for its strong privacy policy and threat intelligence.
-      # mullvad-doh added for redundancy
+      # https://dnscrypt.info/public-servers
       server_names = ["quad9-doh-ip4-nofilter-ecs-pri" "cloudflare" "mullvad-doh"];
-
-      # listen for incoming dns queries on the local loopback interface.
       listen_addresses = ["127.0.0.1:53"];
-
-      # enable dns-over-https (doh) for modern encryption.
       doh_servers = true;
 
-      # define the source of resolver lists.
-      # without this, dnscrypt-proxy cannot find any servers to use.
       sources.public-resolvers = {
         urls = [
           "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
@@ -32,33 +23,26 @@ in {
         cache_file = "/var/lib/${stateDir}/public-resolvers.md";
       };
 
-      # blocklist (oisd small)
       blocked_names = {
         blocked_names_file = blocklistFile;
         log_file = "/var/log/dnscrypt-proxy/blocked-names.log";
       };
 
-      # enforces dnssec validation.
       require_dnssec = true;
-
-      # ensures resolvers don't log queries.
       require_nolog = true;
-
-      # ensures resolvers don't filter results.
       require_nofilter = true;
 
-      # disable ipv6 since it caused binding issues earlier.
+      # IPv6 caused binding issues.
       ipv6_servers = false;
       block_ipv6 = true;
     };
   };
 
-  # give dnscrypt-proxy a persistent state directory for caching resolver lists.
   systemd.services = {
     dnscrypt-proxy = {
       serviceConfig.StateDirectory = stateDir;
 
-      # ensure blocklist file exists before start to prevent crash
+      # Ensure blocklist exists before start.
       preStart = ''
         mkdir -p /var/lib/${stateDir}
         if [ ! -f ${blocklistFile} ]; then
@@ -67,7 +51,6 @@ in {
       '';
     };
 
-    # systemd service to fetch the blocklist
     dnscrypt-blocklist = {
       description = "Update OISD blocklist for dnscrypt-proxy";
       after = ["network.target"];
@@ -76,7 +59,6 @@ in {
         User = "root";
       };
       script = ''
-        # oisd small list (safer, fewer breakages)
         URL="https://small.oisd.nl/"
         TMP_FILE="/tmp/oisd-blocked-names.txt"
 
@@ -84,11 +66,8 @@ in {
 
         if [ -s "$TMP_FILE" ]; then
           mv "$TMP_FILE" ${blocklistFile}
-          # assuming dnscrypt-proxy runs as 'dnscrypt-proxy' user, but the file is in state directory
-          # which usually has restrictive permissions. we make it readable.
           chmod 644 ${blocklistFile}
           echo "Blocklist updated successfully."
-          # reload dnscrypt-proxy to pick up changes
           systemctl try-reload-or-restart dnscrypt-proxy
         else
           echo "Failed to download blocklist."
@@ -99,7 +78,6 @@ in {
     };
   };
 
-  # timer to run blocklist update daily
   systemd.timers.dnscrypt-blocklist = {
     wantedBy = ["timers.target"];
     timerConfig = {
@@ -109,20 +87,19 @@ in {
     };
   };
 
-  # force the system to use the local dnscrypt-proxy instance for all queries.
   networking.nameservers = ["127.0.0.1"];
 
-  # prevent networkmanager from overwriting /etc/resolv.conf with dhcp-provided dns.
+  # Prevent NetworkManager from overwriting resolv.conf.
   networking.networkmanager.dns = "none";
 
-  # disable systemd-resolved to avoid port 53 conflicts.
+  # Avoid port 53 conflicts.
   services.resolved.enable = false;
 
   environment.systemPackages = with pkgs; [
-    dnsutils # dig, nslookup, host
-    whois # domain registration lookup
-    traceroute # network path tracing
-    mtr # combines ping + traceroute
-    captive-portal # helper script
+    dnsutils
+    whois
+    traceroute
+    mtr
+    captive-portal
   ];
 }
