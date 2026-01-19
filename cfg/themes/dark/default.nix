@@ -15,12 +15,6 @@ _: {
       size = 24;
     };
 
-    visual = {
-      rounding = 0;
-      opacity = 0.88;
-      blur = true;
-    };
-
     waybar = {
       styleFile = ./waybar/style.css;
       configFile = ./waybar/config.jsonc;
@@ -30,15 +24,18 @@ _: {
       gaps-in = 12;
       gaps-out = 36;
       rounding = 0;
-      blur = true;
-      shadows = true;
-      active-border-col = "rgba(3c3c3cff)";
-      inactive-border-col = "rgba(1e1e1eff)";
+      opacity = 0.80;
+      blur = "medium";
+      shadow = "soft";
+      animations = "snappy";
+      layout = "spiral";
+      borderActive = "rgba(3c3c3cff)";
+      borderInactive = "rgba(1e1e1eff)";
     };
 
     hyprlock = {
-      fontFamily = "SF Pro Rounded";
-      fontSize = 64;
+      fontFamily = "JetBrainsMono Nerd Font";
+      fontSize = 36;
     };
 
     stylixExclude = [

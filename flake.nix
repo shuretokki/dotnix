@@ -71,6 +71,7 @@
     # [ ... ]
 
     # [ Developer Tools ]
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";

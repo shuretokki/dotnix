@@ -6,19 +6,11 @@
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+      systems = ["x86_64-linux"];
       perSystem = {pkgs, ...}: {
         devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            nodejs
-          ];
-
-          shellHook = ''
-            if [ ! -d "node_modules" ]; then
-              echo "Installing npm dependencies..."
-              npm install
-            fi
-          '';
+          packages = [pkgs.nodejs];
+          shellHook = ''npm install'';
         };
       };
     };

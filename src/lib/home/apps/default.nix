@@ -6,7 +6,7 @@
     ./media
     ./communication
     ./terminal
-    # Shared app modules
+    ./other.nix
     ./files.nix
     ./mime.nix
     ./services.nix

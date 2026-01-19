@@ -60,24 +60,6 @@
       description = "Path to the main wallpaper image";
     };
 
-    visual = {
-      rounding = lib.mkOption {
-        type = lib.types.int;
-        default = 8;
-        description = "Corner rounding in pixels";
-      };
-      opacity = lib.mkOption {
-        type = lib.types.float;
-        default = 0.9;
-        description = "Window opacity (0.0-1.0)";
-      };
-      blur = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "Enable blur effects";
-      };
-    };
-
     icons = {
       name = lib.mkOption {
         type = lib.types.str;
@@ -115,25 +97,42 @@
         default = 0;
         description = "Window corner rounding";
       };
+      opacity = lib.mkOption {
+        type = lib.types.float;
+        default = 0.9;
+        description = "Window opacity (0.0-1.0)";
+      };
       blur = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "Enable Hyprland blur";
+        type = lib.types.enum ["none" "subtle" "medium" "heavy"];
+        default = "medium";
+        description = "Blur effect intensity";
       };
-      shadows = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "Enable window shadows";
+      shadow = lib.mkOption {
+        type = lib.types.enum ["none" "soft" "sharp" "dramatic"];
+        default = "soft";
+        description = "Window shadow style";
       };
-      active-border-col = lib.mkOption {
-        type = lib.types.str;
-        default = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        description = "Active window border color";
+      animations = lib.mkOption {
+        type = lib.types.enum ["none" "minimal" "smooth" "snappy" "fancy"];
+        default = "smooth";
+        description = "Animation style";
       };
-      inactive-border-col = lib.mkOption {
-        type = lib.types.str;
-        default = "rgba(595959aa)";
-        description = "Inactive window border color";
+      layout = lib.mkOption {
+        type = lib.types.enum ["dwindle-equal" "dwindle-master" "spiral" "master"];
+        default = "dwindle-equal";
+        description = "Window layout style";
+      };
+      borderActive = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        example = "rgba(3c3c3cff)";
+        description = "Active border color (fallback: scheme base0D)";
+      };
+      borderInactive = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        example = "rgba(1e1e1eff)";
+        description = "Inactive border color (fallback: scheme base03)";
       };
     };
 

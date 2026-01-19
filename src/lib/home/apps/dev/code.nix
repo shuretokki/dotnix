@@ -543,9 +543,4 @@ in {
       ];
     };
   };
-
-  home.sessionVariables = {
-    EDITOR = lib.mkDefault prefs.editor;
-    VISUAL = lib.mkDefault prefs.editor;
-  };
 }

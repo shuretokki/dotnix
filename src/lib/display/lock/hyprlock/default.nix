@@ -54,7 +54,7 @@ in {
           text = "$TIME";
           color = "rgba(${colors.base05}ff)";
           font_size = config.theme.hyprlock.fontSize;
-          inherit (config.theme.hyprlock) fontFamily;
+          font_family = config.theme.hyprlock.fontFamily;
           position = "0, 80";
           halign = "center";
           valign = "center";

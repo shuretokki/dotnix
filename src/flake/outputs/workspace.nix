@@ -10,7 +10,7 @@
 }: {
   formatter = pkgs.alejandra;
 
-  # Runs on `nix flake check`; catches issues before CI does.
+  # Runs on `nix flake check`
   # https://github.com/cachix/pre-commit-hooks.nix
   checks.pre-commit = inputs.pre-commit-hooks.lib.${system}.run {
     src = self;
@@ -32,7 +32,6 @@
       nix-unit
       nixdoc
       manix
-      nix-tree
       nvd
       nix-output-monitor
       reviewdog

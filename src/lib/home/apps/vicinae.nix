@@ -92,7 +92,7 @@
         };
       };
       launcher_window = {
-        opacity = lib.mkForce 0.44;
+        opacity = lib.mkForce config.theme.vicinae.opacity;
       };
 
       providers = {

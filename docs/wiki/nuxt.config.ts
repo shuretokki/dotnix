@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/i18n', 'nuxt-studio'],
+  modules: ['@nuxtjs/i18n', '@nuxt/fonts'],
+  css: ['~/assets/css/main.css'],
   i18n: {
     defaultLocale: 'en',
     locales: [{
@@ -10,9 +11,4 @@ export default defineNuxtConfig({
       name: 'Bahasa Indonesia',
     }],
   },
-  llms: {
-    domain: 'http://localhost:3000',
-    title: 'SDN Wiki',
-    description: 'Wiki documentation for SDN',
-  }
 })

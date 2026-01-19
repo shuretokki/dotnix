@@ -1,8 +1,7 @@
 # https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/
 # https://home-manager-options.extranix.com/?query=services.hypridle
-# locks after 5 min
-# turns off display after 5.5 min.
-_: {
+# Timeouts configured via theme.hypridle.* options
+{config, ...}: {
   services.hypridle = {
     enable = true;
     settings = {
@@ -14,11 +13,11 @@ _: {
 
       listener = [
         {
-          timeout = 300;
+          timeout = config.theme.hypridle.lockTimeout;
           on-timeout = "loginctl lock-session";
         }
         {
-          timeout = 330;
+          timeout = config.theme.hypridle.dpmsTimeout;
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
