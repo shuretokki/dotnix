@@ -1,41 +1,40 @@
 # https://wiki.hypr.land/Configuring/Window-Rules/
 {
-  windowrulev2 = [
-    "float, class:^(pavucontrol)$"
-    "float, class:^(blueman-manager)$"
-    "float, class:^(nm-connection-editor)$"
-    "float, class:^(localsend_app)$"
-    "float, class:^(org.gnome.Nautilus)$"
-    "float, title:^(About)(.*)$"
-    "float, class:^(xdg-desktop-portal-gtk)$"
+  windowrule = [
+    "match:class:^(pavucontrol)$, float 1"
+    "match:class:^(blueman-manager)$, float 1"
+    "match:class:^(nm-connection-editor)$, float 1"
+    "match:class:^(localsend_app)$, float 1"
+    "match:class:^(org.gnome.Nautilus)$, float 1"
+    "match:title:^(About)(.*)$, float 1"
+    "match:class:^(xdg-desktop-portal-gtk)$, float 1"
 
-    "size 800 600, class:^(localsend_app)$"
-    "center, class:^(localsend_app)$"
+    "match:class:^(localsend_app)$, size 800 600"
+    "match:class:^(localsend_app)$, center 1"
 
-    "opacity 0.95, class:^(warp-terminal)$"
-    "opacity 0.9, class:^(Spotify)$"
+    "match:class:^(warp-terminal)$, opacity 0.95"
+    "match:class:^(Spotify)$, opacity 0.9"
 
-    "workspace 5, class:^(Spotify)$"
-    "workspace 4, class:^(localsend_app)$"
-    "workspace 3, class:^(discord)$"
+    "match:class:^(Spotify)$, workspace 5"
+    "match:class:^(localsend_app)$, workspace 4"
+    "match:class:^(discord)$, workspace 3"
 
-    "idleinhibit focus, class:^(mpv)$"
-    "idleinhibit fullscreen, class:^(firefox)$"
-    "idleinhibit fullscreen, class:^(zen)$"
+    "match:class:^(xwayland)$, opacity 1.0 override"
 
-    "opacity 1.0 override, class:^(xwayland)$"
-
-    "noanim, class:^(hyprshot)$"
+    "match:class:^(hyprshot)$, no_anim 1"
   ];
 
   layerrule = [
-    "match:namespace selection, no_anim on"
-    "match:namespace hyprpickerq, no_anim on"
-    "match:namespace slurp, no_anim on"
-    "match:namespace vicinae, blur on"
-    "match:namespace vicinae, ignore_alpha 0"
-    "match:namespace vicinae, no_anim on"
-    "match:namespace ags, blur on"
-    "match:namespace ags, ignore_alpha 0.2"
+    "no_anim 1, selection"
+    "no_anim 1, hyprpicker"
+    "no_anim 1, slurp"
+    "no_anim 1, hyprshot"
+
+    "blur 1, vicinae"
+    "ignore_alpha 0, vicinae"
+    "no_anim 1, vicinae"
+
+    "blur 1, ags"
+    "ignore_alpha 0.2, ags"
   ];
 }

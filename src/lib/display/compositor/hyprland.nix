@@ -82,7 +82,7 @@ in {
             bindm = mergeBinds defaultMouseBinds userKeybinds.mousebinds;
 
             # Merge user window/workspace rules
-            windowrulev2 = (hyprland-base.settings.windowrulev2 or []) ++ (userRules.windowRules.add or []);
+            windowrule = (hyprland-base.settings.windowrule or []) ++ (userRules.windowRules.add or []);
             workspace = (hyprland-base.settings.workspace or []) ++ (userRules.workspaceRules.add or []);
 
             # Merge user env vars

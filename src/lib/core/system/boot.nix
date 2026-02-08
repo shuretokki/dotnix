@@ -55,11 +55,7 @@ in {
       limine = {
         enable = true;
 
-        # This requires you to already have generated the keys and enrolled them with sbctl.
-        # to create keys use 'sbctl create-keys'.
-        # to enroll them first reset secure boot to “Setup Mode”. this is device specific.
-        # then enroll them using 'sbctl enroll-keys -m -f'.
-        secureBoot.enable = false;
+        secureBoot.enable = lib.mkDefault false;
         maxGenerations = lib.mkDefault 10;
         enableEditor = false;
 

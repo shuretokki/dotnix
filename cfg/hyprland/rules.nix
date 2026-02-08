@@ -2,7 +2,7 @@
 {
   windowRules = {
     add = [
-      # "opacity 0.9, class:^(discord)$"
+      # "match:class:^(discord)$, opacity 0.9"
     ];
   };
 
