@@ -45,6 +45,8 @@ in {
   };
 
   config = {
+    boot.kernelPackages = pkgs.linuxPackages_6_12;
+
     boot.loader = {
       efi.canTouchEfiVariables = true;
 
@@ -59,7 +61,8 @@ in {
         maxGenerations = lib.mkDefault 10;
         enableEditor = false;
 
-        # Limine doesn't have os-prober; entries are generated from dualBoot config.
+        # Limine doesn't have os-prober;
+        # entries are generated from dualBoot config.
         extraEntries = let
           makePrefix = uuid: label:
             if uuid != null

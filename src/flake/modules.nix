@@ -2,7 +2,6 @@
 {
   # Exposed; so external flakes can import only what they need.
   nixosModules = {
-    # [ Core ]
     core = import ../lib/core;
     coreSystem = import ../lib/core/system;
     coreHardware = import ../lib/core/hardware;
@@ -10,14 +9,12 @@
     coreSecurity = import ../lib/core/security;
     # [ ... ]
 
-    # [ Display ]
     display = import ../lib/display;
     displayHyprland = import ../lib/display/compositor/hyprland.nix;
     displayLogin = import ../lib/display/login/sddm.nix;
     displayStylix = import ../lib/display/stylix.nix;
     # [ ... ]
 
-    # [ Profiles ]
     profiles = import ../lib/profiles;
     profileDesktop = import ../lib/profiles/desktop;
     profileLaptop = import ../lib/profiles/laptop;
@@ -29,7 +26,6 @@
   homeModules = {
     home = import ../lib/home;
 
-    # [ Apps ]
     apps = import ../lib/home/apps;
     appsCli = import ../lib/home/apps/cli;
     appsDev = import ../lib/home/apps/dev;
@@ -39,7 +35,6 @@
     appsTerminal = import ../lib/home/apps/terminal;
     # [ ... ]
 
-    # [ Display ]
     displayWaybar = import ../lib/display/bar/waybar;
     displaySwaync = import ../lib/display/notifications/swaync;
     displayHyprlock = import ../lib/display/lock/hyprlock;
@@ -47,7 +42,6 @@
     displaySwayosd = import ../lib/display/osd/swayosd;
     # [ ... ]
 
-    # [ Global ]
     homeGlobal = import ../lib/home/global;
     # [ ... ]
   };

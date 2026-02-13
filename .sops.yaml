@@ -12,7 +12,7 @@
 # Then replace the key below with your public key.
 
 keys:
-  - &primary age1nh8nrhlyndr52g904hjpuxzywaeexu6hx2nwztvr8j2fvw9m5czscu92hxs
+  - &primary age1nh8nrhlyndr52g904hjpuxzywaeexu6hx2nwztvr8j2fvw9m5czscu92hx
   # - &desktop age1xxx  # ssh-to-age -i /etc/ssh/ssh_host_ed25519_key.pub
 
 creation_rules:

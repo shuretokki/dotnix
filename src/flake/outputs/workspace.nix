@@ -10,7 +10,6 @@
 }: {
   formatter = pkgs.alejandra;
 
-  # Runs on `nix flake check`
   # https://github.com/cachix/pre-commit-hooks.nix
   checks.pre-commit = inputs.pre-commit-hooks.lib.${system}.run {
     src = self;
@@ -20,13 +19,12 @@
     };
   };
 
-  # Provides consistent tooling across contributors without global installs.
   devShells.default = pkgs.mkShell {
     packages = with pkgs; [
-      nil # https://github.com/oxalica/nil
-      statix # https://github.com/oppiliappan/statix
-      deadnix # https://github.com/astro/deadnix
-      alejandra # https://github.com/kamadorueda/alejandra
+      nil
+      statix
+      deadnix
+      alejandra
       nix-doc
       nix-diff
       nix-unit
@@ -36,14 +34,14 @@
       nix-output-monitor
       reviewdog
       dasel
+      sops
+      age
     ];
 
-    # Auto-installs git hooks on shell entry; no manual setup needed.
     shellHook = ''
       ${config.checks.pre-commit.shellHook or ""}
     '';
   };
 
-  # Separated so custom packages can be built/tested independently of hosts.
   packages = import (self + "/src/pkg") {inherit pkgs;};
 }

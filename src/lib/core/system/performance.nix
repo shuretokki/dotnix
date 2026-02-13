@@ -8,7 +8,8 @@ _: {
     # algorithm = "zstd";
   };
 
-  # Prevent hanging during rebuild when ZRAM config changes.
+  # Prevent hanging during rebuild
+  # when ZRAM config changes.
   systemd.services."systemd-zram-setup@zram0".stopIfChanged = false;
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/config/sysctl.nix

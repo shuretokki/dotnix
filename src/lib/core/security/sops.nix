@@ -1,3 +1,4 @@
+# TODO: Put config in cfg/
 # https://github.com/Mic92/sops-nix
 # Setup: age-keygen -o ~/.config/sops/age/keys.txt
 {
@@ -30,7 +31,6 @@ in {
     };
 
     secrets = {
-      # github_token = {};
       # user_password = { neededForUsers = true; };
     };
   };
