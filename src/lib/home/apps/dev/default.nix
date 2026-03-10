@@ -2,6 +2,7 @@
   imports = [
     ./code.nix
     ./helix.nix
+    ./zed.nix
   ];
 
   home.sessionVariables = {

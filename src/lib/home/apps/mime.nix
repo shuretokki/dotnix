@@ -20,6 +20,7 @@ in {
       "x-scheme-handler/https" = lib.mkForce "${browser}.desktop";
       "x-scheme-handler/about" = lib.mkForce "${browser}.desktop";
       "x-scheme-handler/unknown" = lib.mkForce "${browser}.desktop";
+      "application/pdf" = lib.mkDefault "sioyek.desktop";
     };
   };
 }

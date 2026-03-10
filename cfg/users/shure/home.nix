@@ -12,7 +12,7 @@
   _prefs = {
     gitname = "Tri R. Utomo";
     email = "tri.r.utomo@gmail.com";
-    browser = "zen";
+    browser = "zen-beta";
     terminal = "warp-terminal";
     editor = "code";
     fileManager = "nautilus";

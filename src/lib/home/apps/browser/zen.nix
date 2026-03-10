@@ -40,6 +40,7 @@
 
     # https://home-manager-options.extranix.com/?query=programs.firefox.profiles
     profiles.default = {
+      isDefault = true;
       extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
         ublock-origin
         bitwarden
