@@ -48,7 +48,7 @@ in {
       helix_mode = false;
       use_autoclose = true;
       use_auto_surround = true;
-      auto_indent = "syntax_aware";
+      auto_indent = true;
       auto_indent_on_paste = true;
       format_on_save = "on";
       remove_trailing_whitespace_on_save = true;
@@ -176,7 +176,7 @@ in {
         enable_preview_from_project_panel = true;
       };
 
-      autosave = "on";
+      autosave = "on_focus_change";
       restore_on_startup = "last_session";
       confirm_quit = false;
       close_on_file_delete = false;
@@ -187,5 +187,8 @@ in {
       middle_click_paste = true;
       scroll_beyond_last_line = "one_page";
     };
+  };
+  home.sessionVariables = {
+    ZED_ALLOW_EMULATED_GPU = 1;
   };
 }

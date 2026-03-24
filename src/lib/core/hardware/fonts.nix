@@ -21,11 +21,11 @@ in {
       packages = with pkgs; [
         noto-fonts
         noto-fonts-cjk-sans
-        fira
-        source-han-sans
-        source-han-serif
-        inter
-        eb-garamond
+        # fira
+        # source-han-sans
+        # source-han-serif
+        # inter
+        # eb-garamond
 
         nerd-fonts.jetbrains-mono
 

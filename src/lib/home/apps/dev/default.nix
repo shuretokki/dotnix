@@ -1,7 +1,7 @@
 {lib, prefs, ...}: {
   imports = [
-    ./code.nix
-    ./helix.nix
+    # ./code.nix
+    # ./helix.nix
     ./zed.nix
   ];
 

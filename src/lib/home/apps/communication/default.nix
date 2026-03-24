@@ -1,6 +1,6 @@
 {...}: {
   imports = [
     ./discord.nix
-    ./ferdium.nix
+    # ./ferdium.nix
   ];
 }

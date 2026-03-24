@@ -11,10 +11,10 @@
   # Consumed by bundlers; affects git, default apps, keybinds.
   _prefs = {
     gitname = "Tri R. Utomo";
-    email = "tri.r.utomo@gmail.com";
+    email = "tri.r.utomo@proton.me";
     browser = "zen-beta";
     terminal = "warp-terminal";
-    editor = "code";
+    editor = "";
     fileManager = "nautilus";
     musicPlayer = "spotify";
   };

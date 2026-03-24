@@ -8,5 +8,6 @@
     ./files.nix
     ./performance.nix
     ./virtualisation.nix
+    ./remote.nix
   ];
 }

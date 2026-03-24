@@ -24,7 +24,7 @@
 
     hyprland.url = "github:hyprwm/Hyprland/531fc432036ef6f580688bc83502bacc7903c73f";
     hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
+      url = "github:hyprwm/hyprland-plugins/v0.53.0";
       inputs.hyprland.follows = "hyprland";
     };
     stylix = {
@@ -76,6 +76,7 @@
       url = "github:natsukium/mcp-servers-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-nvidia.url = "github:NixOS/nixpkgs/0182a36";
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";

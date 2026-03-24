@@ -20,6 +20,9 @@
     nvd
     nix-tree
 
+
+    gemini-cli
+
     inputs.antigravity.packages.${pkgs.system}.default
   ];
 }

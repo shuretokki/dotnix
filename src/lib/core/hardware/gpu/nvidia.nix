@@ -7,12 +7,15 @@
 }: let
   cfg = config.library.core.gpu.nvidia;
 
-  driverPackage =
-    if cfg.legacy == "390"
-    then config.boot.kernelPackages.nvidiaPackages.legacy_390
-    else if cfg.legacy == "470"
-    then config.boot.kernelPackages.nvidiaPackages.legacy_470
-    else config.boot.kernelPackages.nvidiaPackages.stable;
+  driverPackage = let
+    selectedBranch =
+      if cfg.legacy == "390"
+      then "legacy_390"
+      else if cfg.legacy == "470"
+      then "legacy_470"
+      else cfg.branch;
+  in
+    config.boot.kernelPackages.nvidiaPackages.${selectedBranch};
 in {
   options.library.core.gpu.nvidia = {
     enable = lib.mkEnableOption "NVIDIA GPU support";
@@ -35,6 +38,18 @@ in {
         - "470": GTX 600/700/900/10xx
         - "390": GTX 400/500
       '';
+    };
+
+    branch = lib.mkOption {
+      type = lib.types.enum ["stable" "production" "latest" "beta"];
+      default = "stable";
+      description = "NVIDIA driver branch to use (ignored if legacy is set).";
+    };
+
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = driverPackage;
+      description = "The NVIDIA driver package to use. Overrides branch/legacy.";
     };
 
     prime = {
@@ -88,7 +103,7 @@ in {
         finegrained = false;
       };
 
-      package = driverPackage;
+      package = cfg.package;
 
       prime = lib.mkIf cfg.prime.enable (
         if cfg.prime.mode == "sync"

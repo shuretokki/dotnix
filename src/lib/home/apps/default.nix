@@ -10,7 +10,7 @@
     ./files.nix
     ./mime.nix
     ./services.nix
-    ./syncthing.nix
+    # ./syncthing.nix
     ./vicinae.nix
   ];
 }
