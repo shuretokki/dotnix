@@ -19,14 +19,14 @@ description = "Update flake inputs"
 run = "nix flake update"
 
 [tasks.test]
-description = "Activate a system until the next reboot"
+description = "Activate a system until the next reboot, with a change diff"
 usage = 'arg "[host]" help="Host name" default="desktop"'
-run = 'sudo nixos-rebuild test --flake ".#${usage_host?}"'
+run = 'nh os test . --hostname "${usage_host?}"'
 
 [tasks.switch]
-description = "Activate a system and make it the boot default"
+description = "Activate a system and make it the boot default, with a change diff"
 usage = 'arg "[host]" help="Host name" default="desktop"'
-run = 'sudo nixos-rebuild switch --flake ".#${usage_host?}"'
+run = 'nh os switch . --hostname "${usage_host?}"'
 
 [tasks.option]
 description = "Show the upstream description and source file of a NixOS option"
