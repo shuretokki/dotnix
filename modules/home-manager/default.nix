@@ -9,6 +9,7 @@
     ./hyprland
     ./proton.nix
     ./shell.nix
+    ./sonora.nix
     ./terminal.nix
     ./tools.nix
     ./vicinae.nix
