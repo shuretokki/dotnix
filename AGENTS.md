@@ -2,16 +2,18 @@
 
 This repository holds the NixOS configuration for the host `desktop`.
 It is a flake built with flake-parts that follows `nixos-unstable`.
-Home Manager and Stylix follow their `master` branches, and Home Manager runs as a NixOS module.
+Home Manager follows its `master` branch and runs as a NixOS module.
+Stylix will follow it too when it is added.
 
 ## Layout
 
 The port is in progress, so some folders do not exist yet.
 
 - `flake.nix` lists the inputs, sets per-system outputs in `perSystem`, and builds each host with `nixosSystem` under `flake`.
-- `hosts/<name>/` holds one host, with its `configuration.nix` and `hardware-configuration.nix`.
+- `hosts/<name>/` holds one host: `default.nix` for the system, `home.nix` for the user, and `hardware-configuration.nix`.
 - `modules/nixos/` holds system modules, and each file does one job.
 - `modules/home-manager/` holds user modules, and each file does one job.
+- `modules/home-manager/hyprland/` holds the compositor settings as plain Lua files, which the module loads with `extraLuaFiles`.
 - `pkgs/` and `overlays/` hold custom packages and overlays.
 
 ## Rules
@@ -31,14 +33,19 @@ The port is in progress, so some folders do not exist yet.
 13. If something fails, find the real cause first, then research known issues and compare options before you change the machine. Do not loop on retries.
 14. Do not set an option to its default value, so that later upstream changes to the default still apply.
 15. Keep hardware-specific modules, such as `nvidia.nix`, out of `modules/nixos/default.nix`. The host that needs one imports it by path.
+16. Keep `programs.hyprland.withUWSM` at `true`. The cached package is built with it, and `false` forces a local compile of Hyprland.
+17. Add a flake input with `nix flake lock`, not `nix flake update`, because `update` moves every input. Make each input follow `nixpkgs`.
+18. Check the Lua files under `modules/home-manager/hyprland/` with `lua-language-server --check` against the stubs in the Hyprland package. A wrong name otherwise fails only at login.
 
 ## Commands
 
 Run `mise tasks` to list the tasks. The main ones are `fmt`, `check`, `build`, `test`, `switch`, and `update`.
 
 Before each commit, run `mise run fmt`, `mise run check`, and `mise run build`.
-WSL can evaluate and build the system. It cannot test boot, the GPU, Hyprland, or secret decryption.
-On the real machine, run `mise run test` first, because a reboot undoes it.
+A machine that cannot boot this system, such as WSL or CI, can only evaluate and build.
+It cannot test boot, the GPU, Hyprland, or secret decryption.
+On a low-memory machine, build with fewer `--cores` and `--max-jobs 1`.
+On a machine that boots this system, run `mise run test` first, because a reboot undoes it.
 Run `mise run switch` only after `test` works.
 Both tasks use `nh`, which shows a diff of the change before it applies it.
 On a fresh machine where `nh` is not installed yet, run `sudo nixos-rebuild test --flake .#desktop` once.
