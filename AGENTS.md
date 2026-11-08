@@ -40,6 +40,8 @@ Before each commit, run `mise run fmt`, `mise run check`, and `mise run build`.
 WSL can evaluate and build the system. It cannot test boot, the GPU, Hyprland, or secret decryption.
 On the real machine, run `mise run test` first, because a reboot undoes it.
 Run `mise run switch` only after `test` works.
+Both tasks use `nh`, which shows a diff of the change before it applies it.
+On a fresh machine where `nh` is not installed yet, run `sudo nixos-rebuild test --flake .#desktop` once.
 If a switch breaks the system, run `sudo nixos-rebuild switch --rollback`.
 
 ## Commits
