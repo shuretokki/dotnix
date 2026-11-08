@@ -29,18 +29,33 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.treefmt-nix.flakeModule ];
+
       systems = [ "x86_64-linux" ];
 
       perSystem =
         { pkgs, ... }:
         {
           packages = import ./pkgs pkgs;
-          formatter = pkgs.nixfmt-tree;
+
+          treefmt = {
+            projectRootFile = "flake.nix";
+            programs = {
+              nixfmt.enable = true;
+              deadnix.enable = true;
+            };
+            settings.global.excludes = [ "hosts/*/hardware-configuration.nix" ];
+          };
         };
 
       flake = {
