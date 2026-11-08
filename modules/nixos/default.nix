@@ -7,6 +7,7 @@
     ./fonts.nix
     ./hyprland.nix
     ./locale.nix
+    ./login.nix
     ./network.nix
     ./nh.nix
     ./nix.nix
