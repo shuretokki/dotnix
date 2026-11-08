@@ -19,6 +19,7 @@
     isNormalUser = true;
     extraGroups = [
       "wheel"
+      "networkmanager"
       "input"
       "video"
       "audio"
