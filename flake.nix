@@ -34,6 +34,16 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprfm = {
+      url = "github:soyeb-jim285/hyprfm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sonora = {
+      url = "github:sonorahq/sonora";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

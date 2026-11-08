@@ -6,6 +6,7 @@
     ./dns.nix
     ./fonts.nix
     ./hyprland.nix
+    ./keyring.nix
     ./locale.nix
     ./login.nix
     ./network.nix
