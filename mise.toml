@@ -2,8 +2,9 @@
 NIX_CONFIG = "experimental-features = nix-command flakes"
 
 [tasks.build]
-description = "Build the desktop system without activating it"
-run = "nix build '.#nixosConfigurations.desktop.config.system.build.toplevel' --no-link"
+description = "Build a system without activating it"
+usage = 'arg "[host]" help="Host name" default="desktop"'
+run = 'nix build ".#nixosConfigurations.${usage_host?}.config.system.build.toplevel" --no-link'
 
 [tasks.check]
 description = "Run all flake checks"
@@ -18,9 +19,11 @@ description = "Update flake inputs"
 run = "nix flake update"
 
 [tasks.test]
-description = "Activate the system until the next reboot"
-run = "sudo nixos-rebuild test --flake '.#desktop'"
+description = "Activate a system until the next reboot"
+usage = 'arg "[host]" help="Host name" default="desktop"'
+run = 'sudo nixos-rebuild test --flake ".#${usage_host?}"'
 
 [tasks.switch]
-description = "Activate the system and make it the boot default"
-run = "sudo nixos-rebuild switch --flake '.#desktop'"
+description = "Activate a system and make it the boot default"
+usage = 'arg "[host]" help="Host name" default="desktop"'
+run = 'sudo nixos-rebuild switch --flake ".#${usage_host?}"'
