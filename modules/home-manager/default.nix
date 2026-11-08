@@ -11,5 +11,6 @@
     ./shell.nix
     ./terminal.nix
     ./tools.nix
+    ./vicinae.nix
   ];
 }
