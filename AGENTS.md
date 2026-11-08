@@ -16,7 +16,7 @@ The port is in progress, so some folders do not exist yet.
 
 ## Rules
 
-1. Before you add or port an option, check it against the current documentation for that tool. Some old settings are out of date.
+1. Before you add or change an option, a tool setting, or a task recipe, check the current documentation for that tool and follow its best practice. Some old settings are out of date.
 2. Make each desktop part its own module with one enable option. The parts are the compositor, bar, launcher, lock screen, notifications, and theme.
 3. Keep colors, fonts, and wallpaper in Stylix only, so that a part can be replaced without touching the palette.
 4. Keep nixpkgs, Home Manager, and Stylix on matching branches.
