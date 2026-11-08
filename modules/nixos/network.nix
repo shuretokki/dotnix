@@ -1,4 +1,4 @@
 {
-  # The firewall is on by default, so each service opens only its own ports.
+  # Enable networking
   networking.networkmanager.enable = true;
 }

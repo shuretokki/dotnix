@@ -1,6 +1,7 @@
 {
-  # NixOS leaves the timezone unset by default, so the clock would show UTC.
+  # Set your time zone.
   time.timeZone = "Asia/Jakarta";
 
+  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 }
