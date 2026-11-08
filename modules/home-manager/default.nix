@@ -9,6 +9,7 @@
     ./file-manager.nix
     ./hyprland
     ./media.nix
+    ./mime.nix
     ./playerctl.nix
     ./proton.nix
     ./shell.nix
