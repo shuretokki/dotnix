@@ -1,14 +1,14 @@
 # Repository guide
 
 This repository holds the NixOS configuration for the host `desktop`.
-It is a plain flake that follows `nixos-unstable`.
+It is a flake built with flake-parts that follows `nixos-unstable`.
 Home Manager and Stylix follow their `master` branches, and Home Manager runs as a NixOS module.
 
 ## Layout
 
 The port is in progress, so some folders do not exist yet.
 
-- `flake.nix` lists the inputs and builds each host with `nixosSystem`.
+- `flake.nix` lists the inputs, sets per-system outputs in `perSystem`, and builds each host with `nixosSystem` under `flake`.
 - `hosts/<name>/` holds one host, with its `configuration.nix` and `hardware-configuration.nix`.
 - `modules/nixos/` holds system modules, and each file does one job.
 - `modules/home-manager/` holds user modules, and each file does one job.
@@ -22,7 +22,9 @@ The port is in progress, so some folders do not exist yet.
 4. Keep nixpkgs, Home Manager, and Stylix on matching branches.
 5. If you add a file, run `git add` on it before you build. Flakes ignore files that git does not track.
 6. Never print the value of a secret. Secrets use sops-nix, and only encrypted files belong in the repository.
-7. Write one short comment above a module that says why it exists, and do not repeat what the code shows.
+7. Keep every file under `hosts/` and `modules/` a plain NixOS or Home Manager module, and use flake-parts only in `flake.nix` and its flake modules.
+8. Write one short comment above a module that says why it exists, and do not repeat what the code shows.
+9. If something fails, find the real cause first, then research known issues and compare options before you change the machine. Do not loop on retries.
 
 ## Commands
 
