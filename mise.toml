@@ -1,0 +1,26 @@
+[env]
+NIX_CONFIG = "experimental-features = nix-command flakes"
+
+[tasks.build]
+description = "Build the desktop system without activating it"
+run = "nix build '.#nixosConfigurations.desktop.config.system.build.toplevel' --no-link"
+
+[tasks.check]
+description = "Run all flake checks"
+run = "nix flake check"
+
+[tasks.fmt]
+description = "Format all Nix files"
+run = "nix fmt"
+
+[tasks.update]
+description = "Update flake inputs"
+run = "nix flake update"
+
+[tasks.test]
+description = "Activate the system until the next reboot"
+run = "sudo nixos-rebuild test --flake '.#desktop'"
+
+[tasks.switch]
+description = "Activate the system and make it the boot default"
+run = "sudo nixos-rebuild switch --flake '.#desktop'"
