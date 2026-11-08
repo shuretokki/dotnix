@@ -6,6 +6,7 @@
     ./comma.nix
     ./dorion.nix
     ./editor.nix
+    ./hyprland
     ./proton.nix
     ./shell.nix
     ./terminal.nix
