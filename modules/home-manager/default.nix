@@ -1,5 +1,6 @@
 {
   imports = [
+    ./browser.nix
     ./cli.nix
     ./comma.nix
     ./dorion.nix
