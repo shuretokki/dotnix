@@ -6,5 +6,6 @@
     ./locale.nix
     ./network.nix
     ./nix.nix
+    ./unfree.nix
   ];
 }
