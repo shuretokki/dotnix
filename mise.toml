@@ -27,3 +27,26 @@ run = 'sudo nixos-rebuild test --flake ".#${usage_host?}"'
 description = "Activate a system and make it the boot default"
 usage = 'arg "[host]" help="Host name" default="desktop"'
 run = 'sudo nixos-rebuild switch --flake ".#${usage_host?}"'
+
+[tasks.option]
+description = "Show the upstream description and source file of a NixOS option"
+usage = '''
+arg "<option>" help="Option path, for example boot.loader.limine.maxGenerations"
+arg "[host]" help="Host name" default="desktop"
+'''
+run = '''
+nix eval --raw ".#nixosConfigurations.${usage_host?}.options.${usage_option?}.description" --apply 'd: if builtins.isAttrs d then d.text else d'
+echo
+nix eval --raw ".#nixosConfigurations.${usage_host?}.options.${usage_option?}.declarations" --apply 'd: builtins.concatStringsSep "\n" (map toString d)'
+'''
+
+[tasks.upstream]
+description = "Find a line in the nixpkgs installer templates and show the comment above it"
+usage = '''
+arg "<text>" help="Text to search for, for example allowUnfree"
+arg "[host]" help="Host name" default="desktop"
+'''
+run = '''
+src=$(nix eval --raw ".#nixosConfigurations.${usage_host?}.config.nixpkgs.flake.source")
+grep -rnF -B2 -- "${usage_text?}" "$src/nixos/modules/installer" "$src/pkgs/by-name/ca/calamares-nixos-extensions"
+'''
