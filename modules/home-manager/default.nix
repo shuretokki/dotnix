@@ -8,6 +8,7 @@
     ./editor.nix
     ./file-manager.nix
     ./hyprland
+    ./media.nix
     ./playerctl.nix
     ./proton.nix
     ./shell.nix
