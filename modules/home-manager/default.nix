@@ -2,6 +2,7 @@
   imports = [
     ./cli.nix
     ./comma.nix
+    ./dorion.nix
     ./editor.nix
     ./proton.nix
     ./shell.nix
