@@ -5,6 +5,7 @@
     ./boot.nix
     ./dns.nix
     ./fonts.nix
+    ./hyprland.nix
     ./locale.nix
     ./network.nix
     ./nh.nix
