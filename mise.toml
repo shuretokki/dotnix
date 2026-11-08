@@ -50,3 +50,15 @@ run = '''
 src=$(nix eval --raw ".#nixosConfigurations.${usage_host?}.config.nixpkgs.flake.source")
 grep -rnF -B2 -- "${usage_text?}" "$src/nixos/modules/installer" "$src/pkgs/by-name/ca/calamares-nixos-extensions"
 '''
+
+[tasks.home-option]
+description = "Show the upstream description and source file of a Home Manager option"
+usage = '''
+arg "<option>" help="Option path, for example programs.git.enable"
+arg "[host]" help="Host name" default="desktop"
+'''
+run = '''
+nix eval --raw ".#nixosConfigurations.${usage_host?}.options.home-manager.users.type.getSubOptions" --apply "f: let d = (f [ \"user\" ]).${usage_option?}.description; in if builtins.isAttrs d then d.text else d"
+echo
+nix eval --raw ".#nixosConfigurations.${usage_host?}.options.home-manager.users.type.getSubOptions" --apply "f: builtins.concatStringsSep \"\\n\" (map toString (f [ \"user\" ]).${usage_option?}.declarations)"
+'''

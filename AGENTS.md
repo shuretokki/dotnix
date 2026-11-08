@@ -24,7 +24,7 @@ The port is in progress, so some folders do not exist yet.
 6. Never print the value of a secret. Secrets use sops-nix, and only encrypted files belong in the repository.
 7. Keep every file under `hosts/` and `modules/` a plain NixOS or Home Manager module, and use flake-parts only in `flake.nix` and its flake modules.
 8. Do not write original comments. Take each comment from upstream. Find the same line in the nixpkgs installer templates with `mise run upstream <text>`, and copy its comment without changes.
-9. If the templates have no comment for a line, read the upstream option description with `mise run option <option>`. Copy it without changes only when it gives a reason or a warning. Otherwise write no comment.
+9. If the templates have no comment for a line, read the upstream option description with `mise run option <option>`, or `mise run home-option <option>` for a Home Manager option. Copy it without changes only when it gives a reason or a warning. Otherwise write no comment.
 10. A comment must say something the code does not. Never add a comment that restates a setting.
 11. Do not put local context in a committed file. That includes hardware names, host names, local paths, personal details, and tools that exist only on one person's computer.
 12. After a comment-only edit, strip the comments from the old and new files and check that the code is the same.
