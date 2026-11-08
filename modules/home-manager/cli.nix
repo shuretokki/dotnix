@@ -29,11 +29,15 @@
         "--border"
         "--info=inline"
       ];
-      fileWidgetCommand = "fd --type f --hidden --follow --exclude .git";
-      fileWidgetOptions = [ "--preview 'head -100 {}'" ];
-      changeDirWidgetCommand = "fd --type d --hidden --follow --exclude .git";
-      changeDirWidgetOptions = [ "--preview 'eza --tree --level=2 --color=always {} | head -50'" ];
-      historyWidgetOptions = [
+      fileWidget = {
+        command = "fd --type f --hidden --follow --exclude .git";
+        options = [ "--preview 'head -100 {}'" ];
+      };
+      changeDirWidget = {
+        command = "fd --type d --hidden --follow --exclude .git";
+        options = [ "--preview 'eza --tree --level=2 --color=always {} | head -50'" ];
+      };
+      historyWidget.options = [
         "--sort"
         "--exact"
       ];
