@@ -23,8 +23,14 @@ The port is in progress, so some folders do not exist yet.
 5. If you add a file, run `git add` on it before you build. Flakes ignore files that git does not track.
 6. Never print the value of a secret. Secrets use sops-nix, and only encrypted files belong in the repository.
 7. Keep every file under `hosts/` and `modules/` a plain NixOS or Home Manager module, and use flake-parts only in `flake.nix` and its flake modules.
-8. Write one short comment above a module that says why it exists, and do not repeat what the code shows.
-9. If something fails, find the real cause first, then research known issues and compare options before you change the machine. Do not loop on retries.
+8. Do not write original comments. Take each comment from upstream. Find the same line in the nixpkgs installer templates with `mise run upstream <text>`, and copy its comment without changes.
+9. If the templates have no comment for a line, read the upstream option description with `mise run option <option>`. Copy it without changes only when it gives a reason or a warning. Otherwise write no comment.
+10. A comment must say something the code does not. Never add a comment that restates a setting.
+11. Do not put local context in a committed file. That includes hardware names, host names, local paths, personal details, and tools that exist only on one person's computer.
+12. After a comment-only edit, strip the comments from the old and new files and check that the code is the same.
+13. If something fails, find the real cause first, then research known issues and compare options before you change the machine. Do not loop on retries.
+14. Do not set an option to its default value, so that later upstream changes to the default still apply.
+15. Keep hardware-specific modules, such as `nvidia.nix`, out of `modules/nixos/default.nix`. The host that needs one imports it by path.
 
 ## Commands
 
