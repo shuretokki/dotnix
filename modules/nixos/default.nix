@@ -1,1 +1,6 @@
-{ imports = [ ]; }
+{
+  imports = [
+    ./boot.nix
+    ./nix.nix
+  ];
+}

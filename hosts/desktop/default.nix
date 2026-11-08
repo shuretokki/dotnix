@@ -8,22 +8,11 @@
 
   networking.hostName = "desktop";
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.limine = {
-    enable = true;
-    maxGenerations = 10;
-    enableEditor = false;
-    extraEntries = ''
-      /Windows
-        protocol: efi_chainload
-        path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
-    '';
-  };
+  boot.loader.limine.extraEntries = ''
+    /Windows
+      protocol: efi_chainload
+      path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+  '';
 
   users.users.shure = {
     uid = 1000;
