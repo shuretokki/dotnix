@@ -7,6 +7,7 @@
     ./dorion.nix
     ./editor.nix
     ./hyprland
+    ./playerctl.nix
     ./proton.nix
     ./shell.nix
     ./sonora.nix
