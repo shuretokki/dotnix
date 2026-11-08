@@ -2,8 +2,7 @@
 {
   programs = {
     zoxide.enable = true;
-    starship.enable = true;
-    btop.enable = true;
+    bottom.enable = true;
 
     direnv = {
       enable = true;
