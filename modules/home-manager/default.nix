@@ -8,6 +8,7 @@
     ./editor.nix
     ./file-manager.nix
     ./hyprland
+    ./lean-ctx.nix
     ./media.nix
     ./mime.nix
     ./playerctl.nix
