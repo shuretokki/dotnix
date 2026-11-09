@@ -6,6 +6,7 @@ local mainMod = "SUPER"
 -- mist-wall (wallpaper) and the mistd backends itself
 hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+    hl.exec_cmd("mistd tiles @start @trash @trash-full")
     hl.exec_cmd("mist-ui")
 end)
 
