@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   programs.ghostty = {
     enable = true;
@@ -13,6 +14,8 @@
       scrollback-limit = 10000;
     };
   };
+
+  home.packages = [ pkgs.warp-terminal ];
 
   home.sessionVariables.TERMINAL = "ghostty";
 }
