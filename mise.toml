@@ -15,8 +15,21 @@ description = "Format all Nix files"
 run = "nix fmt"
 
 [tasks.update]
-description = "Update flake inputs"
-run = "nix flake update"
+description = "Update everything, or one custom package or flake input"
+usage = 'arg "[name]" help="Package in pkgs/ or flake input, for example mist"'
+run = '''
+sys=$(nix eval --raw --impure --expr builtins.currentSystem)
+pkgs=$(nix eval --raw ".#packages.$sys" --apply 'p: builtins.concatStringsSep " " (builtins.attrNames p)')
+bump() { nix run nixpkgs#nix-update -- --flake "$1" --version=stable --build; }
+if [ -z "${usage_name:-}" ]; then
+  nix flake update
+  for p in $pkgs; do bump "$p"; done
+elif [[ " $pkgs " == *" $usage_name "* ]]; then
+  bump "$usage_name"
+else
+  nix flake update "$usage_name"
+fi
+'''
 
 [tasks.test]
 description = "Activate a system until the next reboot, with a change diff"
