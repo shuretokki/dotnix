@@ -3,22 +3,22 @@
 hl.config({
     input = {
         -- Appropriate XKB keymap parameter.
-        kb_model = "",
+        -- kb_model = "",
 
         -- Appropriate XKB keymap parameter
         kb_layout = "us",
 
         -- Appropriate XKB keymap parameter
-        kb_variant = "",
+        -- kb_variant = "",
 
         -- Appropriate XKB keymap parameter
-        kb_options = "",
+        -- kb_options = "",
 
         -- Appropriate XKB keymap parameter
-        kb_rules = "",
+        -- kb_rules = "",
 
         -- Appropriate XKB keymap file
-        kb_file = "",
+        -- kb_file = "",
 
         -- Engage numlock by default.
         numlock_by_default = false,
@@ -48,7 +48,7 @@ hl.config({
         left_handed = false,
 
         -- Sets the scroll acceleration profile, when accel_profile is set to custom.
-        scroll_points = "",
+        -- scroll_points = "",
 
         -- Sets the scroll method. [2fg/edge/on_button_down/no_scroll]
         -- scroll_method = "",

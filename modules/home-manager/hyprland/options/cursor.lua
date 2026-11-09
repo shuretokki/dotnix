@@ -36,7 +36,7 @@ hl.config({
         warp_on_toggle_special = 0,
 
         -- the name of a default monitor for the cursor to be set to on startup
-        default_monitor = "",
+        -- default_monitor = "",
 
         -- the factor to zoom by around the cursor. 1 means no zoom. (range 1 to 10)
         zoom_factor = 1,

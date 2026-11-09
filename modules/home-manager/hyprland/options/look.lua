@@ -73,7 +73,7 @@ hl.config({
         modal_parent_blocking = true,
 
         -- overrides the system locale
-        locale = "",
+        -- locale = "",
     },
 
     decoration = {
@@ -151,7 +151,7 @@ hl.config({
         dim_around = 0.4,
 
         -- a path to a custom shader to be applied at the end of rendering.
-        screen_shader = "",
+        -- screen_shader = "",
 
         -- whether the border should be treated as a part of the window.
         border_part_of_window = true,

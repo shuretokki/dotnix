@@ -53,10 +53,10 @@ hl.config({
         enable_swallow = false,
 
         -- The class regex to be used for windows that should be swallowed.
-        swallow_regex = "",
+        -- swallow_regex = "",
 
         -- The title regex to be used for windows that should not be swallowed.
-        swallow_exception_regex = "",
+        -- swallow_exception_regex = "",
 
         -- Whether Hyprland should focus an app that requests to be focused.
         focus_on_activate = false,

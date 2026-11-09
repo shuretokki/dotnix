@@ -59,7 +59,7 @@ hl.config({
             transform = 0,
 
             -- the monitor to bind tablets.
-            output = "",
+            -- output = "",
 
             -- position of the mapped region in monitor layout.
             -- region_position has no simple default in the source (Config::VEC2{})
