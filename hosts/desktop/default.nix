@@ -32,6 +32,8 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "backup";
+    overwriteBackup = true;
     extraSpecialArgs = { inherit inputs; };
     users.shure = import ./home.nix;
   };
