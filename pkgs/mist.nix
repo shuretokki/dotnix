@@ -14,6 +14,7 @@
   systemd,
   linux-pam,
   libglvnd,
+  inter,
   mpv-unwrapped,
   dbus,
   procps,
@@ -125,11 +126,16 @@ stdenvNoCC.mkDerivation {
     cp -r examples/hyprland $share/examples/
     cp -r docs $share/
 
+    install -d $share/fonts
+    ln -s ${inter}/share/fonts/truetype/InterVariable.ttf $share/fonts/SF-Pro.ttf
+    ln -s $share/native/assets/tabler-icons.ttf $share/fonts/tabler-icons.ttf
+
     patchShebangs $out/bin/mist-ui $out/bin/mist-try $share/scripts
 
     for bin in mist-ui-bin mist-wall-bin mist-comp mistd mist-try; do
       wrapProgram $out/bin/$bin \
         --set MIST_DIR $share \
+        --set MIST_FONT_DIR $share/fonts \
         --set MIST_TRY_BIN $out/bin \
         --prefix PATH : $out/bin:${lib.makeBinPath tools} \
         --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath libraries}:/run/opengl-driver/lib
