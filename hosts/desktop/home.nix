@@ -1,7 +1,7 @@
 {
   imports = [
     ../../modules/home-manager
-    ../../modules/home-manager/macshell
+    ../../modules/home-manager/mist
   ];
 
   home = {

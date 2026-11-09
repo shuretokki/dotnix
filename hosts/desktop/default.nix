@@ -4,7 +4,6 @@
     ./hardware-configuration.nix
     ../../modules/nixos
     ../../modules/nixos/nvidia.nix
-    ../../modules/nixos/macshell.nix
     ../../modules/nixos/proton-vpn.nix
     inputs.home-manager.nixosModules.home-manager
   ];
