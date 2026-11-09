@@ -2,6 +2,7 @@
 {
   programs = {
     zoxide.enable = true;
+    mise.enable = true;
     bottom.enable = true;
 
     direnv = {
