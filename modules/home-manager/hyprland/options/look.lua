@@ -97,7 +97,7 @@ hl.config({
             enabled = true,
 
             -- Shadow range (size) in layout px (range 0 to 100)
-            range = 4,
+            range = 30,
 
             -- in what power to render the falloff (more power, the faster the falloff) (range 1 to 4)
             render_power = 3,
