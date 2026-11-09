@@ -14,6 +14,7 @@ The port is in progress, so some folders do not exist yet.
 - `modules/nixos/` holds system modules, and each file does one job.
 - `modules/home-manager/` holds user modules, and each file does one job.
 - `modules/home-manager/hyprland/` holds the compositor settings as plain Lua files, which the module loads with `extraLuaFiles`.
+- `modules/home-manager/hyprland/options/` lists every Hyprland option with its default value and its upstream description, one file for each topic.
 - `pkgs/` and `overlays/` hold custom packages and overlays.
 
 ## Rules
@@ -31,7 +32,7 @@ The port is in progress, so some folders do not exist yet.
 11. Do not put local context in a committed file. That includes hardware names, host names, local paths, personal details, and tools that exist only on one person's computer.
 12. After a comment-only edit, strip the comments from the old and new files and check that the code is the same.
 13. If something fails, find the real cause first, then research known issues and compare options before you change the machine. Do not loop on retries.
-14. Do not set an option to its default value, so that later upstream changes to the default still apply.
+14. Do not set an option to its default value, so that later upstream changes to the default still apply. The files under `modules/home-manager/hyprland/options/` are the one exception. They list every option with its default and its upstream description, so that the owner can change a value in place. An option that another file sets stays out of them.
 15. Keep hardware-specific modules, such as `nvidia.nix`, out of `modules/nixos/default.nix`. The host that needs one imports it by path.
 16. Keep `programs.hyprland.withUWSM` at `true`. The cached package is built with it, and `false` forces a local compile of Hyprland.
 17. Add a flake input with `nix flake lock`, not `nix flake update`, because `update` moves every input. Make each input follow `nixpkgs`.
