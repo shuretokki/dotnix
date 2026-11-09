@@ -8,10 +8,12 @@
     ./editor.nix
     ./file-manager.nix
     ./hyprland
+    ./lean-ctx.nix
     ./media.nix
     ./mime.nix
     ./playerctl.nix
     ./proton.nix
+    ./runtimes.nix
     ./shell.nix
     ./sonora.nix
     ./terminal.nix
