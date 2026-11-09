@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ../../modules/nixos
     ../../modules/nixos/nvidia.nix
+    ../../modules/nixos/macshell.nix
     ../../modules/nixos/proton-vpn.nix
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -13,7 +14,7 @@
   boot.loader.limine.extraEntries = ''
     /Windows
       protocol: efi_chainload
-      path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+      path: uuid(BD81D35E-3B71-495F-A6AA-2EAAD3BF5EF1):/EFI/Microsoft/Boot/bootmgfw.efi
   '';
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
