@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 {
-  home.packages = [ inputs.hyprfm.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+  home.packages = [ pkgs.nautilus ];
 }

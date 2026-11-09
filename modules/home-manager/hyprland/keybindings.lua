@@ -1,5 +1,5 @@
 local terminal    = "ghostty"
-local fileManager = "hyprfm"
+local fileManager = "nautilus"
 local browser     = "zen-beta"
 local menu        = "vicinae toggle"
 
