@@ -36,7 +36,7 @@ hl.config({
         sensitivity = 0,
 
         -- Sets the cursor acceleration profile. [adaptive/flat/custom]
-        accel_profile = "",
+        accel_profile = "flat",
 
         -- Force no cursor acceleration.
         force_no_accel = false,
