@@ -8,6 +8,7 @@
     ./dorion.nix
     ./editor.nix
     ./file-manager.nix
+    ./github-mcp.nix
     ./hyprland
     ./karere.nix
     ./lean-ctx.nix
