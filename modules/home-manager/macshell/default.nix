@@ -32,6 +32,7 @@ in
   home.packages = [
     macshell-start
     pkgs.papirus-icon-theme
+    pkgs.quickshell
   ];
 
   xdg.configFile = {
