@@ -6,6 +6,7 @@
     configType = "lua";
     systemd.enable = false;
     extraLuaFiles = {
+      animations = ./animations.lua;
       behavior = ./options/behavior.lua;
       blur = ./options/blur.lua;
       cursor = ./options/cursor.lua;
