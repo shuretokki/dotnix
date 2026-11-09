@@ -16,7 +16,7 @@ hl.config({
             middle_button_emulation = false,
 
             -- Sets the tap button mapping for touchpad button emulation. [lrm/lmr]
-            tap_button_map = "",
+            -- tap_button_map = "",
 
             -- Button presses with 1, 2, or 3 fingers will be mapped to LMB, RMB, and MMB respectively.
             clickfinger_behavior = false,

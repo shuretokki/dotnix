@@ -51,7 +51,7 @@ hl.config({
         scroll_points = "",
 
         -- Sets the scroll method. [2fg/edge/on_button_down/no_scroll]
-        scroll_method = "",
+        -- scroll_method = "",
 
         -- Sets the scroll button. 0 means default. (range 0 to 300)
         scroll_button = 0,
