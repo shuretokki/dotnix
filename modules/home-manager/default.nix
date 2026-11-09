@@ -13,6 +13,7 @@
     ./mime.nix
     ./playerctl.nix
     ./proton.nix
+    ./runtimes.nix
     ./shell.nix
     ./sonora.nix
     ./terminal.nix
