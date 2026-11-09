@@ -78,10 +78,10 @@ hl.config({
 
     decoration = {
         -- rounded corners' radius (in layout px) (range 0 to 100)
-        rounding = 0,
+        rounding = 18,
 
         -- rounding power of corners (2 is a circle) (range 1 to 10)
-        rounding_power = 2,
+        rounding_power = 2.4,
 
         -- opacity of active windows. (range 0 to 1)
         active_opacity = 1,
