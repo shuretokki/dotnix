@@ -16,6 +16,7 @@
     ./playerctl.nix
     ./proton.nix
     ./runtimes.nix
+    ./scrapling.nix
     ./shell.nix
     ./sonora.nix
     ./terminal.nix
