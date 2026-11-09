@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -28,6 +28,8 @@
       "audio"
     ];
   };
+
+  programs.nh.flake = "${config.users.users.shure.home}/dotnix";
 
   home-manager = {
     useGlobalPkgs = true;
