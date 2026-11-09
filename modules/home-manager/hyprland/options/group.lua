@@ -16,16 +16,16 @@ hl.config({
 
         col = {
             -- active group border color
-            border_active = "rgba(ffff0066)",
+            -- border_active is set by Stylix
 
             -- inactive group border color
-            border_inactive = "rgba(77770066)",
+            -- border_inactive is set by Stylix
 
             -- inactive locked group border color
             border_locked_inactive = "rgba(ff550066)",
 
             -- active locked group border color
-            border_locked_active = "rgba(77550066)",
+            -- border_locked_active is set by Stylix
         },
 
         -- automatically group new windows
@@ -105,7 +105,7 @@ hl.config({
             gradient_round_only_edges = true,
 
             -- color for window titles in the groupbar
-            text_color = "rgba(ffffffff)",
+            -- text_color is set by Stylix
 
             -- color for inactive windows' titles in the groupbar
             -- text_color_inactive is unset by default
@@ -118,10 +118,10 @@ hl.config({
 
             col = {
                 -- active group border color
-                active = "rgba(ffff0066)",
+                -- active is set by Stylix
 
                 -- inactive (out of focus) group border color
-                inactive = "rgba(77770066)",
+                -- inactive is set by Stylix
 
                 -- active locked group border color
                 locked_active = "rgba(ff550066)",

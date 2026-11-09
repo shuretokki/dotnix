@@ -19,10 +19,10 @@ hl.config({
 
         col = {
             -- border color for inactive windows
-            inactive_border = "rgba(444444ff)",
+            -- inactive_border is set by Stylix
 
             -- border color for the active window
-            active_border = "rgba(ffffffff)",
+            -- active_border is set by Stylix
 
             -- inactive border color for window that cannot be added to a group
             nogroup_border = "rgba(ffaaffff)",
@@ -106,7 +106,7 @@ hl.config({
             sharp = false,
 
             -- shadow's color. Alpha dictates shadow's opacity.
-            color = "rgba(1a1a1aee)",
+            -- color is set by Stylix
 
             -- inactive shadow color. (if not set, will fall back to col.shadow)
             -- color_inactive is unset by default

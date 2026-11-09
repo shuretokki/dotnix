@@ -74,7 +74,7 @@ hl.config({
         session_lock_blur = false,
 
         -- change the background color.
-        background_color = "rgba(111111ff)",
+        -- background_color is set by Stylix
 
         -- close the special workspace if the last window is removed
         close_special_on_empty = true,
