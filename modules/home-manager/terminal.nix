@@ -17,5 +17,5 @@
 
   home.packages = [ pkgs.warp-terminal ];
 
-  home.sessionVariables.TERMINAL = "ghostty";
+  home.sessionVariables.TERMINAL = "warp-terminal";
 }
