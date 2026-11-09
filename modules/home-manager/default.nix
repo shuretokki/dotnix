@@ -4,10 +4,12 @@
     ./claude.nix
     ./cli.nix
     ./comma.nix
+    ./craft.nix
     ./dorion.nix
     ./editor.nix
     ./file-manager.nix
     ./hyprland
+    ./karere.nix
     ./lean-ctx.nix
     ./media.nix
     ./mime.nix
