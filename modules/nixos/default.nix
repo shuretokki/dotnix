@@ -5,6 +5,7 @@
     ./boot.nix
     ./dns.nix
     ./fonts.nix
+    ./gvfs.nix
     ./hyprland.nix
     ./keyring.nix
     ./locale.nix
@@ -13,6 +14,7 @@
     ./nh.nix
     ./nix.nix
     ./performance.nix
+    ./udisks2.nix
     ./unfree.nix
   ];
 }

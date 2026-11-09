@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       server_names = [
-        "quad9-doh-ip4-nofilter-ecs-pri"
+        "quad9-doh-ip4-port443-nofilter-ecs-pri"
         "cloudflare"
       ];
       listen_addresses = [ "127.0.0.1:53" ];
