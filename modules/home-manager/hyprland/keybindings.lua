@@ -7,11 +7,11 @@ local mainMod = "SUPER"
 local altMod  = "ALT"
 local ctrlAlt = "CTRL + ALT"
 
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(ctrlAlt .. " + SHIFT + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop"))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind(altMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
@@ -32,6 +32,11 @@ hl.bind(mainMod .. " + SHIFT + left",  hl.dsp.window.move({ direction = "left" }
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + up",    hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + down",  hl.dsp.window.move({ direction = "down" }))
+
+hl.bind(altMod .. " + SHIFT + A", hl.dsp.window.move({ direction = "left" }))
+hl.bind(altMod .. " + SHIFT + D", hl.dsp.window.move({ direction = "right" }))
+hl.bind(altMod .. " + SHIFT + W", hl.dsp.window.move({ direction = "up" }))
+hl.bind(altMod .. " + SHIFT + S", hl.dsp.window.move({ direction = "down" }))
 
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
