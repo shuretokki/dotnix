@@ -28,6 +28,11 @@ description = "Activate a system and make it the boot default, with a change dif
 usage = 'arg "[host]" help="Host name" default="desktop"'
 run = 'nh os switch . --hostname "${usage_host?}"'
 
+[tasks.boot]
+description = "Make a system the boot default without activating it, with a change diff"
+usage = 'arg "[host]" help="Host name" default="desktop"'
+run = 'nh os boot . --hostname "${usage_host?}"'
+
 [tasks.option]
 description = "Show the upstream description and source file of a NixOS option"
 usage = '''

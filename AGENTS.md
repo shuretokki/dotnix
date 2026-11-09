@@ -47,6 +47,8 @@ It cannot test boot, the GPU, Hyprland, or secret decryption.
 On a low-memory machine, build with fewer `--cores` and `--max-jobs 1`.
 On a machine that boots this system, run `mise run test` first, because a reboot undoes it.
 Run `mise run switch` only after `test` works.
+A new display manager, session, or compositor package takes effect only after a reboot.
+For that kind of change, run `mise run boot` and reboot, because `test` leaves the old session running.
 Both tasks use `nh`, which shows a diff of the change before it applies it.
 On a fresh machine where `nh` is not installed yet, run `sudo nixos-rebuild test --flake .#desktop` once.
 If a switch breaks the system, run `sudo nixos-rebuild switch --rollback`.
