@@ -35,6 +35,7 @@ in
     macshell-start
     pkgs.papirus-icon-theme
     pkgs.quickshell
+    pkgs.awww
   ];
 
   xdg.configFile = {
