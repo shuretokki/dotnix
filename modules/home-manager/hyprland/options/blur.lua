@@ -13,7 +13,7 @@ hl.config({
             size = 8,
 
             -- the amount of passes to perform (range 0 to 10)
-            passes = 1,
+            passes = 3,
 
             -- make the blur layer ignore the opacity of the window
             ignore_opacity = true,
