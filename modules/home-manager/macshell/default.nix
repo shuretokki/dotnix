@@ -21,6 +21,8 @@ let
     ];
     text = ''
       export QS_ICON_THEME=Papirus-Dark
+      export QML2_IMPORT_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/qml''${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
+      export QT_PLUGIN_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/plugins''${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
       while true; do
         qs -c MacShell || true
         sleep 3
@@ -33,6 +35,7 @@ in
     macshell-start
     pkgs.papirus-icon-theme
     pkgs.quickshell
+    pkgs.awww
   ];
 
   xdg.configFile = {
