@@ -1,12 +1,12 @@
--- Defaults from Hyprland 0.57.1. Documentation: https://wiki.hypr.land/configuring/core/config-options/
+-- https://wiki.hypr.land/configuring/core/config-options/
 
 hl.config({
     misc = {
         -- disables the random Hyprland logo / anime girl background. :(
-        disable_hyprland_logo = false,
+        disable_hyprland_logo = true,
 
         -- disables the Hyprland splash rendering.
-        disable_splash_rendering = false,
+        disable_splash_rendering = true,
 
         col = {
             -- Changes the color of the splash text.
@@ -41,7 +41,7 @@ hl.config({
         layers_hog_keyboard_focus = true,
 
         -- If true, will animate manual window resizes/moves
-        animate_manual_resizes = false,
+        animate_manual_resizes = true,
 
         -- If true, will animate windows being dragged by mouse.
         animate_mouse_windowdragging = false,
@@ -53,10 +53,10 @@ hl.config({
         enable_swallow = false,
 
         -- The class regex to be used for windows that should be swallowed.
-        swallow_regex = "",
+        -- swallow_regex = "",
 
         -- The title regex to be used for windows that should not be swallowed.
-        swallow_exception_regex = "",
+        -- swallow_exception_regex = "",
 
         -- Whether Hyprland should focus an app that requests to be focused.
         focus_on_activate = false,
@@ -74,7 +74,7 @@ hl.config({
         session_lock_blur = false,
 
         -- change the background color.
-        background_color = "rgba(111111ff)",
+        -- background_color is set by Stylix
 
         -- close the special workspace if the last window is removed
         close_special_on_empty = true,

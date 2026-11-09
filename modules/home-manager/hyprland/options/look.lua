@@ -19,10 +19,10 @@ hl.config({
 
         col = {
             -- border color for inactive windows
-            inactive_border = "rgba(444444ff)",
+            -- inactive_border is set by Stylix
 
             -- border color for the active window
-            active_border = "rgba(ffffffff)",
+            -- active_border is set by Stylix
 
             -- inactive border color for window that cannot be added to a group
             nogroup_border = "rgba(ffaaffff)",
@@ -73,15 +73,15 @@ hl.config({
         modal_parent_blocking = true,
 
         -- overrides the system locale
-        locale = "",
+        -- locale = "",
     },
 
     decoration = {
         -- rounded corners' radius (in layout px) (range 0 to 100)
-        rounding = 0,
+        rounding = 18,
 
         -- rounding power of corners (2 is a circle) (range 1 to 10)
-        rounding_power = 2,
+        rounding_power = 2.4,
 
         -- opacity of active windows. (range 0 to 1)
         active_opacity = 1,
@@ -97,7 +97,7 @@ hl.config({
             enabled = true,
 
             -- Shadow range (size) in layout px (range 0 to 100)
-            range = 4,
+            range = 30,
 
             -- in what power to render the falloff (more power, the faster the falloff) (range 1 to 4)
             render_power = 3,
@@ -106,7 +106,7 @@ hl.config({
             sharp = false,
 
             -- shadow's color. Alpha dictates shadow's opacity.
-            color = "rgba(1a1a1aee)",
+            -- color is set by Stylix
 
             -- inactive shadow color. (if not set, will fall back to col.shadow)
             -- color_inactive is unset by default
@@ -151,7 +151,7 @@ hl.config({
         dim_around = 0.4,
 
         -- a path to a custom shader to be applied at the end of rendering.
-        screen_shader = "",
+        -- screen_shader = "",
 
         -- whether the border should be treated as a part of the window.
         border_part_of_window = true,

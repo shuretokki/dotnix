@@ -14,6 +14,7 @@
     ./nh.nix
     ./nix.nix
     ./performance.nix
+    ./stylix.nix
     ./udisks2.nix
     ./unfree.nix
   ];

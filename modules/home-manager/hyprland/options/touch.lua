@@ -16,7 +16,7 @@ hl.config({
             middle_button_emulation = false,
 
             -- Sets the tap button mapping for touchpad button emulation. [lrm/lmr]
-            tap_button_map = "",
+            -- tap_button_map = "",
 
             -- Button presses with 1, 2, or 3 fingers will be mapped to LMB, RMB, and MMB respectively.
             clickfinger_behavior = false,
@@ -59,7 +59,7 @@ hl.config({
             transform = 0,
 
             -- the monitor to bind tablets.
-            output = "",
+            -- output = "",
 
             -- position of the mapped region in monitor layout.
             -- region_position has no simple default in the source (Config::VEC2{})
