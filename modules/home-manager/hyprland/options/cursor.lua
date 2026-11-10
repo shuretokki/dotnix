@@ -1,4 +1,5 @@
--- Defaults from Hyprland 0.57.1. Documentation: https://wiki.hypr.land/configuring/core/config-options/
+-- 0.57.1
+-- https://wiki.hypr.land/configuring/core/config-options/
 
 hl.config({
     cursor = {

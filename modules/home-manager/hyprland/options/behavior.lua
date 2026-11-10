@@ -1,3 +1,4 @@
+-- 0.57.1
 -- https://wiki.hypr.land/configuring/core/config-options/
 
 hl.config({

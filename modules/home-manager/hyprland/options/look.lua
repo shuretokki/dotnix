@@ -1,4 +1,5 @@
--- Defaults from Hyprland 0.57.1. Documentation: https://wiki.hypr.land/configuring/core/config-options/
+-- 0.57.1
+-- https://wiki.hypr.land/configuring/core/config-options/
 
 hl.config({
     general = {
@@ -6,10 +7,10 @@ hl.config({
         border_size = 1,
 
         -- gaps between windows
-        gaps_in = 5,
+        gaps_in = 2,
 
         -- gaps between windows and monitor edges
-        gaps_out = 20,
+        gaps_out = 4,
 
         -- gaps between windows and monitor edges for floating windows
         float_gaps = 0,
@@ -78,10 +79,10 @@ hl.config({
 
     decoration = {
         -- rounded corners' radius (in layout px) (range 0 to 100)
-        rounding = 18,
+        rounding = 16,
 
         -- rounding power of corners (2 is a circle) (range 1 to 10)
-        rounding_power = 2.4,
+        rounding_power = 4,
 
         -- opacity of active windows. (range 0 to 1)
         active_opacity = 1,
@@ -112,7 +113,7 @@ hl.config({
             -- color_inactive is unset by default
 
             -- shadow's rendering offset.
-            -- offset has no simple default in the source (Config::VEC2{})
+            offset = { 0, 14 },
 
             -- shadow's scale. (range 0.05 to 2)
             scale = 1,
@@ -123,13 +124,13 @@ hl.config({
             enabled = false,
 
             -- glow range (size) in layout px (range 0 to 100)
-            range = 10,
+            range = 4,
 
             -- in what power to render the falloff (more power, the faster the falloff) (range 1 to 4)
-            render_power = 3,
+            render_power = 1,
 
             -- glow's color. Alpha dictates glow's opacity.
-            color = "rgba(33ccffee)",
+            color = "rgba(ffaaffff)",
 
             -- inactive glow color. (if not set, will fall back to decoration:glow:color)
             -- color_inactive is unset by default
