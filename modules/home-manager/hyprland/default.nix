@@ -23,6 +23,7 @@ in
         ];
         angle = 45;
       };
+      decoration.shadow.color = lib.mkForce "rgba(${colors.base00}66)";
       plugin.hyprbars = {
         bar_height = 28;
         bar_color = "rgb(${colors.base00})";
