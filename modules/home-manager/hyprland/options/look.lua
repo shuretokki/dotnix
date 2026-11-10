@@ -98,10 +98,10 @@ hl.config({
             enabled = true,
 
             -- Shadow range (size) in layout px (range 0 to 100)
-            range = 30,
+            range = 45,
 
             -- in what power to render the falloff (more power, the faster the falloff) (range 1 to 4)
-            render_power = 3,
+            render_power = 2,
 
             -- whether the shadow should be sharp or not.
             sharp = false,
@@ -113,7 +113,7 @@ hl.config({
             -- color_inactive is unset by default
 
             -- shadow's rendering offset.
-            offset = { 0, 14 },
+            offset = { 0, 8 },
 
             -- shadow's scale. (range 0.05 to 2)
             scale = 1,

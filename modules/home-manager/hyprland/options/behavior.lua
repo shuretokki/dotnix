@@ -38,9 +38,6 @@ hl.config({
         -- Will make mouse focus follow the mouse when drag and dropping.
         always_follow_on_dnd = true,
 
-        -- If true, will make keyboard-interactive layers keep their focus on mouse move.
-        layers_hog_keyboard_focus = true,
-
         -- If true, will animate manual window resizes/moves
         animate_manual_resizes = true,
 

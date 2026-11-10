@@ -25,9 +25,6 @@ hl.config({
         -- if enabled, makes the preselect direction persist.
         permanent_direction_override = false,
 
-        -- specifies the scale factor of windows on the special workspace (range 0 to 1)
-        special_scale_factor = 1,
-
         -- specifies the auto-split width multiplier (range 0.1 to 3)
         split_width_multiplier = 1,
 
@@ -47,9 +44,6 @@ hl.config({
     master = {
         -- enable adding additional master windows in a horizontal split style
         allow_small_split = false,
-
-        -- the scale of the special workspace windows. (range 0 to 1)
-        special_scale_factor = 1,
 
         -- the size as a percentage of the master window. (range 0 to 1)
         mfact = 0.55,
