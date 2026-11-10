@@ -128,9 +128,6 @@ hl.config({
 
         -- allow buffer invalidation. (range 0 to 1; options: disable = 0, enable = 1)
         invalidate_buffers = 1,
-
-        -- allow fp16 buffer invalidation. (range 0 to 2; options: disable = 0, enable = 1, auto = 2)
-        invalidate_fp16 = 1,
     },
 
     experimental = {
