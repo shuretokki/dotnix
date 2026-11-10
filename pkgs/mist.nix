@@ -45,6 +45,8 @@ let
 
     postPatch = ''
       rm -f .cargo/config.toml
+      substituteInPlace mist-ui/src/switcher.rs \
+        --replace-fail 'Keysym::Super_L | Keysym::Super_R |' 'Keysym::Alt_L | Keysym::Alt_R | Keysym::Super_L | Keysym::Super_R |'
     '';
 
     nativeBuildInputs = [ pkg-config ];
