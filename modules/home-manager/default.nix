@@ -5,7 +5,7 @@
     ./cli.nix
     ./comma.nix
     ./craft.nix
-    ./dorion.nix
+    ./discord.nix
     ./editor.nix
     ./file-manager.nix
     ./github-mcp.nix
