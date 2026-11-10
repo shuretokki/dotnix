@@ -36,11 +36,6 @@ description = "Activate a system until the next reboot, with a change diff"
 usage = 'arg "[host]" help="Host name" default="desktop"'
 run = 'nh os test . --hostname "${usage_host?}"'
 
-[tasks.switch]
-description = "Activate a system and make it the boot default, with a change diff"
-usage = 'arg "[host]" help="Host name" default="desktop"'
-run = 'nh os switch . --hostname "${usage_host?}"'
-
 [tasks.boot]
 description = "Make a system the boot default without activating it, with a change diff"
 usage = 'arg "[host]" help="Host name" default="desktop"'
