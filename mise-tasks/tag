@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+#MISE description="Tag the commit of the running system with a message about the switch"
+#USAGE flag "--note <note>" help="Subject line for the tag"
+#USAGE flag "--preview" help="Print the tag message and the checks, then stop"
+set -euo pipefail
+
+note="${usage_note:-}"
+preview="${usage_preview:-false}"
+
+generation=$(readlink /nix/var/nix/profiles/system | sed -E 's/^system-([0-9]+)-link$/\1/')
+version=$(nixos-version)
+revision=$(nixos-version --configuration-revision 2>/dev/null || echo unknown)
+previous=$(git describe --tags --abbrev=0 --match 'switch-*' 2>/dev/null || true)
+day=$(date +%Y%m%d)
+count=$(git tag --list "switch-$day-*" | wc -l)
+tag="switch-$day-$((count + 1))"
+subject="${note:-switch $(date +%F)}"
+
+if [ -n "$previous" ]; then
+  since="$previous"
+  commits=$(git log --oneline "$previous..HEAD")
+else
+  since="the start"
+  commits=$(git log --oneline -n 20)
+fi
+
+base=""
+if [ -n "$previous" ]; then
+  base=$(git tag --list "$previous" --format='%(contents)' | sed -n 's/^Generation: //p' | head -n 1)
+fi
+
+if [ -n "$base" ] && [ -e "/nix/var/nix/profiles/system-$base-link" ]; then
+  heading="Package changes since generation $base"
+  changes=$(nix run nixpkgs#dix -- --color never diff "/nix/var/nix/profiles/system-$base-link" /nix/var/nix/profiles/system 2>/dev/null || true)
+else
+  heading="Package changes since the previous generation"
+  changes=$(nix run nixpkgs#dix -- --color never last 2>/dev/null || true)
+fi
+
+message="$subject
+
+Generation: $generation
+NixOS: $version
+Revision: $revision
+
+$heading:
+$changes
+
+Commits since $since:
+$commits"
+
+problem=""
+if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+  problem="the working tree is dirty"
+elif [ "$revision" != "$(git rev-parse HEAD)" ]; then
+  problem="the running system was not built from HEAD"
+fi
+
+if [ "$preview" = true ]; then
+  echo "tag: $tag"
+  echo "would tag: ${problem:-yes}"
+  echo "----"
+  echo "$message"
+  exit 0
+fi
+
+if [ -n "$problem" ]; then
+  echo "No tag created: $problem."
+  exit 0
+fi
+
+git tag -a "$tag" -m "$message"
+echo "Created tag $tag."
+
+if [ -t 0 ] && git remote get-url origin >/dev/null 2>&1; then
+  read -r -p "Push $tag to origin now? [y/N] " answer
+  case "$answer" in
+    [yY]*) git push origin "$tag" ;;
+    *) echo "Kept local. Publish later with: git push origin $tag" ;;
+  esac
+else
+  echo "Publish it with: git push origin $tag"
+fi

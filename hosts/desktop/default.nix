@@ -10,6 +10,9 @@
 
   networking.hostName = "desktop"; # Define your hostname.
 
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+  system.nixos.tags = [ (inputs.self.shortRev or inputs.self.dirtyShortRev or "dirty") ];
+
   boot.loader.limine.extraEntries = ''
     /Windows
       protocol: efi_chainload
