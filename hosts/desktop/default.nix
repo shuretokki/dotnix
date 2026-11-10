@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -9,6 +9,9 @@
   ];
 
   networking.hostName = "desktop"; # Define your hostname.
+
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+  system.nixos.tags = [ (inputs.self.shortRev or inputs.self.dirtyShortRev or "dirty") ];
 
   boot.loader.limine.extraEntries = ''
     /Windows
@@ -28,6 +31,8 @@
       "audio"
     ];
   };
+
+  programs.nh.flake = "${config.users.users.shure.home}/dotnix";
 
   home-manager = {
     useGlobalPkgs = true;

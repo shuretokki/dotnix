@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#MISE description="Activate a system and make it the boot default, then tag a clean commit"
+#USAGE arg "[host]" help="Host name" default="desktop"
+#USAGE flag "--note <note>" help="Subject line for the tag"
+set -euo pipefail
+
+note="${usage_note:-}"
+if [ -z "$note" ] && [ -t 0 ]; then
+  read -r -p "Tag subject (empty for the default): " note
+fi
+
+nh os switch . --hostname "${usage_host?}"
+mise run tag ${note:+--note "$note"}
