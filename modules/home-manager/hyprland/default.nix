@@ -1,16 +1,52 @@
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  colors = config.lib.stylix.colors;
+in
+{
   wayland.windowManager.hyprland = {
     enable = true;
     package = null;
     portalPackage = null;
     configType = "lua";
     systemd.enable = false;
+    plugins = [ pkgs.hyprlandPlugins.hyprbars ];
+    settings.config = {
+      general."col.active_border" = lib.mkForce {
+        colors = [
+          "rgba(${colors.base07}9e)"
+          "rgba(${colors.base07}66)"
+        ];
+        angle = 45;
+      };
+      plugin.hyprbars = {
+        bar_height = 28;
+        bar_color = "rgb(${colors.base00})";
+        bar_blur = false;
+        bar_precedence_over_border = true;
+        bar_text_font = config.stylix.fonts.sansSerif.name;
+        bar_text_size = 11;
+        bar_text_align = "center";
+        bar_buttons_alignment = "left";
+        bar_padding = 12;
+        bar_button_padding = 8;
+        bar_part_of_window = true;
+        icon_on_hover = true;
+        col.text = "rgb(${colors.base05})";
+        on_double_click = "hyprctl dispatch 'hl.dsp.window.fullscreen({ mode = \"maximized\", action = \"toggle\" })'";
+      };
+    };
     extraLuaFiles = {
       animations = ./animations.lua;
       behavior = ./options/behavior.lua;
       blur = ./options/blur.lua;
       cursor = ./options/cursor.lua;
       group = ./options/group.lua;
+      hyprbars = ./hyprbars.lua;
       input = ./options/input.lua;
       keybindings = ./keybindings.lua;
       layouts = ./options/layouts.lua;
