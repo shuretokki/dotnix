@@ -9,6 +9,9 @@
   stylix = {
     enable = true;
     base16Scheme = {
+      system = "base16";
+      name = "Amoled";
+      variant = "dark";
       base00 = "000000";
       base01 = "0b0b0d";
       base02 = "1c1c1e";
