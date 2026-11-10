@@ -4,6 +4,7 @@
   rustPlatform,
   fetchFromGitHub,
   pkg-config,
+  sqlite,
   makeWrapper,
   libxkbcommon,
   wayland,
@@ -69,6 +70,7 @@ let
     cargoLock.lockFile = "${src}/scripts/mistd/Cargo.lock";
 
     nativeBuildInputs = [ pkg-config ];
+    buildInputs = [ sqlite ];
 
     doCheck = false;
   };
