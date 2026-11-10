@@ -3,4 +3,5 @@ pkgs: {
   macshell = pkgs.callPackage ./macshell.nix { };
   mist = pkgs.callPackage ./mist.nix { };
   pixie-sddm = pkgs.callPackage ./pixie-sddm.nix { };
+  qylock-sddm = pkgs.callPackage ./qylock-sddm.nix { };
 }

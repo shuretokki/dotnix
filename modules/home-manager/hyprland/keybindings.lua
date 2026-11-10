@@ -10,7 +10,7 @@ local ctrlAlt = "CTRL + ALT"
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(ctrlAlt .. " + SHIFT + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop"))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(altMod .. " + Q", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(altMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
@@ -43,9 +43,6 @@ for i = 1, 10 do
     hl.bind(altMod .. " + " .. key,            hl.dsp.focus({ workspace = i }))
     hl.bind(altMod .. " + SHIFT + " .. key,    hl.dsp.window.move({ workspace = i }))
 end
-
-hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
