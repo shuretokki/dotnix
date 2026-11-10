@@ -27,6 +27,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
     pkg-config
   ];
 
+  dontCargoUseSystemLibs = true;
+
   doCheck = false;
 
   doInstallCheck = true;
