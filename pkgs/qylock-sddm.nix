@@ -1,6 +1,7 @@
 {
   stdenvNoCC,
   fetchgit,
+  noto-fonts,
 }:
 stdenvNoCC.mkDerivation {
   pname = "qylock-star-rail-sddm";
@@ -16,6 +17,8 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     mkdir -p $out/share/sddm/themes
     cp -r themes/star-rail $out/share/sddm/themes/star-rail
+    mkdir -p $out/share/sddm/themes/star-rail/font
+    cp ${noto-fonts}/share/fonts/noto/NotoSans.ttf $out/share/sddm/themes/star-rail/font/
   '';
 
   meta = {
