@@ -20,6 +20,7 @@ in
         colors = [
           "rgba(${colors.base07}9e)"
           "rgba(${colors.base07}26)"
+          "rgba(${colors.base07}9e)"
         ];
         angle = 45;
       };
@@ -27,6 +28,7 @@ in
         colors = [
           "rgba(${colors.base03}ff)"
           "rgba(${colors.base03}33)"
+          "rgba(${colors.base03}ff)"
         ];
         angle = 45;
       };
