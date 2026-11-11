@@ -4,6 +4,7 @@
     ./bluetooth.nix
     ./boot.nix
     ./dns.nix
+    ./firmware.nix
     ./fonts.nix
     ./gvfs.nix
     ./hyprland.nix
@@ -15,6 +16,7 @@
     ./nix.nix
     ./online-accounts.nix
     ./performance.nix
+    ./storage.nix
     ./stylix.nix
     ./udisks2.nix
     ./unfree.nix
