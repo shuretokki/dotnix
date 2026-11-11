@@ -51,6 +51,11 @@
       inputs.nixpkgs-packages.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    hylki = {
+      url = "github:clementpoiret/hylki-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
