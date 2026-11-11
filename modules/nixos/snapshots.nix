@@ -1,5 +1,7 @@
-let
-  timeline = {
+{
+  services.snapper.configs.home = {
+    SUBVOLUME = "/home";
+    ALLOW_USERS = [ "shure" ];
     TIMELINE_CREATE = true;
     TIMELINE_CLEANUP = true;
     TIMELINE_LIMIT_HOURLY = 5;
@@ -8,16 +10,5 @@ let
     TIMELINE_LIMIT_MONTHLY = 1;
     TIMELINE_LIMIT_QUARTERLY = 0;
     TIMELINE_LIMIT_YEARLY = 0;
-  };
-in
-{
-  services.snapper.configs = {
-    root = timeline // {
-      SUBVOLUME = "/";
-    };
-    home = timeline // {
-      SUBVOLUME = "/home";
-      ALLOW_USERS = [ "shure" ];
-    };
   };
 }
