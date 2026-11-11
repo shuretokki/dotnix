@@ -9,7 +9,7 @@
     defaultApplicationPackages = [
       pkgs.nautilus
       config.programs.sonora.package
-      config.programs.mpv.finalPackage
+      pkgs.celluloid
       pkgs.loupe
       pkgs.papers
     ];

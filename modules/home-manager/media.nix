@@ -2,5 +2,8 @@
 {
   programs.mpv.enable = true;
 
-  home.packages = [ pkgs.loupe ];
+  home.packages = with pkgs; [
+    celluloid
+    loupe
+  ];
 }
