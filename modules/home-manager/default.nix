@@ -9,6 +9,7 @@
     ./editor.nix
     ./file-manager.nix
     ./github-mcp.nix
+    ./gnome-apps.nix
     ./hyprland
     ./karere.nix
     ./lean-ctx.nix

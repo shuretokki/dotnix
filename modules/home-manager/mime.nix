@@ -11,6 +11,7 @@
       config.programs.sonora.package
       config.programs.mpv.finalPackage
       pkgs.loupe
+      pkgs.papers
     ];
   };
 }
