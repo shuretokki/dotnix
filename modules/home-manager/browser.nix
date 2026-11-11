@@ -91,6 +91,7 @@
       };
 
       settings = {
+        "media.peerconnection.enabled" = true;
         "zen.view.sidebar-only" = true;
         "zen.view.vertical-tabs.show-new-tab-button" = true;
         "zen.view.vertical-tabs.new-tab-button-at-top" = true;

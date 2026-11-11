@@ -12,6 +12,7 @@
     ./hyprland
     ./karere.nix
     ./lean-ctx.nix
+    ./mail.nix
     ./media.nix
     ./mime.nix
     ./playerctl.nix
