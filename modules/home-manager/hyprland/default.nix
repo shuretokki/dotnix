@@ -19,7 +19,16 @@ in
       general."col.active_border" = lib.mkForce {
         colors = [
           "rgba(${colors.base07}9e)"
-          "rgba(${colors.base07}66)"
+          "rgba(${colors.base07}26)"
+          "rgba(${colors.base07}9e)"
+        ];
+        angle = 45;
+      };
+      general."col.inactive_border" = lib.mkForce {
+        colors = [
+          "rgba(${colors.base03}ff)"
+          "rgba(${colors.base03}33)"
+          "rgba(${colors.base03}ff)"
         ];
         angle = 45;
       };
