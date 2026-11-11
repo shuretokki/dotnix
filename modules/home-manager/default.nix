@@ -9,6 +9,7 @@
     ./editor.nix
     ./file-manager.nix
     ./github-mcp.nix
+    ./gnome-apps.nix
     ./hyprland
     ./karere.nix
     ./lean-ctx.nix
@@ -16,6 +17,7 @@
     ./media.nix
     ./mime.nix
     ./playerctl.nix
+    ./polkit.nix
     ./proton.nix
     ./runtimes.nix
     ./scrapling.nix

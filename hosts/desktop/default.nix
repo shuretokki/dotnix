@@ -5,6 +5,7 @@
     ../../modules/nixos
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/proton-vpn.nix
+    ./windows-drives.nix
     # ../../modules/nixos/macshell.nix
     inputs.home-manager.nixosModules.home-manager
   ];

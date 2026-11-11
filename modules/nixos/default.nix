@@ -13,6 +13,7 @@
     ./network.nix
     ./nh.nix
     ./nix.nix
+    ./online-accounts.nix
     ./performance.nix
     ./stylix.nix
     ./udisks2.nix
