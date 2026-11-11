@@ -17,6 +17,7 @@
     ./media.nix
     ./mime.nix
     ./playerctl.nix
+    ./polkit.nix
     ./proton.nix
     ./runtimes.nix
     ./scrapling.nix
