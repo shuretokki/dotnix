@@ -14,10 +14,10 @@ fi
 
 nh clean all --keep 3 --keep-since 4d
 sudo journalctl --vacuum-time=7d
-uv cache prune
+UV_LOCK_TIMEOUT=3 uv cache prune || echo "uv cache is in use, close the tools that run through uvx and run again"
 
 if [ "${usage_deep:-false}" = "true" ]; then
-  uv cache clean
+  UV_LOCK_TIMEOUT=3 uv cache clean || echo "uv cache is in use, skipped"
   npm cache clean --force
   if command -v pnpm >/dev/null; then pnpm store prune; fi
   rm -rf ~/.cache/nix ~/.cache/spotify.old ~/.cache/appimage-run ~/.cache/ms-playwright
