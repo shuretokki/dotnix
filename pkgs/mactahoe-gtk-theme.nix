@@ -75,8 +75,19 @@ stdenvNoCC.mkDerivation {
 
     window.csd { outline: none; }
 
-    .sidebar-pane:dir(ltr):not(.end) { border-right: 1px solid $header_border; }
-    .sidebar-pane:dir(rtl):not(.end) { border-left: 1px solid $header_border; }
+    .navigation-sidebar,
+    .sidebar-pane list.navigation-sidebar:not(.view) {
+      padding: 6px 0 4px;
+    }
+
+    .navigation-sidebar > row {
+      min-height: 36px;
+      padding: 0 8px;
+      margin: 0 6px 2px;
+      border-radius: 9px;
+    }
+
+    .navigation-sidebar > row + row { margin-top: 0; }
     EOF
     substituteInPlace libs/lib-core.sh \
       --replace-fail 'MY_HOME=$(getent passwd "''${MY_USERNAME}" | cut -d: -f6)' 'MY_HOME=/tmp' \
