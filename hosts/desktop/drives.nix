@@ -22,9 +22,15 @@ in
       device = "/dev/disk/by-uuid/40DA95A2DA95952E";
     };
 
-  fileSystems."/mnt/d" = ntfs [ "x-gvfs-name=D:" ] // {
-    device = "/dev/disk/by-uuid/A60A4A3A0A4A07AF";
-  };
+  fileSystems."/mnt/d" =
+    ntfs [
+      "x-gvfs-name=D:"
+      "noauto"
+      "x-systemd.automount"
+    ]
+    // {
+      device = "/dev/disk/by-uuid/A60A4A3A0A4A07AF";
+    };
 
   fileSystems."/mnt/e" = ntfs [ "x-gvfs-name=E:" ] // {
     device = "/dev/disk/by-uuid/A43A16E73A16B5F0";
