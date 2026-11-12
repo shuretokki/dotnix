@@ -73,7 +73,7 @@ in
         '')
         {
           macdock = look // {
-            dockEnabled = false;
+            dockEnabled = true;
             desktopIcons = false;
           };
           macbar = look // {
