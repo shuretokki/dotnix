@@ -33,9 +33,9 @@ in
 
     icons = {
       enable = true;
-      package = pkgs.whitesur-icon-theme;
-      dark = "WhiteSur-dark";
-      light = "WhiteSur-light";
+      package = (import ../../pkgs pkgs).mactahoe-icon-theme;
+      dark = "MacTahoe-dark";
+      light = "MacTahoe-light";
     };
 
     targets.limine.enable = false;
