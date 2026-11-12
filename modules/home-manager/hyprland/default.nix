@@ -38,7 +38,7 @@ in
       decoration.shadow.color = lib.mkForce "rgb(${colors.base02})";
       plugin.borders_plus_plus = {
         add_borders = 1;
-        natural_rounding = true;
+        natural_rounding = false;
         col.border_1 = "rgb(${colors.base00})";
         border_size_1 = 6;
       };
