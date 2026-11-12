@@ -1,39 +1,71 @@
 #!/usr/bin/env bash
-#MISE description="Show the system, theme and Hyprland look like fastfetch, with the installed programs"
+#MISE description="Show the system, theme, Hyprland look and programs in fastfetch style"
 #USAGE arg "[host]" help="Host name" default="desktop"
-#USAGE flag "-p --packages" help="Also list every installed package"
+#USAGE flag "-p --packages" help="Also list the system packages"
 set -euo pipefail
 
 host="${usage_host?}"
 opts=modules/home-manager/hyprland/options
-section() { printf '\n\033[1;34m%s\033[0m\n' "$1"; }
+tmp=$(mktemp --suffix=.jsonc)
+trap 'rm -f "$tmp"' EXIT
 
-fastfetch
+base=$(nix build --no-link --print-out-paths ".#nixosConfigurations.${host}.config.home-manager.users.$(whoami).xdg.configFile.\"fastfetch/config.jsonc\".source")
 
 data=$(nix eval --json ".#nixosConfigurations.${host}.config" --apply '
 c: let
   hm = c.home-manager.users.${builtins.head (builtins.attrNames c.home-manager.users)};
   names = ps: builtins.sort builtins.lessThan (map (p: p.pname or (builtins.parseDrvName p.name).name) ps);
-  hypr = hm.wayland.windowManager.hyprland;
+  base = [ "00" "01" "02" "03" "04" "05" "06" "07" "08" "09" "0A" "0B" "0C" "0D" "0E" "0F" ];
 in {
-  plugins = names hypr.plugins;
-  pluginSettings = hypr.settings.config.plugin or { };
+  colors = map (n: { name = "base" + n; hex = c.lib.stylix.colors."base${n}"; }) base;
+  plugins = names hm.wayland.windowManager.hyprland.plugins;
   system = names c.environment.systemPackages;
   user = names hm.home.packages;
 }')
 
-section "Hyprland look"
-awk '/^[[:space:]]+(rounding|rounding_power|gaps_in|gaps_out|border_size|active_opacity|inactive_opacity) *=/ {gsub(/^[ \t]+/, ""); gsub(/,$/, ""); print "  " $0}' "$opts/look.lua"
-awk '/shadow = \{/ {on=1; next} on && /^[[:space:]]+\},?$/ {on=0} on && /enabled *=/ {gsub(/^[ \t]+/, ""); gsub(/,$/, ""); print "  shadow " $0; exit}' "$opts/look.lua"
-awk '/blur = \{/ {on=1; next} on && /enabled *=/ {gsub(/^[ \t]+/, ""); gsub(/,$/, ""); print "  blur " $0; exit}' "$opts/blur.lua"
-grep -h 'scale' "hosts/${host}/monitor.lua" 2>/dev/null | sed 's/^ */  monitor /; s/,$//' || true
+val() { awk -v k="$1" '$0 ~ "^[[:space:]]+"k" *=" {gsub(/^[^=]*= */, ""); gsub(/,$/, ""); print; exit}' "$2"; }
+shadow=$(awk '/shadow = \{/ {on=1; next} on && /enabled *=/ {gsub(/^[^=]*= */, ""); gsub(/,$/, ""); print; exit}' "$opts/look.lua")
+blur=$(awk '/blur = \{/ {on=1; next} on && /enabled *=/ {gsub(/^[^=]*= */, ""); gsub(/,$/, ""); print; exit}' "$opts/blur.lua")
+scale=$(grep -h 'scale' "hosts/${host}/monitor.lua" 2>/dev/null | sed 's/.*= *//; s/,$//' | head -n 1)
+onoff() { if [ "$1" = "true" ]; then echo on; else echo off; fi; }
 
-section "Hyprland plugins"
-echo "$data" | jq -r '.plugins[] | "  " + .'
-echo "$data" | jq -r '.pluginSettings | to_entries[] | "  \(.key): " + (.value | tostring)'
+jq \
+  --argjson d "$data" \
+  --arg gaps "$(val gaps_in "$opts/look.lua") in, $(val gaps_out "$opts/look.lua") out" \
+  --arg border "$(val border_size "$opts/look.lua") px" \
+  --arg round "$(val rounding "$opts/look.lua") (power $(val rounding_power "$opts/look.lua"))" \
+  --arg shadow "$(onoff "$shadow")" \
+  --arg blur "$(onoff "$blur")" \
+  --arg scale "${scale:-auto}" \
+  --arg term "${TERM_PROGRAM:-}" \
+  --argjson all "$([ "${usage_packages:-false}" = "true" ] && echo true || echo false)" '
+  def hx: explode | map(if . >= 97 then . - 87 elif . >= 65 then . - 55 else . - 48 end) | reduce .[] as $x (0; . * 16 + $x);
+  def block($h): "\u001b[48;2;\($h[0:2] | hx);\($h[2:4] | hx);\($h[4:6] | hx)m  \u001b[0m \($h)";
+  def row($k; $v): { type: "custom", key: $k, format: $v };
+  def head($t): { type: "custom", format: "\u001b[1;34m\($t)\u001b[0m" };
+  def branch($i; $n): if $i == $n - 1 then "└─ " else "├─ " end;
+  def tree($rows): ($rows | length) as $n | [range(0; $n) as $i | row(branch($i; $n) + $rows[$i][0]; $rows[$i][1])];
+  def apps: map(select(test("^(dummy|hm-session|home-configuration|index\\.theme|usage$|inter$|man-db|shared-mime|adw|qt|bash-interactive|nix-index)|icon-theme|cursor|fonts?|stylix|gnome-shell-extension|^bat(diff|grep|man|watch)$"; "i") | not)) | unique;
+  def chunks($a; $n): [range(0; $a | length; $n) as $i | $a[$i:$i + $n] | join(", ")];
+  def lines($label; $a; $n; $last):
+    chunks($a; $n) as $c
+    | [range(0; $c | length) as $i
+       | row(if $i == 0 then (if $last then "└─ " else "├─ " end) + $label else (if $last then "   " else "│  " end) end; $c[$i])];
+  def palette:
+    [range(0; 4) as $r
+     | $d.colors[$r * 4:$r * 4 + 4] as $c
+     | [($c[0].name[4:] + "-" + $c[3].name[4:]), ($c | map(block(.hex)) | join("  "))]];
+  .modules |= map(select(type != "object" or ((.key // "") != "Palette" and (.key // "") != "Scheme")))
+  | .modules |= map(if type == "object" and .key == "Terminal" and $term != "" then row("Terminal"; $term) else . end)
+  | .modules += (
+      ["break", head("Palette")]
+      + tree(palette)
+      + ["break", head("Hyprland")]
+      + tree([["Layout", "gaps \($gaps), border \($border)"], ["Corners", $round], ["Shadow", $shadow], ["Blur", $blur], ["Scale", $scale], ["Plugins", ($d.plugins | join(", "))]])
+      + ["break", head("Programs"), row("├─ System"; "\($d.system | length) packages"), row("├─ User"; "\($d.user | length) packages")]
+      + lines("Apps"; ($d.user | apps); 6; ($all | not))
+      + (if $all then lines("System apps"; ($d.system | apps); 6; true) else [] end)
+    )
+' "$base" > "$tmp"
 
-section "Programs"
-echo "$data" | jq -r '"  system packages: \(.system | length)", "  user packages:   \(.user | length)"'
-if [ "${usage_packages:-false}" = "true" ]; then
-  echo "$data" | jq -r '"  -- system", (.system | join(" ")), "  -- user", (.user | join(" "))' | fold -s -w 100
-fi
+fastfetch --config "$tmp"
