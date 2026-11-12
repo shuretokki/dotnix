@@ -95,7 +95,7 @@ hl.config({
 
         shadow = {
             -- enable drop shadows on windows
-            enabled = true,
+            enabled = false,
 
             -- Shadow range (size) in layout px (range 0 to 100)
             range = 3,
