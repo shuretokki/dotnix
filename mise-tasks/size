@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#MISE description="Show disk use: root filesystem, system closure, store and the biggest caches"
+set -uo pipefail
+
+df -h / | tail -n 1
+nix path-info -Sh /run/current-system
+du -sh /nix/store 2>/dev/null
+du -sh /var/log/journal 2>/dev/null
+echo
+du -sh ~/.cache/* ~/.npm ~/.local/share/* 2>/dev/null | sort -h | tail -n 12

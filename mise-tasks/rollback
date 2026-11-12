@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Switch back to the previous system generation"
+set -euo pipefail
+
+sudo nixos-rebuild switch --rollback

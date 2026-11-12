@@ -37,7 +37,7 @@ The port is in progress, so some folders do not exist yet.
 15. Keep hardware-specific modules, such as `nvidia.nix`, out of `modules/nixos/default.nix`. The host that needs one imports it by path.
 16. Keep `programs.hyprland.withUWSM` at `true`. The cached package is built with it, and `false` forces a local compile of Hyprland.
 17. Add a flake input with `nix flake lock`, not `nix flake update`, because `update` moves every input. Make each input follow `nixpkgs`.
-18. Check the Lua files under `modules/home-manager/hyprland/` with `lua-language-server --check` against the stubs in the Hyprland package. A wrong name otherwise fails only at login.
+18. Check the Lua files under `modules/home-manager/hyprland/` with `mise run lint-lua`, which runs `lua-language-server --check` against the stubs in the Hyprland package. A wrong name otherwise fails only at login.
 
 19. Keep a polkit agent running in the session (`modules/home-manager/polkit.nix`). Without one, a GUI app cannot show the password prompt, so actions such as mounting a disk fail with no message.
 20. Do not snapshot `/` with snapper. It holds `/nix`, so each snapshot keeps old store paths alive and the disk fills. Roll the system back with generations, and snapshot only `/home`. Snapper needs a `.snapshots` subvolume inside each target before the first run.
@@ -45,7 +45,7 @@ The port is in progress, so some folders do not exist yet.
 
 ## Commands
 
-Run `mise tasks` to list the tasks. The main ones are `fmt`, `check`, `build`, `test`, `switch`, `update`, and `clean`.
+Run `mise tasks` to list the tasks. The main ones are `fmt`, `check`, `build`, `test`, `switch`, `update`, `clean`, `lint-lua`, `size`, `doctor`, and `rollback`.
 `mise run clean` removes old generations, garbage, logs, and the package manager caches that are safe to drop.
 Add `--deep` for the caches that must be downloaded again, and `--dry` to see what the Nix part would remove.
 
