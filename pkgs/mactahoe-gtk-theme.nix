@@ -73,6 +73,8 @@ stdenvNoCC.mkDerivation {
       }
     }
 
+    window.csd { outline: none; }
+
     .sidebar-pane:dir(ltr):not(.end) { border-right: 1px solid $header_border; }
     .sidebar-pane:dir(rtl):not(.end) { border-left: 1px solid $header_border; }
     EOF
