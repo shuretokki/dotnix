@@ -8,5 +8,5 @@ tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 printf '{"workspace":{"library":["%s/share/hypr/stubs"]},"diagnostics":{"globals":["hl"]}}\n' "$hyprland" > "$tmp/luarc.json"
 
-nix run nixpkgs#lua-language-server -- --check modules/home-manager/hyprland \
+nix run nixpkgs#lua-language-server -- --check . \
   --configpath "$tmp/luarc.json" --checklevel Warning --logpath "$tmp/log"

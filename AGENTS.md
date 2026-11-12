@@ -16,6 +16,7 @@ The port is in progress, so some folders do not exist yet.
 - `modules/home-manager/` holds user modules, and each file does one job.
 - `modules/home-manager/hyprland/` holds the compositor settings as plain Lua files, which the module loads with `extraLuaFiles`.
 - `modules/home-manager/hyprland/options/` lists every Hyprland option with its default value and its upstream description, one file for each topic.
+- `themes/` holds the Stylix colour schemes as base16 YAML files, and `scheme` in `modules/nixos/stylix.nix` picks one.
 - `pkgs/` and `overlays/` hold custom packages and overlays.
 
 ## Rules

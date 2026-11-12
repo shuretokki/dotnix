@@ -45,3 +45,10 @@ for _, k in ipairs(hwkeys) do
     pcall(hl.unbind, k[1])
     hl.bind(k[1], hl.dsp.exec_cmd(k[2]), { locked = true, repeating = k[3] })
 end
+
+hl.window_rule({
+    name = "macshell-settings-no-bar",
+    match = { title = "^macshell Settings$" },
+
+    ["hyprbars:no_bar"] = true,
+})
