@@ -12,6 +12,7 @@ let
     appearanceMode = "dark";
     accent = "#${colors.base0D}";
     fontFamily = config.stylix.fonts.sansSerif.name;
+    glassOpacity = 0.42;
   };
 
   macshell-start = pkgs.writeShellApplication {
@@ -32,7 +33,7 @@ let
       kdePackages.qtshadertools
     ];
     text = ''
-      export QS_ICON_THEME=Papirus-Dark
+      export QS_ICON_THEME=${config.stylix.icons.dark}
       export QML2_IMPORT_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/qml''${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
       export QT_PLUGIN_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/plugins''${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
       while true; do
@@ -45,7 +46,6 @@ in
 {
   home.packages = [
     macshell-start
-    pkgs.papirus-icon-theme
     pkgs.quickshell
     pkgs.awww
   ];
@@ -73,12 +73,10 @@ in
         '')
         {
           macdock = look // {
-            dockEnabled = false;
+            dockEnabled = true;
             desktopIcons = false;
           };
-          macbar = look // {
-            glassOpacity = 1.82;
-          };
+          macbar = look;
         }
     )
   );

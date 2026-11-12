@@ -5,7 +5,7 @@ hl.config({
     decoration = {
         blur = {
             -- enable window background blur
-            enabled = false,
+            enabled = true,
 
             -- set the blur variant. Blur variants enhance regular blur, but may increase GPU and CPU usage, significantly so if they are animated. (range 0 to 10; options: kawase = 0, frost = 1, ripple = 2, drops = 3, water = 4, fluid_jar = 5, prism = 6, heat_shimmer = 7, acrylic = 8, aurora = 9, haze = 10)
             variant = 0,
