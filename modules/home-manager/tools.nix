@@ -9,6 +9,5 @@
     ncdu
     nix-du
     nix-tree
-    fastfetch
   ];
 }

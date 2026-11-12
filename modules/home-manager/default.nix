@@ -7,6 +7,7 @@
     ./craft.nix
     ./discord.nix
     ./editor.nix
+    ./fastfetch.nix
     ./file-manager.nix
     ./github-mcp.nix
     ./gtk.nix
