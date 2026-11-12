@@ -14,25 +14,20 @@ in
     portalPackage = null;
     configType = "lua";
     systemd.enable = false;
-    plugins = [ pkgs.hyprlandPlugins.hyprbars ];
+    plugins = with pkgs.hyprlandPlugins; [
+      borders-plus-plus
+      hyprbars
+    ];
     settings.config = {
-      general."col.active_border" = lib.mkForce {
-        colors = [
-          "rgba(${colors.base07}9e)"
-          "rgba(${colors.base07}26)"
-          "rgba(${colors.base07}9e)"
-        ];
-        angle = 45;
+      general."col.active_border" = lib.mkForce "rgb(${colors.base02})";
+      general."col.inactive_border" = lib.mkForce "rgb(${colors.base02})";
+      decoration.shadow.color = lib.mkForce "rgb(${colors.base02})";
+      plugin.borders_plus_plus = {
+        add_borders = 1;
+        natural_rounding = false;
+        col.border_1 = "rgb(${colors.base00})";
+        border_size_1 = 6;
       };
-      general."col.inactive_border" = lib.mkForce {
-        colors = [
-          "rgba(${colors.base03}ff)"
-          "rgba(${colors.base03}33)"
-          "rgba(${colors.base03}ff)"
-        ];
-        angle = 45;
-      };
-      decoration.shadow.color = lib.mkForce "rgba(${colors.base00}66)";
       plugin.hyprbars = {
         bar_height = 28;
         bar_color = "rgb(${colors.base00})";
