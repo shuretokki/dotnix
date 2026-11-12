@@ -1,4 +1,5 @@
 pkgs: {
+  cap = pkgs.callPackage ./cap.nix { };
   lean-ctx = pkgs.callPackage ./lean-ctx.nix { };
   macshell = pkgs.callPackage ./macshell.nix { };
   mist = pkgs.callPackage ./mist.nix { };
