@@ -14,7 +14,7 @@
     ./gnome-apps.nix
     ./hyprland
     ./lean-ctx.nix
-    ./mactahoe.nix
+    # ./mactahoe.nix
     ./mail.nix
     ./media.nix
     ./mime.nix

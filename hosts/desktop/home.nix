@@ -5,7 +5,6 @@
     inputs.framr.homeManagerModules.default
     ../../modules/home-manager
     # ../../modules/home-manager/mist
-    # ../../modules/home-manager/chillpill-shell
     ../../modules/home-manager/macshell
   ];
 
@@ -15,10 +14,10 @@
     stateVersion = "25.11";
   };
 
-  theme.mactahoe = {
-    enable = true;
-    zen.enable = true;
-  };
+  # theme.mactahoe = {
+  #   enable = true;
+  #   zen.enable = true;
+  # };
 
   programs.zapfast.enable = true;
   programs.framr.enable = true;
