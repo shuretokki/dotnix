@@ -27,6 +27,5 @@
     ./terminal.nix
     ./tools.nix
     ./vicinae.nix
-    ./macshell
   ];
 }
