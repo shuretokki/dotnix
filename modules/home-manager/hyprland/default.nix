@@ -33,9 +33,7 @@ in
         bar_color = "rgb(${colors.base00})";
         bar_blur = false;
         bar_precedence_over_border = true;
-        bar_text_font = config.stylix.fonts.sansSerif.name;
-        bar_text_size = 11;
-        bar_text_align = "center";
+        bar_title_enabled = false;
         bar_buttons_alignment = "left";
         bar_padding = 12;
         bar_button_padding = 8;
