@@ -19,22 +19,8 @@ in
       hyprbars
     ];
     settings.config = {
-      general."col.active_border" = lib.mkForce {
-        colors = [
-          "rgb(${colors.base04})"
-          "rgb(${colors.base02})"
-          "rgb(${colors.base04})"
-        ];
-        angle = 45;
-      };
-      general."col.inactive_border" = lib.mkForce {
-        colors = [
-          "rgb(${colors.base03})"
-          "rgb(${colors.base01})"
-          "rgb(${colors.base03})"
-        ];
-        angle = 45;
-      };
+      general."col.active_border" = lib.mkForce "rgb(${colors.base02})";
+      general."col.inactive_border" = lib.mkForce "rgb(${colors.base02})";
       decoration.shadow.color = lib.mkForce "rgb(${colors.base02})";
       plugin.borders_plus_plus = {
         add_borders = 1;
