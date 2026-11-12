@@ -4,5 +4,4 @@ pkgs: {
   mist = pkgs.callPackage ./mist.nix { };
   pixie-sddm = pkgs.callPackage ./pixie-sddm.nix { };
   qylock-sddm = pkgs.callPackage ./qylock-sddm.nix { };
-  tide-island = pkgs.callPackage ./tide-island.nix { };
 }
