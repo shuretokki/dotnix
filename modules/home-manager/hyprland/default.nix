@@ -26,7 +26,7 @@ in
         add_borders = 1;
         natural_rounding = false;
         col.border_1 = "rgb(${colors.base00})";
-        border_size_1 = 6;
+        border_size_1 = 2;
       };
       plugin.hyprbars = {
         bar_height = 28;
