@@ -29,5 +29,6 @@
     ./terminal.nix
     ./tools.nix
     ./vicinae.nix
+    ./zapfast.nix
   ];
 }
