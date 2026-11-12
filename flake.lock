@@ -68,6 +68,29 @@
         "type": "github"
       }
     },
+    "chillpill-shell": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794388705,
+        "narHash": "sha256-cP5AV+v2+6SgXt4MF0IsAYBCm3jWBh0aEt0Szx2X5kM=",
+        "owner": "LUCKYS1NGHH",
+        "repo": "ChillPill-Shell",
+        "rev": "8e41d137e39cc2f5d0ebe3f64e51d8b7aea9d2f1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LUCKYS1NGHH",
+        "repo": "ChillPill-Shell",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -367,6 +390,7 @@
     },
     "root": {
       "inputs": {
+        "chillpill-shell": "chillpill-shell",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
