@@ -39,6 +39,27 @@ stdenvNoCC.mkDerivation {
 
   postPatch = ''
     patchShebangs install.sh parse-sass.sh libs
+    cat >> src/sass/gtk/apps/_libadwaita.scss <<'EOF'
+
+    .sidebar-pane,
+    .content-pane .sidebar-pane,
+    .sidebar-pane .content-pane {
+      &, &:dir(ltr), &:dir(rtl) {
+        margin: 0;
+        border-radius: 0;
+        background-image: none;
+        background-color: transparent;
+        box-shadow: none;
+      }
+
+      &:dir(ltr), &:dir(rtl) {
+        banner > revealer > widget { box-shadow: none; }
+      }
+    }
+
+    .sidebar-pane:dir(ltr):not(.end) { border-right: 1px solid $header_border; }
+    .sidebar-pane:dir(rtl):not(.end) { border-left: 1px solid $header_border; }
+    EOF
     substituteInPlace libs/lib-core.sh \
       --replace-fail 'MY_HOME=$(getent passwd "''${MY_USERNAME}" | cut -d: -f6)' 'MY_HOME=/tmp' \
       --replace-fail 'SUDO_BIN="$(command -v sudo)"' 'SUDO_BIN=false'

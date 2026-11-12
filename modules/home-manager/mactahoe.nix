@@ -18,6 +18,8 @@ let
   libadwaitaCss = pkgs.runCommandLocal "gtk-4.0.css" { } ''
     echo '@import url("file://${mactahoe}/share/themes/${themeName}/gtk-4.0/gtk.css");' >$out
     cat ${palette} >>$out
+    echo '@define-color sidebar_bg_color @window_bg_color;' >>$out
+    echo '@define-color secondary_sidebar_bg_color @window_bg_color;' >>$out
     echo ${lib.escapeShellArg config.stylix.targets.gtk.extraCss} >>$out
   '';
 
