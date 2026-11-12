@@ -15,6 +15,7 @@
     ./hyprland
     ./karere.nix
     ./lean-ctx.nix
+    ./mactahoe.nix
     ./mail.nix
     ./media.nix
     ./mime.nix
