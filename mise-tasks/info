@@ -1,61 +1,39 @@
 #!/usr/bin/env bash
-#MISE description="Show the colour scheme, fonts, theme, Hyprland look and installed programs"
+#MISE description="Show the system, theme and Hyprland look like fastfetch, with the installed programs"
 #USAGE arg "[host]" help="Host name" default="desktop"
 #USAGE flag "-p --packages" help="Also list every installed package"
 set -euo pipefail
 
 host="${usage_host?}"
 opts=modules/home-manager/hyprland/options
+section() { printf '\n\033[1;34m%s\033[0m\n' "$1"; }
+
+fastfetch
 
 data=$(nix eval --json ".#nixosConfigurations.${host}.config" --apply '
 c: let
   hm = c.home-manager.users.${builtins.head (builtins.attrNames c.home-manager.users)};
   names = ps: builtins.sort builtins.lessThan (map (p: p.pname or (builtins.parseDrvName p.name).name) ps);
-  base = [ "00" "01" "02" "03" "04" "05" "06" "07" "08" "09" "0A" "0B" "0C" "0D" "0E" "0F" ];
   hypr = hm.wayland.windowManager.hyprland;
 in {
-  scheme = c.lib.stylix.colors.scheme-name;
-  polarity = c.stylix.polarity;
-  colors = builtins.listToAttrs (map (n: { name = "base" + n; value = c.lib.stylix.colors."base${n}"; }) base);
-  fonts = {
-    monospace = c.stylix.fonts.monospace.name;
-    sansSerif = c.stylix.fonts.sansSerif.name;
-    serif = c.stylix.fonts.serif.name;
-    emoji = c.stylix.fonts.emoji.name;
-  };
-  sizes = c.stylix.fonts.sizes;
-  cursor = "${c.stylix.cursor.name} ${toString c.stylix.cursor.size}";
-  icons = c.stylix.icons.dark;
   plugins = names hypr.plugins;
   pluginSettings = hypr.settings.config.plugin or { };
   system = names c.environment.systemPackages;
   user = names hm.home.packages;
 }')
 
-echo "$data" | jq -r '
-  "== Theme",
-  "Scheme:   \(.scheme) (\(.polarity))",
-  "Colours:  " + ([.colors | to_entries[] | "\(.key)=\(.value)"] | join(" ")),
-  "Fonts:    mono \(.fonts.monospace), sans \(.fonts.sansSerif), serif \(.fonts.serif), emoji \(.fonts.emoji)",
-  "Sizes:    " + ([.sizes | to_entries[] | "\(.key)=\(.value)"] | join(" ")),
-  "Cursor:   \(.cursor)",
-  "Icons:    \(.icons)",
-  "",
-  "== Hyprland plugins",
-  (.plugins | join(", ")),
-  (.pluginSettings | to_entries[] | "\(.key): " + (.value | tostring))'
+section "Hyprland look"
+awk '/^[[:space:]]+(rounding|rounding_power|gaps_in|gaps_out|border_size|active_opacity|inactive_opacity) *=/ {gsub(/^[ \t]+/, ""); gsub(/,$/, ""); print "  " $0}' "$opts/look.lua"
+awk '/shadow = \{/ {on=1; next} on && /^[[:space:]]+\},?$/ {on=0} on && /enabled *=/ {gsub(/^[ \t]+/, ""); gsub(/,$/, ""); print "  shadow " $0; exit}' "$opts/look.lua"
+awk '/blur = \{/ {on=1; next} on && /enabled *=/ {gsub(/^[ \t]+/, ""); gsub(/,$/, ""); print "  blur " $0; exit}' "$opts/blur.lua"
+grep -h 'scale' "hosts/${host}/monitor.lua" 2>/dev/null | sed 's/^ */  monitor /; s/,$//' || true
 
-echo
-echo "== Hyprland look"
-awk '/^[[:space:]]+(rounding|rounding_power|gaps_in|gaps_out|border_size|active_opacity|inactive_opacity) *=/ {gsub(/^[ \t]+/, ""); print}' "$opts/look.lua"
-echo "shadow:"
-awk '/shadow = \{/ {on=1; next} on && /^[[:space:]]+\},?$/ {on=0} on && /=/ && !/^[[:space:]]*--/ {gsub(/^[ \t]+/, "  "); print}' "$opts/look.lua"
-echo "blur:"
-awk '/blur = \{/ {on=1; next} on && /enabled *=/ {gsub(/^[ \t]+/, "  "); print; exit}' "$opts/blur.lua"
-grep -h 'scale' hosts/"$host"/monitor.lua 2>/dev/null | sed 's/^ */monitor /' || true
+section "Hyprland plugins"
+echo "$data" | jq -r '.plugins[] | "  " + .'
+echo "$data" | jq -r '.pluginSettings | to_entries[] | "  \(.key): " + (.value | tostring)'
 
-echo
-echo "$data" | jq -r '"== Programs", "System packages: \(.system | length)", "User packages: \(.user | length)"'
+section "Programs"
+echo "$data" | jq -r '"  system packages: \(.system | length)", "  user packages:   \(.user | length)"'
 if [ "${usage_packages:-false}" = "true" ]; then
-  echo "$data" | jq -r '"-- system", (.system | join(" ")), "-- user", (.user | join(" "))'
+  echo "$data" | jq -r '"  -- system", (.system | join(" ")), "  -- user", (.user | join(" "))' | fold -s -w 100
 fi
