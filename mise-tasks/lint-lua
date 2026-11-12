@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#MISE description="Type check the Hyprland Lua files against the stubs in the Hyprland package"
+#USAGE arg "[host]" help="Host name" default="desktop"
+set -euo pipefail
+
+hyprland=$(nix eval --raw ".#nixosConfigurations.${usage_host?}.config.programs.hyprland.package")
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+printf '{"workspace":{"library":["%s/share/hypr/stubs"]},"diagnostics":{"globals":["hl"]}}\n' "$hyprland" > "$tmp/luarc.json"
+
+nix run nixpkgs#lua-language-server -- --check modules/home-manager/hyprland \
+  --configpath "$tmp/luarc.json" --checklevel Warning --logpath "$tmp/log"

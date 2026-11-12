@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#MISE description="Check for failed units, the polkit agent, the Windows drive mounts and snapper"
+set -uo pipefail
+
+echo "== failed system units"
+systemctl --failed --no-legend --no-pager
+echo "== failed user units"
+systemctl --user --failed --no-legend --no-pager
+echo "== polkit agent"
+pgrep -a hyprpolkitagent || echo "WARN: no polkit agent is running"
+echo "== mounts"
+findmnt -rn -o TARGET,SOURCE,FSTYPE /mnt/c /mnt/d /mnt/e || echo "WARN: a Windows drive is not mounted"
+echo "== snapper"
+systemctl list-timers 'snapper-*' --no-legend --no-pager
+echo "== disk"
+df -h / | tail -n 1
