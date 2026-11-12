@@ -80,7 +80,6 @@ in
             barStyle = "liquid";
             barGlass = false;
             barBgOpacity = 0.25;
-            showTray = false;
           };
         }
     )
