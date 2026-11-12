@@ -42,16 +42,20 @@ stdenvNoCC.mkDerivation {
     // Bluetooth has its own optional widget; it remains visible when the radio is off.'
     substituteInPlace MacShell/MacDock.qml \
       --replace-fail 'visible: !cell.isSep && !cell.thumbReady' 'visible: !cell.isSep && !cell.thumbReady
-                                    scale: 0.72
-                                    Rectangle {
-                                        z: -1
-                                        anchors.centerIn: parent
-                                        width: parent.width / 0.72
-                                        height: width
-                                        radius: width * 0.225
-                                        color: root.dockDark ? Qt.rgba(0.26, 0.26, 0.28, 0.92) : Qt.rgba(1, 1, 1, 0.92)
-                                        border.width: 1
-                                        border.color: root.dockDark ? Qt.rgba(1, 1, 1, 0.16) : Qt.rgba(0, 0, 0, 0.12)
+                                    maskEnabled: true
+                                    maskSource: tileMask
+                                    maskThresholdMin: 0.5
+                                    maskSpreadAtMin: 1.0
+                                    Item {
+                                        id: tileMask
+                                        anchors.fill: parent
+                                        visible: false
+                                        layer.enabled: true
+                                        Rectangle {
+                                            anchors.fill: parent
+                                            radius: width * 0.225
+                                            color: "black"
+                                        }
                                     }'
   '';
 
