@@ -1,10 +1,18 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }:
 let
   macshell = (import ../../../pkgs pkgs).macshell;
+  colors = config.lib.stylix.colors;
+  look = {
+    darkMode = true;
+    appearanceMode = "dark";
+    accent = "#${colors.base0D}";
+    fontFamily = config.stylix.fonts.sansSerif.name;
+  };
 
   macshell-start = pkgs.writeShellApplication {
     name = "macshell-start";
@@ -64,11 +72,13 @@ in
           mv "$settings.tmp" "$settings"
         '')
         {
-          macdock = {
+          macdock = look // {
             dockEnabled = false;
             desktopIcons = false;
           };
-          macbar.glassOpacity = 1.82;
+          macbar = look // {
+            glassOpacity = 1.82;
+          };
         }
     )
   );
