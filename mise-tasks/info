@@ -77,7 +77,7 @@ jq \
           ["Opacity", [["Active", $active], ["Inactive", $inactive]]],
           ["Effects", [["Shadow", $shadow], ["Blur", $blur]]],
           ["Monitor", [["Scale", $scale]]],
-          ["Plugins", ($d.plugins | map([., ""]))]
+          ["Plugins", ($d.plugins | join(", "))]
         ]; "")
       + ["break", head("Programs")]
       + tree([
