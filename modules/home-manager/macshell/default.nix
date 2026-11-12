@@ -32,7 +32,7 @@ let
       kdePackages.qtshadertools
     ];
     text = ''
-      export QS_ICON_THEME=Papirus-Dark
+      export QS_ICON_THEME=${config.stylix.icons.dark}
       export QML2_IMPORT_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/qml''${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
       export QT_PLUGIN_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/plugins''${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
       while true; do
@@ -45,7 +45,6 @@ in
 {
   home.packages = [
     macshell-start
-    pkgs.papirus-icon-theme
     pkgs.quickshell
     pkgs.awww
   ];
