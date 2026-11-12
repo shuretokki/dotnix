@@ -6,6 +6,16 @@
 }:
 let
   colors = config.lib.stylix.colors;
+  hyprbars = pkgs.hyprlandPlugins.hyprbars.overrideAttrs (old: {
+    patchFlags = [ "-p2" ];
+    patches = (old.patches or [ ]) ++ [
+      (pkgs.fetchurl {
+        name = "hyprbars-stencil-mask.patch";
+        url = "https://github.com/hyprwm/hyprland-plugins/pull/717.diff";
+        hash = "sha256-orrYdr9YHY8acq60CBgPajKrtR8hHovfaAG/S+50Vik=";
+      })
+    ];
+  });
 in
 {
   wayland.windowManager.hyprland = {
@@ -14,8 +24,8 @@ in
     portalPackage = null;
     configType = "lua";
     systemd.enable = false;
-    plugins = with pkgs.hyprlandPlugins; [
-      borders-plus-plus
+    plugins = [
+      pkgs.hyprlandPlugins.borders-plus-plus
       hyprbars
     ];
     settings.config = {

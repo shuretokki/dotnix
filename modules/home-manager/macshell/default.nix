@@ -76,7 +76,11 @@ in
             dockEnabled = true;
             desktopIcons = false;
           };
-          macbar = look;
+          macbar = look // {
+            barStyle = "liquid";
+            barGlass = false;
+            barBgOpacity = 0.25;
+          };
         }
     )
   );
