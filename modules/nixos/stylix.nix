@@ -4,7 +4,7 @@
   ...
 }:
 let
-  scheme = "amoled";
+  scheme = "macshell";
 in
 {
   imports = [ inputs.stylix.nixosModules.stylix ];
