@@ -1,61 +1,90 @@
 #!/usr/bin/env bash
-#MISE description="Show the colour scheme, fonts, theme, Hyprland look and installed programs"
+#MISE description="Show the colour palette, the Hyprland look and the installed programs as a tree"
 #USAGE arg "[host]" help="Host name" default="desktop"
-#USAGE flag "-p --packages" help="Also list every installed package"
+#USAGE flag "-p --packages" help="Also list the system packages"
 set -euo pipefail
 
 host="${usage_host?}"
 opts=modules/home-manager/hyprland/options
+tmp=$(mktemp --suffix=.jsonc)
+trap 'rm -f "$tmp"' EXIT
+
+base=$(nix build --no-link --print-out-paths ".#nixosConfigurations.${host}.config.home-manager.users.$(whoami).xdg.configFile.\"fastfetch/config.jsonc\".source")
 
 data=$(nix eval --json ".#nixosConfigurations.${host}.config" --apply '
 c: let
   hm = c.home-manager.users.${builtins.head (builtins.attrNames c.home-manager.users)};
   names = ps: builtins.sort builtins.lessThan (map (p: p.pname or (builtins.parseDrvName p.name).name) ps);
   base = [ "00" "01" "02" "03" "04" "05" "06" "07" "08" "09" "0A" "0B" "0C" "0D" "0E" "0F" ];
-  hypr = hm.wayland.windowManager.hyprland;
 in {
-  scheme = c.lib.stylix.colors.scheme-name;
-  polarity = c.stylix.polarity;
-  colors = builtins.listToAttrs (map (n: { name = "base" + n; value = c.lib.stylix.colors."base${n}"; }) base);
-  fonts = {
-    monospace = c.stylix.fonts.monospace.name;
-    sansSerif = c.stylix.fonts.sansSerif.name;
-    serif = c.stylix.fonts.serif.name;
-    emoji = c.stylix.fonts.emoji.name;
-  };
-  sizes = c.stylix.fonts.sizes;
-  cursor = "${c.stylix.cursor.name} ${toString c.stylix.cursor.size}";
-  icons = c.stylix.icons.dark;
-  plugins = names hypr.plugins;
-  pluginSettings = hypr.settings.config.plugin or { };
+  colors = map (n: { name = "base" + n; hex = c.lib.stylix.colors."base${n}"; }) base;
+  plugins = names hm.wayland.windowManager.hyprland.plugins;
   system = names c.environment.systemPackages;
   user = names hm.home.packages;
 }')
 
-echo "$data" | jq -r '
-  "== Theme",
-  "Scheme:   \(.scheme) (\(.polarity))",
-  "Colours:  " + ([.colors | to_entries[] | "\(.key)=\(.value)"] | join(" ")),
-  "Fonts:    mono \(.fonts.monospace), sans \(.fonts.sansSerif), serif \(.fonts.serif), emoji \(.fonts.emoji)",
-  "Sizes:    " + ([.sizes | to_entries[] | "\(.key)=\(.value)"] | join(" ")),
-  "Cursor:   \(.cursor)",
-  "Icons:    \(.icons)",
-  "",
-  "== Hyprland plugins",
-  (.plugins | join(", ")),
-  (.pluginSettings | to_entries[] | "\(.key): " + (.value | tostring))'
+val() { awk -v k="$1" '$0 ~ "^[[:space:]]+"k" *=" {gsub(/^[^=]*= */, ""); gsub(/,$/, ""); print; exit}' "$2"; }
+shadow=$(awk '/shadow = \{/ {on=1; next} on && /enabled *=/ {gsub(/^[^=]*= */, ""); gsub(/,$/, ""); print; exit}' "$opts/look.lua")
+blur=$(awk '/blur = \{/ {on=1; next} on && /enabled *=/ {gsub(/^[^=]*= */, ""); gsub(/,$/, ""); print; exit}' "$opts/blur.lua")
+scale=$(grep -h 'scale' "hosts/${host}/monitor.lua" 2>/dev/null | sed 's/.*= *//; s/,$//' | head -n 1)
+onoff() { if [ "$1" = "true" ]; then echo on; else echo off; fi; }
 
-echo
-echo "== Hyprland look"
-awk '/^[[:space:]]+(rounding|rounding_power|gaps_in|gaps_out|border_size|active_opacity|inactive_opacity) *=/ {gsub(/^[ \t]+/, ""); print}' "$opts/look.lua"
-echo "shadow:"
-awk '/shadow = \{/ {on=1; next} on && /^[[:space:]]+\},?$/ {on=0} on && /=/ && !/^[[:space:]]*--/ {gsub(/^[ \t]+/, "  "); print}' "$opts/look.lua"
-echo "blur:"
-awk '/blur = \{/ {on=1; next} on && /enabled *=/ {gsub(/^[ \t]+/, "  "); print; exit}' "$opts/blur.lua"
-grep -h 'scale' hosts/"$host"/monitor.lua 2>/dev/null | sed 's/^ */monitor /' || true
+jq \
+  --argjson d "$data" \
+  --arg gin "$(val gaps_in "$opts/look.lua")" \
+  --arg gout "$(val gaps_out "$opts/look.lua")" \
+  --arg border "$(val border_size "$opts/look.lua")" \
+  --arg radius "$(val rounding "$opts/look.lua")" \
+  --arg power "$(val rounding_power "$opts/look.lua")" \
+  --arg active "$(val active_opacity "$opts/look.lua")" \
+  --arg inactive "$(val inactive_opacity "$opts/look.lua")" \
+  --arg shadow "$(onoff "$shadow")" \
+  --arg blur "$(onoff "$blur")" \
+  --arg scale "${scale:-auto}" \
+  --argjson all "$([ "${usage_packages:-false}" = "true" ] && echo true || echo false)" '
+  def hx: explode | map(if . >= 97 then . - 87 elif . >= 65 then . - 55 else . - 48 end) | reduce .[] as $x (0; . * 16 + $x);
+  def block($h): "\u001b[48;2;\($h[0:2] | hx);\($h[2:4] | hx);\($h[4:6] | hx)m  \u001b[0m \($h)";
+  def row($k; $v): { type: "custom", key: $k, format: $v };
+  def head($t): { type: "custom", format: "\u001b[1;34m\($t)\u001b[0m" };
+  def tree($items; $prefix):
+    ($items | length) as $n
+    | [range(0; $n) as $i
+       | $items[$i] as $it
+       | (if $i == $n - 1 then "└─ " else "├─ " end) as $branch
+       | (if $i == $n - 1 then "   " else "│  " end) as $pad
+       | if ($it[1] | type) == "array"
+         then row($prefix + $branch + $it[0]; ""), tree($it[1]; $prefix + $pad)
+         else row($prefix + $branch + $it[0]; $it[1])
+         end]
+    | flatten;
+  def apps: map(select(test("^(dummy|hm-session|home-configuration|index\\.theme|usage$|inter$|man-db|shared-mime|adw|qt|bash-interactive|nix-index)|icon-theme|cursor|fonts?|stylix|gnome-shell-extension|^bat(diff|grep|man|watch)$"; "i") | not)) | unique;
+  def chunks($a; $n): [range(0; $a | length; $n) as $i | $a[$i:$i + $n] | join(", ")];
+  def lines($a; $n): chunks($a; $n) | map([ "", . ]);
+  def palette:
+    [range(0; 4) as $r
+     | $d.colors[$r * 4:$r * 4 + 4] as $c
+     | [($c[0].name[4:] + "-" + $c[3].name[4:]), ($c | map(block(.hex)) | join("  "))]];
+  .display.key.width = 24
+  | .logo = { type: "none" }
+  | .modules = []
+  | .modules += (
+      [head("Palette")]
+      + tree(palette; "")
+      + ["break", head("Hyprland")]
+      + tree([
+          ["Layout", [["Gaps in", $gin], ["Gaps out", $gout], ["Border", "\($border) px"]]],
+          ["Corners", [["Radius", $radius], ["Power", $power]]],
+          ["Opacity", [["Active", $active], ["Inactive", $inactive]]],
+          ["Effects", [["Shadow", $shadow], ["Blur", $blur]]],
+          ["Monitor", [["Scale", $scale]]],
+          ["Plugins", ($d.plugins | map([., ""]))]
+        ]; "")
+      + ["break", head("Programs")]
+      + tree([
+          ["Count", [["System", "\($d.system | length)"], ["User", "\($d.user | length)"]]],
+          ["Installed", (chunks($d.user | apps; 6) | map(["", .]))]
+        ] + (if $all then [["System", (chunks($d.system | apps; 6) | map(["", .]))]] else [] end); "")
+    )
+' "$base" > "$tmp"
 
-echo
-echo "$data" | jq -r '"== Programs", "System packages: \(.system | length)", "User packages: \(.user | length)"'
-if [ "${usage_packages:-false}" = "true" ]; then
-  echo "$data" | jq -r '"-- system", (.system | join(" ")), "-- user", (.user | join(" "))'
-fi
+fastfetch --config "$tmp"
