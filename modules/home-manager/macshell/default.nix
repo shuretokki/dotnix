@@ -80,6 +80,8 @@ in
             barStyle = "liquid";
             barGlass = false;
             barBgOpacity = 0.25;
+            barLogoMode = "custom";
+            barCustomLogoPath = "${./nixos-logomark.svg}";
           };
         }
     )
