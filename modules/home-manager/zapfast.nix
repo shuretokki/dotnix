@@ -10,7 +10,7 @@ in
       base = if config.stylix.polarity == "light" then "light" else "dark";
       colors = {
         window = "#${colors.base00}";
-        panel = "#${colors.base01}";
+        panel = "#${colors.base00}";
         surface = "#${colors.base02}";
         outline = "#${colors.base03}";
         text = "#${colors.base05}";
