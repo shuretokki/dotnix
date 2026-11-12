@@ -22,7 +22,6 @@ hl.bind("SUPER + period",     hl.dsp.exec_cmd(qs .. "spotlight emoji"))
 hl.bind("SUPER + SPACE",      hl.dsp.exec_cmd(qs .. "spotlight toggle"))
 hl.bind("ALT + TAB",          hl.dsp.exec_cmd(qs .. "switcher next"))
 hl.bind("CTRL + ALT + W",     hl.dsp.exec_cmd(qs .. "wallpapers toggle"))
-hl.bind("PRINT",              hl.dsp.exec_cmd(qs .. "screenshot region"))
 
 hl.bind("SUPER + L",          hl.dsp.exec_cmd("sh ~/.config/quickshell/MacLock/lock-via-ipc.sh"))
 
