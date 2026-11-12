@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#MISE description="Free disk space by removing old generations, garbage, logs and caches"
+#USAGE flag "--deep" help="Also clear package caches that must be downloaded again"
+#USAGE flag "-n --dry" help="Only show what the Nix cleanup would remove"
+set -euo pipefail
+
+df -h / | tail -n 1
+
+if [ "${usage_dry:-false}" = "true" ]; then
+  nh clean all --keep 3 --keep-since 4d --dry
+  du -sh ~/.cache/uv ~/.npm ~/.cache/nix /var/log/journal 2>/dev/null || true
+  exit 0
+fi
+
+nh clean all --keep 3 --keep-since 4d
+sudo journalctl --vacuum-time=7d
+uv cache prune
+
+if [ "${usage_deep:-false}" = "true" ]; then
+  uv cache clean
+  npm cache clean --force
+  if command -v pnpm >/dev/null; then pnpm store prune; fi
+  rm -rf ~/.cache/nix ~/.cache/spotify.old ~/.cache/appimage-run ~/.cache/ms-playwright
+fi
+
+df -h / | tail -n 1
