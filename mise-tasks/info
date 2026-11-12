@@ -31,9 +31,13 @@ onoff() { if [ "$1" = "true" ]; then echo on; else echo off; fi; }
 
 jq \
   --argjson d "$data" \
-  --arg gaps "$(val gaps_in "$opts/look.lua") in, $(val gaps_out "$opts/look.lua") out" \
-  --arg border "$(val border_size "$opts/look.lua") px" \
-  --arg round "$(val rounding "$opts/look.lua") (power $(val rounding_power "$opts/look.lua"))" \
+  --arg gin "$(val gaps_in "$opts/look.lua")" \
+  --arg gout "$(val gaps_out "$opts/look.lua")" \
+  --arg border "$(val border_size "$opts/look.lua")" \
+  --arg radius "$(val rounding "$opts/look.lua")" \
+  --arg power "$(val rounding_power "$opts/look.lua")" \
+  --arg active "$(val active_opacity "$opts/look.lua")" \
+  --arg inactive "$(val inactive_opacity "$opts/look.lua")" \
   --arg shadow "$(onoff "$shadow")" \
   --arg blur "$(onoff "$blur")" \
   --arg scale "${scale:-auto}" \
@@ -43,28 +47,45 @@ jq \
   def block($h): "\u001b[48;2;\($h[0:2] | hx);\($h[2:4] | hx);\($h[4:6] | hx)m  \u001b[0m \($h)";
   def row($k; $v): { type: "custom", key: $k, format: $v };
   def head($t): { type: "custom", format: "\u001b[1;34m\($t)\u001b[0m" };
-  def branch($i; $n): if $i == $n - 1 then "└─ " else "├─ " end;
-  def tree($rows): ($rows | length) as $n | [range(0; $n) as $i | row(branch($i; $n) + $rows[$i][0]; $rows[$i][1])];
+  def tree($items; $prefix):
+    ($items | length) as $n
+    | [range(0; $n) as $i
+       | $items[$i] as $it
+       | (if $i == $n - 1 then "└─ " else "├─ " end) as $branch
+       | (if $i == $n - 1 then "   " else "│  " end) as $pad
+       | if ($it[1] | type) == "array"
+         then row($prefix + $branch + $it[0]; ""), tree($it[1]; $prefix + $pad)
+         else row($prefix + $branch + $it[0]; $it[1])
+         end]
+    | flatten;
   def apps: map(select(test("^(dummy|hm-session|home-configuration|index\\.theme|usage$|inter$|man-db|shared-mime|adw|qt|bash-interactive|nix-index)|icon-theme|cursor|fonts?|stylix|gnome-shell-extension|^bat(diff|grep|man|watch)$"; "i") | not)) | unique;
   def chunks($a; $n): [range(0; $a | length; $n) as $i | $a[$i:$i + $n] | join(", ")];
-  def lines($label; $a; $n; $last):
-    chunks($a; $n) as $c
-    | [range(0; $c | length) as $i
-       | row(if $i == 0 then (if $last then "└─ " else "├─ " end) + $label else (if $last then "   " else "│  " end) end; $c[$i])];
+  def lines($a; $n): chunks($a; $n) | map([ "", . ]);
   def palette:
     [range(0; 4) as $r
      | $d.colors[$r * 4:$r * 4 + 4] as $c
      | [($c[0].name[4:] + "-" + $c[3].name[4:]), ($c | map(block(.hex)) | join("  "))]];
-  .modules |= map(select(type != "object" or ((.key // "") != "Palette" and (.key // "") != "Scheme")))
+  def installed($a): chunks($a; 6) as $c | [range(0; $c | length) as $i | [(if $i == 0 then "Apps" else " " end), $c[$i]]];
+  .display.key.width = 24
+  | .modules |= map(select(type != "object" or ((.key // "") != "Palette" and (.key // "") != "Scheme")))
   | .modules |= map(if type == "object" and .key == "Terminal" and $term != "" then row("Terminal"; $term) else . end)
   | .modules += (
       ["break", head("Palette")]
-      + tree(palette)
+      + tree(palette; "")
       + ["break", head("Hyprland")]
-      + tree([["Layout", "gaps \($gaps), border \($border)"], ["Corners", $round], ["Shadow", $shadow], ["Blur", $blur], ["Scale", $scale], ["Plugins", ($d.plugins | join(", "))]])
-      + ["break", head("Programs"), row("├─ System"; "\($d.system | length) packages"), row("├─ User"; "\($d.user | length) packages")]
-      + lines("Apps"; ($d.user | apps); 6; ($all | not))
-      + (if $all then lines("System apps"; ($d.system | apps); 6; true) else [] end)
+      + tree([
+          ["Layout", [["Gaps in", $gin], ["Gaps out", $gout], ["Border", "\($border) px"]]],
+          ["Corners", [["Radius", $radius], ["Power", $power]]],
+          ["Opacity", [["Active", $active], ["Inactive", $inactive]]],
+          ["Effects", [["Shadow", $shadow], ["Blur", $blur]]],
+          ["Monitor", [["Scale", $scale]]],
+          ["Plugins", ($d.plugins | map([., ""]))]
+        ]; "")
+      + ["break", head("Programs")]
+      + tree([
+          ["Count", [["System", "\($d.system | length)"], ["User", "\($d.user | length)"]]],
+          ["Installed", (chunks($d.user | apps; 6) | map(["", .]))]
+        ] + (if $all then [["System", (chunks($d.system | apps; 6) | map(["", .]))]] else [] end); "")
     )
 ' "$base" > "$tmp"
 
