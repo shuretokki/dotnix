@@ -3,7 +3,7 @@
     ../../modules/home-manager
     # ../../modules/home-manager/mist
     # ../../modules/home-manager/chillpill-shell
-    ../../modules/home-manager/tide-island
+    ../../modules/home-manager/macshell
   ];
 
   home = {
