@@ -1,4 +1,12 @@
 { pkgs, ... }:
+let
+  warp = pkgs.symlinkJoin {
+    name = "warp-terminal";
+    paths = [ pkgs.warp-terminal ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = "wrapProgram $out/bin/warp-terminal --set WARP_ENABLE_WAYLAND 1";
+  };
+in
 {
   programs.ghostty = {
     enable = true;
@@ -15,7 +23,7 @@
     };
   };
 
-  home.packages = [ pkgs.warp-terminal ];
+  home.packages = [ warp ];
 
   home.sessionVariables.TERMINAL = "warp-terminal";
 }
