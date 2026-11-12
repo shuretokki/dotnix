@@ -18,6 +18,7 @@ stdenvNoCC.mkDerivation {
     substituteInPlace MacShell/MacBar.qml \
       --replace-fail 'property var trayItem: null' 'property bool trayExpanded: false
                     property var trayItem: null' \
+      --replace-fail 'width: 17; height: 17' 'width: 22; height: 22' \
       --replace-fail 'model: root.showTray ? SystemTray.items : null' 'model: root.showTray && ui.trayExpanded ? SystemTray.items : null' \
       --replace-fail '// Bluetooth has its own optional widget; it remains visible when the radio is off.' 'Item {
         visible: root.showTray && SystemTray.items.values.length > 0
