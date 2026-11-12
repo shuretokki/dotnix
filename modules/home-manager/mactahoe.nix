@@ -7,7 +7,16 @@
 }:
 let
   cfg = config.theme.mactahoe;
-  mactahoe = (import ../../pkgs pkgs).mactahoe-gtk-theme;
+  colors = config.lib.stylix.colors;
+  mactahoe = (import ../../pkgs pkgs).mactahoe-gtk-theme.override {
+    palette = {
+      bg = "#${colors.base00}";
+      base = "#${colors.base00}";
+      text = "#${colors.base05}";
+      fg = "#${colors.base05}";
+      altFg = "#${colors.base04}";
+    };
+  };
   themeName = "MacTahoe-Dark";
 
   palette = config.lib.stylix.colors {
