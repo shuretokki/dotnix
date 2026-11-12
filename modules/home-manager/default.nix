@@ -13,7 +13,6 @@
     ./gtk.nix
     ./gnome-apps.nix
     ./hyprland
-    ./karere.nix
     ./lean-ctx.nix
     ./mactahoe.nix
     ./mail.nix
