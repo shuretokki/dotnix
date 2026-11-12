@@ -2,7 +2,8 @@
   imports = [
     ../../modules/home-manager
     # ../../modules/home-manager/mist
-    ../../modules/home-manager/chillpill-shell
+    # ../../modules/home-manager/chillpill-shell
+    ../../modules/home-manager/tide-island
   ];
 
   home = {

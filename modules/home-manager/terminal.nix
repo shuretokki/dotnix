@@ -1,10 +1,15 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
   warp = pkgs.symlinkJoin {
     name = "warp-terminal";
     paths = [ pkgs.warp-terminal ];
     nativeBuildInputs = [ pkgs.makeWrapper ];
-    postBuild = "wrapProgram $out/bin/warp-terminal --set WARP_ENABLE_WAYLAND 1";
+    postBuild = "wrapProgram $out/bin/warp-terminal --set WARP_ENABLE_WAYLAND 1 --prefix LD_LIBRARY_PATH : ${
+      lib.makeLibraryPath [
+        pkgs.wayland
+        pkgs.libxkbcommon
+      ]
+    }";
   };
 in
 {
