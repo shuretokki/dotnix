@@ -1,7 +1,8 @@
 {
   imports = [
     ../../modules/home-manager
-    ../../modules/home-manager/mist
+    # ../../modules/home-manager/mist
+    ../../modules/home-manager/chillpill-shell
   ];
 
   home = {
