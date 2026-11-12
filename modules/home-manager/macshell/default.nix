@@ -12,6 +12,7 @@ let
     appearanceMode = "dark";
     accent = "#${colors.base0D}";
     fontFamily = config.stylix.fonts.sansSerif.name;
+    glassOpacity = 0.42;
   };
 
   macshell-start = pkgs.writeShellApplication {
@@ -75,9 +76,7 @@ in
             dockEnabled = true;
             desktopIcons = false;
           };
-          macbar = look // {
-            glassOpacity = 1.82;
-          };
+          macbar = look;
         }
     )
   );
