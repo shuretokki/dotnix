@@ -19,3 +19,10 @@ hl.window_rule({
 
     no_focus = true,
 })
+
+hl.window_rule({
+    name  = "cap-no-bar",
+    match = { class = "^[Cc]ap$" },
+
+    ["hyprbars:no_bar"] = true,
+})

@@ -51,3 +51,10 @@ hl.window_rule({
 
     ["hyprbars:no_bar"] = true,
 })
+
+hl.window_rule({
+    name = "macshell-about-no-bar",
+    match = { title = "^About This Linux$" },
+
+    ["hyprbars:no_bar"] = true,
+})
