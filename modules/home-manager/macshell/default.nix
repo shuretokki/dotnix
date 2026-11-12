@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 let
   macshell = (import ../../../pkgs pkgs).macshell;
 
@@ -48,6 +52,14 @@ in
       recursive = true;
     };
   };
+
+  home.activation.macshellMenuBarOnly = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    settings="$HOME/.config/macdock/settings.json"
+    mkdir -p "$(dirname "$settings")"
+    [ -f "$settings" ] || echo '{}' > "$settings"
+    ${pkgs.jq}/bin/jq '. + { dockEnabled: false, desktopIcons: false }' "$settings" > "$settings.tmp"
+    mv "$settings.tmp" "$settings"
+  '';
 
   wayland.windowManager.hyprland.extraLuaFiles.macshell = ./macshell.lua;
 }
