@@ -7,7 +7,16 @@
 }:
 let
   cfg = config.theme.mactahoe;
-  mactahoe = (import ../../pkgs pkgs).mactahoe-gtk-theme;
+  colors = config.lib.stylix.colors;
+  mactahoe = (import ../../pkgs pkgs).mactahoe-gtk-theme.override {
+    palette = {
+      bg = "#${colors.base00}";
+      base = "#${colors.base00}";
+      text = "#${colors.base05}";
+      fg = "#${colors.base05}";
+      altFg = "#${colors.base04}";
+    };
+  };
   themeName = "MacTahoe-Dark";
 
   palette = config.lib.stylix.colors {
@@ -18,6 +27,8 @@ let
   libadwaitaCss = pkgs.runCommandLocal "gtk-4.0.css" { } ''
     echo '@import url("file://${mactahoe}/share/themes/${themeName}/gtk-4.0/gtk.css");' >$out
     cat ${palette} >>$out
+    echo '@define-color sidebar_bg_color @window_bg_color;' >>$out
+    echo '@define-color secondary_sidebar_bg_color @window_bg_color;' >>$out
     echo ${lib.escapeShellArg config.stylix.targets.gtk.extraCss} >>$out
   '';
 

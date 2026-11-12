@@ -6,6 +6,13 @@
   glib,
   libxml2,
   bash,
+  palette ? {
+    bg = "#333333";
+    base = "#242424";
+    text = "#dadada";
+    fg = "#dedede";
+    altFg = "#afafaf";
+  },
   dialog,
   ncurses,
   util-linux,
@@ -39,6 +46,36 @@ stdenvNoCC.mkDerivation {
 
   postPatch = ''
     patchShebangs install.sh parse-sass.sh libs
+    substituteInPlace src/sass/_colors.scss \
+      --replace-fail "#ffffff, if(\$darker == 'true', #1f1f1f, #242424)" "#ffffff, if(\$darker == 'true', #1f1f1f, ${palette.base})" \
+      --replace-fail "#363636, #dadada" "#363636, ${palette.text}" \
+      --replace-fail "#f5f5f5, if(\$darker == 'true', #282828, #333333)" "#f5f5f5, if(\$darker == 'true', #282828, ${palette.bg})" \
+      --replace-fail "#f2f2f2, if(\$darker == 'true', #1f1f1f, #242424)" "#f2f2f2, if(\$darker == 'true', #1f1f1f, ${palette.bg})" \
+      --replace-fail "#242424, #dedede" "#242424, ${palette.fg}" \
+      --replace-fail "#424242, #afafaf" "#424242, ${palette.altFg}" \
+      --replace-fail "#ffffff, if(\$darker == 'true', #1e1e1e, #333333)" "#ffffff, if(\$darker == 'true', #1e1e1e, ${palette.bg})" \
+      --replace-fail "if(\$darker == 'true', #282828, #333333)" "if(\$darker == 'true', #282828, ${palette.bg})"
+    cat >> src/sass/gtk/apps/_libadwaita.scss <<'EOF'
+
+    .sidebar-pane,
+    .content-pane .sidebar-pane,
+    .sidebar-pane .content-pane {
+      &, &:dir(ltr), &:dir(rtl) {
+        margin: 0;
+        border-radius: 0;
+        background-image: none;
+        background-color: transparent;
+        box-shadow: none;
+      }
+
+      &:dir(ltr), &:dir(rtl) {
+        banner > revealer > widget { box-shadow: none; }
+      }
+    }
+
+    .sidebar-pane:dir(ltr):not(.end) { border-right: 1px solid $header_border; }
+    .sidebar-pane:dir(rtl):not(.end) { border-left: 1px solid $header_border; }
+    EOF
     substituteInPlace libs/lib-core.sh \
       --replace-fail 'MY_HOME=$(getent passwd "''${MY_USERNAME}" | cut -d: -f6)' 'MY_HOME=/tmp' \
       --replace-fail 'SUDO_BIN="$(command -v sudo)"' 'SUDO_BIN=false'
