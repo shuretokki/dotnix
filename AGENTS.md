@@ -3,7 +3,8 @@
 This repository holds the NixOS configuration for the host `desktop`.
 It is a flake built with flake-parts that follows `nixos-unstable`.
 Home Manager follows its `master` branch and runs as a NixOS module.
-Stylix will follow it too when it is added.
+Stylix follows it too.
+The default branch is `main`.
 
 ## Layout
 
@@ -38,9 +39,15 @@ The port is in progress, so some folders do not exist yet.
 17. Add a flake input with `nix flake lock`, not `nix flake update`, because `update` moves every input. Make each input follow `nixpkgs`.
 18. Check the Lua files under `modules/home-manager/hyprland/` with `lua-language-server --check` against the stubs in the Hyprland package. A wrong name otherwise fails only at login.
 
+19. Keep a polkit agent running in the session (`modules/home-manager/polkit.nix`). Without one, a GUI app cannot show the password prompt, so actions such as mounting a disk fail with no message.
+20. Do not snapshot `/` with snapper. It holds `/nix`, so each snapshot keeps old store paths alive and the disk fills. Roll the system back with generations, and snapshot only `/home`. Snapper needs a `.snapshots` subvolume inside each target before the first run.
+21. Add a plugin to the Hyprland `plugins` list in `modules/home-manager/hyprland/default.nix`, and set its options under `settings.config.plugin` with underscores in the name, for example `borders_plus_plus`. A plugin must match the Hyprland version, so check them after each update.
+
 ## Commands
 
-Run `mise tasks` to list the tasks. The main ones are `fmt`, `check`, `build`, `test`, `switch`, and `update`.
+Run `mise tasks` to list the tasks. The main ones are `fmt`, `check`, `build`, `test`, `switch`, `update`, and `clean`.
+`mise run clean` removes old generations, garbage, logs, and the package manager caches that are safe to drop.
+Add `--deep` for the caches that must be downloaded again, and `--dry` to see what the Nix part would remove.
 
 Before each commit, run `mise run fmt`, `mise run check`, and `mise run build`.
 A machine that cannot boot this system, such as WSL or CI, can only evaluate and build.
