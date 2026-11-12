@@ -21,25 +21,25 @@ in
     settings.config = {
       general."col.active_border" = lib.mkForce {
         colors = [
-          "rgba(${colors.base07}9e)"
-          "rgba(${colors.base07}26)"
-          "rgba(${colors.base07}9e)"
+          "rgb(${colors.base04})"
+          "rgb(${colors.base02})"
+          "rgb(${colors.base04})"
         ];
         angle = 45;
       };
       general."col.inactive_border" = lib.mkForce {
         colors = [
-          "rgba(${colors.base03}ff)"
-          "rgba(${colors.base03}33)"
-          "rgba(${colors.base03}ff)"
+          "rgb(${colors.base03})"
+          "rgb(${colors.base01})"
+          "rgb(${colors.base03})"
         ];
         angle = 45;
       };
-      decoration.shadow.color = lib.mkForce "rgba(${colors.base00}66)";
+      decoration.shadow.color = lib.mkForce "rgb(${colors.base02})";
       plugin.borders_plus_plus = {
         add_borders = 1;
         natural_rounding = true;
-        col.border_1 = "rgb(${colors.base02})";
+        col.border_1 = "rgb(${colors.base00})";
         border_size_1 = 6;
       };
       plugin.hyprbars = {
