@@ -2,6 +2,7 @@
   lib,
   stdenvNoCC,
   fetchFromGitHub,
+  qt6,
 }:
 stdenvNoCC.mkDerivation {
   pname = "macshell";
@@ -13,6 +14,10 @@ stdenvNoCC.mkDerivation {
     tag = "0.5.1";
     hash = "sha256-sDJ9HtdXYKNrU/VEHgC4olgMzd7MTcIoKn3IeJvXULI=";
   };
+
+  nativeBuildInputs = [ qt6.qtshadertools ];
+
+  dontWrapQtApps = true;
 
   postPatch = ''
     substituteInPlace MacShell/MacBar.qml \
@@ -52,9 +57,17 @@ stdenvNoCC.mkDerivation {
                                     height: width
                                     radius: width * 0.2237
                                     color: root.dockDark ? Qt.rgba(0.22, 0.22, 0.24, 0.9) : Qt.rgba(1, 1, 1, 0.9)
-                                    border.width: 1
-                                    border.color: Qt.rgba(1, 1, 1, 0.35)
                                     z: 0
+                                }
+                                ShaderEffect {
+                                    visible: !cell.isSep && !cell.thumbReady
+                                    anchors.centerIn: img
+                                    width: img.width * 0.805
+                                    height: width
+                                    z: 2
+                                    property vector2d itemSize: Qt.vector2d(width, height)
+                                    property real cornerR: width * 0.2237
+                                    fragmentShader: Qt.resolvedUrl("iconrim.frag.qsb")
                                 }
                                 // ── window thumbnail (same box as the icon, so magnification just works) ──'
   '';
@@ -62,6 +75,7 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     mkdir -p $out/share/quickshell
     cp -r MacShell MacLock $out/share/quickshell/
+    qsb --qt6 -o $out/share/quickshell/MacShell/iconrim.frag.qsb ${./macshell-iconrim.frag}
   '';
 
   meta = {
