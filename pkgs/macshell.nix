@@ -22,13 +22,13 @@ stdenvNoCC.mkDerivation {
       --replace-fail 'model: root.showTray ? SystemTray.items : null' 'model: root.showTray && ui.trayExpanded ? SystemTray.items : null' \
       --replace-fail '// Bluetooth has its own optional widget; it remains visible when the radio is off.' 'Item {
         visible: root.showTray && SystemTray.items.values.length > 0
-        width: visible ? 22 : 0
+        width: visible ? 24 : 0
         height: 28
         Text {
             anchors.centerIn: parent
             text: ui.trayExpanded ? "›" : "‹"
             color: bpal.fg2
-            font.pixelSize: 16
+            font.pixelSize: 20
         }
         MouseArea {
             anchors.fill: parent
@@ -43,6 +43,7 @@ stdenvNoCC.mkDerivation {
     // Bluetooth has its own optional widget; it remains visible when the radio is off.'
     substituteInPlace MacShell/MacDock.qml \
       --replace-fail 'visible: !cell.isSep && !cell.thumbReady' 'visible: !cell.isSep && !cell.thumbReady
+                                    scale: 1.15
                                     maskEnabled: true
                                     maskSource: tileMask
                                     maskThresholdMin: 0.5
@@ -53,10 +54,22 @@ stdenvNoCC.mkDerivation {
                                         visible: false
                                         layer.enabled: true
                                         Rectangle {
-                                            anchors.fill: parent
+                                            anchors.centerIn: parent
+                                            width: parent.width / 1.15
+                                            height: width
                                             radius: width * 0.225
                                             color: "black"
                                         }
+                                    }
+                                    Rectangle {
+                                        z: 1
+                                        anchors.centerIn: parent
+                                        width: parent.width / 1.15
+                                        height: width
+                                        radius: width * 0.225
+                                        color: "transparent"
+                                        border.width: 1
+                                        border.color: Qt.rgba(1, 1, 1, 0.35)
                                     }'
   '';
 
