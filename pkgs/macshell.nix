@@ -43,34 +43,36 @@ stdenvNoCC.mkDerivation {
     // Bluetooth has its own optional widget; it remains visible when the radio is off.'
     substituteInPlace MacShell/MacDock.qml \
       --replace-fail 'visible: !cell.isSep && !cell.thumbReady' 'visible: !cell.isSep && !cell.thumbReady
-                                    scale: 1.15
+                                    scale: 0.915
                                     maskEnabled: true
                                     maskSource: tileMask
                                     maskThresholdMin: 0.5
-                                    maskSpreadAtMin: 1.0
-                                    Item {
-                                        id: tileMask
-                                        anchors.fill: parent
-                                        visible: false
-                                        layer.enabled: true
-                                        Rectangle {
-                                            anchors.centerIn: parent
-                                            width: parent.width / 1.15
-                                            height: width
-                                            radius: width * 0.225
-                                            color: "black"
-                                        }
-                                    }
+                                    maskSpreadAtMin: 1.0' \
+      --replace-fail '// ── window thumbnail (same box as the icon, so magnification just works) ──' 'Item {
+                                    id: tileMask
+                                    width: img.width
+                                    height: img.height
+                                    visible: false
+                                    layer.enabled: true
                                     Rectangle {
-                                        z: 1
                                         anchors.centerIn: parent
-                                        width: parent.width / 1.15
+                                        width: parent.width * 0.88
                                         height: width
-                                        radius: width * 0.225
-                                        color: "transparent"
-                                        border.width: 1
-                                        border.color: Qt.rgba(1, 1, 1, 0.35)
-                                    }'
+                                        radius: width * 0.2237
+                                        color: "black"
+                                    }
+                                }
+                                Rectangle {
+                                    visible: !cell.isSep && !cell.thumbReady
+                                    anchors.centerIn: img
+                                    width: img.width * 0.805
+                                    height: width
+                                    radius: width * 0.2237
+                                    color: "transparent"
+                                    border.width: 1
+                                    border.color: Qt.rgba(1, 1, 1, 0.35)
+                                }
+                                // ── window thumbnail (same box as the icon, so magnification just works) ──'
   '';
 
   installPhase = ''
