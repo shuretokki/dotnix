@@ -32,7 +32,7 @@ void main()
     float lit = pow(max(key, 0.0), 1.4);
     float bounce = pow(max(-key, 0.0), 2.5);
 
-    float a = line * (0.16 + 0.84 * lit + 0.38 * bounce) + sheen * (0.16 * lit + 0.05 * bounce);
+    float a = line * (0.08 + 0.42 * lit + 0.18 * bounce) + sheen * (0.07 * lit + 0.02 * bounce);
     a = clamp(a, 0.0, 1.0);
 
     fragColor = vec4(vec3(a), a) * qt_Opacity;

@@ -50,13 +50,47 @@ stdenvNoCC.mkDerivation {
       --replace-fail 'visible: !cell.isSep && !cell.thumbReady' 'visible: !cell.isSep && !cell.thumbReady
                                     scale: 0.66
                                     z: 1' \
-      --replace-fail '// ── window thumbnail (same box as the icon, so magnification just works) ──' 'Rectangle {
+      --replace-fail '// ── window thumbnail (same box as the icon, so magnification just works) ──' 'Canvas {
+                                    id: domCanvas
+                                    width: 32
+                                    height: 32
+                                    visible: false
+                                    renderTarget: Canvas.Image
+                                    property color dom: Qt.rgba(0.22, 0.22, 0.24, 1)
+                                    property string src: img.source.toString()
+                                    onSrcChanged: if (src !== "") loadImage(src)
+                                    Component.onCompleted: if (src !== "") loadImage(src)
+                                    onImageLoaded: requestPaint()
+                                    onPaint: {
+                                        if (src === "" || !isImageLoaded(src)) return;
+                                        var ctx = getContext("2d");
+                                        ctx.clearRect(0, 0, 32, 32);
+                                        ctx.drawImage(src, 0, 0, 32, 32);
+                                        var d = ctx.getImageData(0, 0, 32, 32).data;
+                                        var cnt = {};
+                                        var best = 0;
+                                        var bestKey = "";
+                                        for (var i = 0; i < d.length; i += 4) {
+                                            if (d[i + 3] < 200) continue;
+                                            var key = "" + (d[i] >> 4) + "," + (d[i + 1] >> 4) + "," + (d[i + 2] >> 4);
+                                            var e = cnt[key];
+                                            if (!e) { e = { n: 0, r: 0, g: 0, b: 0 }; cnt[key] = e; }
+                                            e.n++; e.r += d[i]; e.g += d[i + 1]; e.b += d[i + 2];
+                                            if (e.n > best) { best = e.n; bestKey = key; }
+                                        }
+                                        if (best > 0) {
+                                            var m = cnt[bestKey];
+                                            dom = Qt.rgba(m.r / m.n / 255, m.g / m.n / 255, m.b / m.n / 255, 1);
+                                        }
+                                    }
+                                }
+                                Rectangle {
                                     visible: !cell.isSep && !cell.thumbReady
                                     anchors.centerIn: img
                                     width: img.width * 0.805
                                     height: width
-                                    radius: width * 0.2237
-                                    color: root.dockDark ? Qt.rgba(0.22, 0.22, 0.24, 0.9) : Qt.rgba(1, 1, 1, 0.9)
+                                    radius: width * 0.245
+                                    color: domCanvas.dom
                                     z: 0
                                 }
                                 ShaderEffect {
@@ -66,7 +100,7 @@ stdenvNoCC.mkDerivation {
                                     height: width
                                     z: 2
                                     property vector2d itemSize: Qt.vector2d(width, height)
-                                    property real cornerR: width * 0.2237
+                                    property real cornerR: width * 0.245
                                     fragmentShader: Qt.resolvedUrl("iconrim.frag.qsb")
                                 }
                                 // ── window thumbnail (same box as the icon, so magnification just works) ──'
