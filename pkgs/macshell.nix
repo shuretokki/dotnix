@@ -43,34 +43,18 @@ stdenvNoCC.mkDerivation {
     // Bluetooth has its own optional widget; it remains visible when the radio is off.'
     substituteInPlace MacShell/MacDock.qml \
       --replace-fail 'visible: !cell.isSep && !cell.thumbReady' 'visible: !cell.isSep && !cell.thumbReady
-                                    scale: 0.915
-                                    maskEnabled: true
-                                    maskSource: tileMask
-                                    maskThresholdMin: 0.5
-                                    maskSpreadAtMin: 1.0' \
-      --replace-fail '// ── window thumbnail (same box as the icon, so magnification just works) ──' 'Item {
-                                    id: tileMask
-                                    width: img.width
-                                    height: img.height
-                                    visible: false
-                                    layer.enabled: true
-                                    Rectangle {
-                                        anchors.centerIn: parent
-                                        width: parent.width * 0.88
-                                        height: width
-                                        radius: width * 0.2237
-                                        color: "black"
-                                    }
-                                }
-                                Rectangle {
+                                    scale: 0.66
+                                    z: 1' \
+      --replace-fail '// ── window thumbnail (same box as the icon, so magnification just works) ──' 'Rectangle {
                                     visible: !cell.isSep && !cell.thumbReady
                                     anchors.centerIn: img
                                     width: img.width * 0.805
                                     height: width
                                     radius: width * 0.2237
-                                    color: "transparent"
+                                    color: root.dockDark ? Qt.rgba(0.22, 0.22, 0.24, 0.9) : Qt.rgba(1, 1, 1, 0.9)
                                     border.width: 1
                                     border.color: Qt.rgba(1, 1, 1, 0.35)
+                                    z: 0
                                 }
                                 // ── window thumbnail (same box as the icon, so magnification just works) ──'
   '';
