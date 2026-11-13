@@ -50,6 +50,7 @@ stdenvNoCC.mkDerivation {
       --replace-fail 'visible: !cell.isSep && !cell.thumbReady' 'visible: !cell.isSep && !cell.thumbReady
                                     scale: 0.66
                                     z: 1' \
+      --replace-fail 'shadowEnabled: true' 'shadowEnabled: false' \
       --replace-fail '// ── window thumbnail (same box as the icon, so magnification just works) ──' 'Canvas {
                                     id: domCanvas
                                     width: 32
