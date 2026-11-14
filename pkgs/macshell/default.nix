@@ -23,6 +23,7 @@ stdenvNoCC.mkDerivation {
     ./patches/tray-chevron.patch
     ./patches/menubar-logo-size.patch
     ./patches/icon-tile.patch
+    ./patches/dock-running-apps.patch
   ];
 
   postPatch = ''
