@@ -11,7 +11,7 @@ let
     darkMode = true;
     appearanceMode = "dark";
     accent = "#${colors.base0D}";
-    fontFamily = "Open Runde";
+    fontFamily = config.stylix.fonts.sansSerif.name;
     glassOpacity = 0.42;
   };
 
