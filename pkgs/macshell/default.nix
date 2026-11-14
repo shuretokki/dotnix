@@ -33,7 +33,6 @@ stdenvNoCC.mkDerivation {
     mkdir -p $out/share/quickshell
     cp -r MacShell MacLock $out/share/quickshell/
     cp ${./IconClass.qml} $out/share/quickshell/MacShell/IconClass.qml
-    cp ${./IconTile.qml} $out/share/quickshell/MacShell/IconTile.qml
     qsb --qt6 -o $out/share/quickshell/MacShell/iconrim.frag.qsb ${./iconrim.frag}
   '';
 
