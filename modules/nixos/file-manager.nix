@@ -14,6 +14,13 @@ let
       substituteInPlace src/ui/src/window.cpp \
         --replace-fail 'kBlack.with_alpha(0.18F));' 'Color::rgb(0x${colors.base02}).with_alpha(0.6F));'
 
+      # The rows of the columns and the details are 28 px high at the usual size, which looks tight.
+      # This makes the usual row 34 px and the next zoom step 40 px, so the steps stay different.
+      # Delete this replacement to get the 28 px rows again.
+      substituteInPlace src/views/include/nordend/views/list_size.hpp \
+        --replace-fail '{.row = 28.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' '{.row = 34.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' \
+        --replace-fail '{.row = 34.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},' '{.row = 40.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},'
+
       # The separators of the sidebar and the header are 18 percent of the text color over the background.
       # That is brighter than the compositor border, so this draws them in the same border color of the theme.
       # Delete this replacement to get the mixed separators again.
