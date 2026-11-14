@@ -4,6 +4,7 @@ pkgs: {
   lean-ctx = pkgs.callPackage ./lean-ctx.nix { };
   mactahoe-icon-theme = pkgs.callPackage ./mactahoe-icon-theme.nix { };
   macshell = pkgs.callPackage ./macshell { };
+  nordend-lucide-icons = pkgs.callPackage ./nordend-lucide-icons { };
   open-runde = pkgs.callPackage ./open-runde.nix { };
   pocketdesk = pkgs.callPackage ./pocketdesk.nix { };
   qylock-sddm = pkgs.callPackage ./qylock-sddm.nix { };

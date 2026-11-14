@@ -6,13 +6,26 @@
 }:
 let
   colors = config.lib.stylix.colors;
+  lucideIcons = (import ../../pkgs pkgs).nordend-lucide-icons;
   nordend = inputs.nordend.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
+      # The outline icons are a font of Tabler glyphs that is compiled into the program.
+      # This swaps it for a font of Lucide glyphs that has the same glyph names, so every icon keeps its place.
+      # Delete this line to get the Tabler icons again.
+      cp --no-preserve=mode ${lucideIcons}/tabler-icons.ttf third_party/tabler-icons/tabler-icons.ttf
+
       # The window outline is a fixed black at 18 percent opacity.
       # This draws it in the border color of the theme instead, at 60 percent so it is not brighter than the compositor border.
       # Raise the 0.6F to make the outline brighter, or delete this replacement to get the black outline again.
       substituteInPlace src/ui/src/window.cpp \
         --replace-fail 'kBlack.with_alpha(0.18F));' 'Color::rgb(0x${colors.base02}).with_alpha(0.6F));'
+
+      # The rows of the columns and the details are 28 px high at the usual size, which looks tight.
+      # This makes the usual row 34 px and the next zoom step 40 px, so the steps stay different.
+      # Delete this replacement to get the 28 px rows again.
+      substituteInPlace src/views/include/nordend/views/list_size.hpp \
+        --replace-fail '{.row = 28.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' '{.row = 34.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' \
+        --replace-fail '{.row = 34.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},' '{.row = 40.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},'
 
       # The separators of the sidebar and the header are 18 percent of the text color over the background.
       # That is brighter than the compositor border, so this draws them in the same border color of the theme.
