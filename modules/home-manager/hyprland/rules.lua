@@ -33,3 +33,10 @@ hl.window_rule({
 
     opacity = "0.999 0.999",
 })
+
+hl.layer_rule({
+    name  = "vicinae-liquid-glass",
+    match = { namespace = "vicinae" },
+
+    ["hyprliquid:effect"] = "liquid_glass",
+})

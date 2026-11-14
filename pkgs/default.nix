@@ -1,5 +1,6 @@
 pkgs: {
   cap = pkgs.callPackage ./cap.nix { };
+  hyprliquid = pkgs.callPackage ./hyprliquid.nix { };
   lean-ctx = pkgs.callPackage ./lean-ctx.nix { };
   mactahoe-icon-theme = pkgs.callPackage ./mactahoe-icon-theme.nix { };
   macshell = pkgs.callPackage ./macshell { };

@@ -27,6 +27,7 @@ in
     plugins = [
       pkgs.hyprlandPlugins.borders-plus-plus
       hyprbars
+      (import ../../../pkgs pkgs).hyprliquid
     ];
     settings.config = {
       general."col.active_border" = lib.mkForce "rgb(${colors.base02})";
