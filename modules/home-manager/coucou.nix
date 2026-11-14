@@ -27,6 +27,16 @@ let
       # Delete this replacement to get the 32 px island again.
       substituteInPlace src/core/layout.ts \
         --replace-fail 'export const NOTCH_H = 32;' 'export const NOTCH_H = 28;'
+
+      # The expanded island starts its tab and tool row 8 px below the top and makes it 34 px high.
+      # That puts the row lower than the closed island, near the bottom edge of the menu bar.
+      # This starts the row at the top with the bar height and keeps the content below it in place.
+      # Delete this replacement to get the lower row again.
+      substituteInPlace src/style.css \
+        --replace-fail 'padding: 8px 10px 10px;' 'padding: 0 10px 10px;' \
+        --replace-fail 'height: 34px;' 'height: 28px;' \
+        --replace-fail 'flex: 0 0 34px;' 'flex: 0 0 28px;' \
+        --replace-fail 'margin: 0 -10px;' 'margin: 0 -10px 14px;'
     '';
   });
 in

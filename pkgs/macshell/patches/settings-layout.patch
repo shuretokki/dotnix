@@ -1,0 +1,128 @@
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -1802,10 +1802,6 @@
+                     SRow {
+                         t: pal; title: I18n.tr("System tray")
+                         SSwitch { t: pal; checked: root.bar ? root.bar.showTray : true; onToggled: v => { if (root.bar) root.bar.showTray = v; } }
+-                        }
+-                        SRow {
+-                            t: pal; title: I18n.tr("Collapse the system tray behind an arrow")
+-                            SSwitch { t: pal; checked: root.bar ? root.bar.trayCollapse : true; onToggled: v => { if (root.bar) root.bar.trayCollapse = v; } }
+                     }
+                     SRow {
+                         t: pal; title: I18n.tr("Volume")
+@@ -1850,6 +1846,15 @@
+                     t: pal
+                     SRow {
+                         t: pal
++                        title: I18n.tr("Collapse the system tray behind an arrow")
++                        SSwitch { t: pal; checked: root.bar ? root.bar.trayCollapse : true; onToggled: v => { if (root.bar) root.bar.trayCollapse = v; } }
++                    }
++                }
++
++                SCard {
++                    t: pal
++                    SRow {
++                        t: pal
+                         title: I18n.tr("Keep clipboard history")
+                         subtitle: I18n.tr("Spotlight \u2192 Clipboard (needs wl-clipboard and cliphist). Turn off to stop recording what you copy")
+                         SSwitch {
+@@ -2076,19 +2081,6 @@
+                     }
+                     SRow {
+                         t: pal
+-                        title: I18n.tr("Icon size in the Dock")
+-                        subtitle: I18n.tr("Scales the icons inside their cells and keeps the Dock size and the gaps")
+-                        SSlider {
+-                            t: pal
+-                            from: 0.5; to: 1.2; stepSize: 0.01
+-                            value: root.iconScale
+-                            leftLabel: I18n.tr("Small"); rightLabel: I18n.tr("Large")
+-                            resetValue: 1
+-                            onMoved: v => root.iconScale = v
+-                        }
+-                    }
+-                    SRow {
+-                        t: pal
+                         title: I18n.tr("Magnification")
+                         subtitle: I18n.tr("Enlarge icons as the pointer moves over them")
+                         SSwitch {
+@@ -2179,10 +2171,24 @@
+                     }
+                 }
+ 
++                SLabel { t: pal; header: true; text: I18n.tr("Dock") }
+                 SCard {
+                     t: pal
+                     SRow {
+                         t: pal
++                        title: I18n.tr("Icon size")
++                        subtitle: I18n.tr("Scales the icons inside their cells and keeps the Dock size and the gaps")
++                        SSlider {
++                            t: pal
++                            from: 0.5; to: 1.2; stepSize: 0.01
++                            value: root.iconScale
++                            leftLabel: I18n.tr("Small"); rightLabel: I18n.tr("Large")
++                            resetValue: 1
++                            onMoved: v => root.iconScale = v
++                        }
++                    }
++                    SRow {
++                        t: pal
+                         title: I18n.tr("Icon spacing")
+                         SSlider {
+                             t: pal
+@@ -2195,6 +2201,24 @@
+                     }
+                     SRow {
+                         t: pal
++                        title: I18n.tr("Icon background")
++                        subtitle: I18n.tr("Puts every icon on the same grid and fills the gaps with the icon color")
++                        SSwitch { t: pal; checked: root.iconTile; onToggled: v => root.iconTile = v }
++                    }
++                    SRow {
++                        t: pal
++                        title: I18n.tr("Icon edge highlight")
++                        SSlider {
++                            t: pal
++                            from: 0; to: 2; stepSize: 0.05
++                            value: root.iconRim
++                            leftLabel: I18n.tr("Off"); rightLabel: I18n.tr("Strong")
++                            resetValue: 1
++                            onMoved: v => root.iconRim = v
++                        }
++                    }
++                    SRow {
++                        t: pal
+                         title: I18n.tr("Distance from screen edge")
+                         SSlider {
+                             t: pal
+@@ -2461,27 +2485,9 @@
+                         }
+                         SRow {
+                             t: pal
+-                            title: I18n.tr("Show open applications that are not in the Dock")
++                            title: I18n.tr("Show icons for open applications")
+                             SSwitch { t: pal; checked: root.showRunningApps; onToggled: v => root.showRunningApps = v }
+                             }
+-                            SRow {
+-                                t: pal
+-                                title: I18n.tr("Show a tile behind application icons")
+-                                subtitle: I18n.tr("Sizes every icon to the same grid, fills the gaps with the icon color and adds a light edge")
+-                                SSwitch { t: pal; checked: root.iconTile; onToggled: v => root.iconTile = v }
+-                                }
+-                                SRow {
+-                                    t: pal
+-                                    title: I18n.tr("Edge light on application icons")
+-                                    SSlider {
+-                                        t: pal
+-                                        from: 0; to: 2; stepSize: 0.05
+-                                        value: root.iconRim
+-                                        leftLabel: I18n.tr("Off"); rightLabel: I18n.tr("Strong")
+-                                        resetValue: 1
+-                                        onMoved: v => root.iconRim = v
+-                                    }
+-                    }
+                     SRow {
+                         t: pal
+                         title: I18n.tr("Animate opening applications")

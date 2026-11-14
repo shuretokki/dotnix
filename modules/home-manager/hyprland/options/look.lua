@@ -88,7 +88,7 @@ hl.config({
         active_opacity = 1,
 
         -- opacity of inactive windows. (range 0 to 1)
-        inactive_opacity = 1.01,
+        inactive_opacity = 0.99,
 
         -- opacity of fullscreen windows. (range 0 to 1)
         fullscreen_opacity = 1,
