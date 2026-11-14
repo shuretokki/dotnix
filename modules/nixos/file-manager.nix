@@ -9,10 +9,10 @@ let
   nordend = inputs.nordend.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
       # The window outline is a fixed black at 18 percent opacity.
-      # This draws it in the border color of the theme instead.
-      # Delete this replacement to get the black outline again.
+      # This draws it in the border color of the theme instead, at 60 percent so it is not brighter than the compositor border.
+      # Raise the 0.6F to make the outline brighter, or delete this replacement to get the black outline again.
       substituteInPlace src/ui/src/window.cpp \
-        --replace-fail 'kBlack.with_alpha(0.18F));' 'Color::rgb(0x${colors.base02}));'
+        --replace-fail 'kBlack.with_alpha(0.18F));' 'Color::rgb(0x${colors.base02}).with_alpha(0.6F));'
     '';
   });
 in
