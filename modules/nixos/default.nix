@@ -5,6 +5,7 @@
     ./bluetooth.nix
     ./boot.nix
     ./dns.nix
+    ./file-manager.nix
     ./firmware.nix
     ./fonts.nix
     ./gvfs.nix

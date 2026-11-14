@@ -98,6 +98,7 @@
         "zen.view.vertical-tabs.show-new-tab-button" = true;
         "zen.view.vertical-tabs.new-tab-button-at-top" = true;
         "zen.view.compact.toolbar-flash-popup" = false;
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
         "zen.glance.enabled" = true;
         "zen.glance.trigger-modifier" = "alt";
         "zen.theme.content-element-separation" = 0;
