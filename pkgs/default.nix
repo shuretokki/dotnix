@@ -1,6 +1,5 @@
 pkgs: {
   cap = pkgs.callPackage ./cap.nix { };
-  explorist = pkgs.callPackage ./explorist.nix { };
   lean-ctx = pkgs.callPackage ./lean-ctx.nix { };
   mactahoe-icon-theme = pkgs.callPackage ./mactahoe-icon-theme.nix { };
   macshell = pkgs.callPackage ./macshell { };
