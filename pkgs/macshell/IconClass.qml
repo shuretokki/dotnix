@@ -24,7 +24,7 @@ Canvas {
         var opaque = 0, x0 = N, x1 = -1, y0 = N, y1 = -1;
         for (var y = 0; y < N; y++) {
             for (var x = 0; x < N; x++) {
-                if (d[(y * N + x) * 4 + 3] >= 128) {
+                if (d[(y * N + x) * 4 + 3] >= 64) {
                     opaque++;
                     if (x < x0) x0 = x;
                     if (x > x1) x1 = x;
