@@ -1,0 +1,91 @@
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -9687,7 +9687,11 @@
+                                         Image {
+                                             visible: rr.ico !== ""
+                                             anchors.fill: parent
+-                                            source: rr.ico
++                                            source: ""
++                            IconTile {
++                                anchors.fill: parent
++                                source: rr.ico
++                            }
+                                             sourceSize: Qt.size(64, 64)
+                                             fillMode: Image.PreserveAspectFit
+                                             asynchronous: true
+@@ -10336,7 +10340,11 @@
+                                                         anchors.horizontalCenter: parent.horizontalCenter
+                                                         y: 10
+                                                         width: 56; height: 56
+-                                                        source: root.iconSrc(cell.e.icon)
++                                                        source: ""
++                            IconTile {
++                                anchors.fill: parent
++                                source: root.iconSrc(cell.e.icon)
++                            }
+                                                         sourceSize: Qt.size(128, 128)
+                                                         fillMode: Image.PreserveAspectFit
+                                                         asynchronous: true
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -5829,9 +5829,15 @@
+                                 }
+                                 MultiEffect {
+                                     visible: !cell.isSep && !cell.thumbReady
++                                scale: ((domCanvas.proper || domCanvas.square) ? 0.805 : 0.58) / domCanvas.art
++                                z: 1
++                                maskEnabled: domCanvas.square
++                                maskSource: tileMask
++                                maskThresholdMin: 0.5
++                                maskSpreadAtMin: 1.0
+                                     source: img
+                                     anchors.fill: img
+-                                    shadowEnabled: true
++                                    shadowEnabled: false
+                                     shadowColor: "black"
+                                     shadowOpacity: 0.32
+                                     shadowBlur: 0.55
+@@ -5844,7 +5850,42 @@
+                                     colorizationColor: root.iconTintColor
+                                 }
+ 
+-                                // ── window thumbnail (same box as the icon, so magnification just works) ──
++                                IconClass {
++                                id: domCanvas
++                                source: img.source.toString()
++                            }
++                            Item {
++                                id: tileMask
++                                width: img.width
++                                height: img.height
++                                visible: false
++                                layer.enabled: true
++                                Rectangle {
++                                    anchors.fill: parent
++                                    radius: width * 0.245
++                                    color: "black"
++                                }
++                            }
++                            Rectangle {
++                                visible: !cell.isSep && !cell.thumbReady && !domCanvas.proper && !domCanvas.square
++                                anchors.centerIn: img
++                                width: img.width * 0.805
++                                height: width
++                                radius: width * 0.245
++                                color: domCanvas.dom
++                                z: 0
++                            }
++                            ShaderEffect {
++                                visible: !cell.isSep && !cell.thumbReady
++                                anchors.centerIn: img
++                                width: img.width * 0.805
++                                height: width
++                                z: 2
++                                property vector2d itemSize: Qt.vector2d(width, height)
++                                property real cornerR: width * 0.245
++                                fragmentShader: Qt.resolvedUrl("iconrim.frag.qsb")
++                            }
++                            // ── window thumbnail (same box as the icon, so magnification just works) ──
+                                 Item {
+                                     id: th
+                                     anchors.fill: img

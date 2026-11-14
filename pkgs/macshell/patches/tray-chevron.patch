@@ -1,0 +1,48 @@
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -4803,6 +4803,7 @@
+                 property bool ccEdit: false         // Control Center is in "Edit Controls" mode
+                 property string ccPage: ""          // "" = the control grid, "wifi" = the Wi-Fi list shown inside the Control Center
+                 onCcPageChanged: wifiPrompt = ""
++                property bool trayExpanded: false
+                 property var trayItem: null         // SystemTrayItem whose menu is open in the tray popover
+                 property var trayStack: []          // submenu path (QsMenuEntry objects) inside that menu
+                 Timer { interval: 1500; repeat: true; running: ui.pop === "vol"; onTriggered: root.audioTick++ }
+@@ -5640,7 +5641,7 @@
+ 
+                         // tray
+                         Repeater {
+-                            model: root.showTray ? SystemTray.items : null
++                            model: root.showTray && ui.trayExpanded ? SystemTray.items : null
+                             delegate: Item {
+                                 id: tray
+                                 required property var modelData
+@@ -5676,7 +5677,27 @@
+                             }
+                         }
+ 
+-                        // Bluetooth has its own optional widget; it remains visible when the radio is off.
++                        Item {
++    visible: root.showTray && SystemTray.items.values.length > 0
++    width: visible ? 24 : 0
++    height: 28
++    Text {
++        anchors.centerIn: parent
++        text: ui.trayExpanded ? "›" : "‹"
++        color: bpal.fg2
++        font.pixelSize: 20
++    }
++    MouseArea {
++        anchors.fill: parent
++        onClicked: ui.trayExpanded = !ui.trayExpanded
++    }
++    Timer {
++        interval: 10000
++        running: ui.trayExpanded
++        onTriggered: ui.trayExpanded = false
++    }
++}
++// Bluetooth has its own optional widget; it remains visible when the radio is off.
+                         Item {
+                             id: btBtn
+                             visible: root.barWidgetEnabled("bluetooth")
