@@ -4,7 +4,6 @@
     inputs.zapfast.homeManagerModules.default
     inputs.framr.homeManagerModules.default
     ../../modules/home-manager
-    # ../../modules/home-manager/mist
     ../../modules/home-manager/macshell
   ];
 

@@ -16,7 +16,7 @@ run = "nix fmt"
 
 [tasks.update]
 description = "Update everything, or one custom package or flake input"
-usage = 'arg "[name]" help="Package in pkgs/ or flake input, for example mist"'
+usage = 'arg "[name]" help="Package in pkgs/ or flake input, for example cap"'
 run = '''
 sys=$(nix eval --raw --impure --expr builtins.currentSystem)
 pkgs=$(nix eval --raw ".#packages.$sys" --apply 'p: builtins.concatStringsSep " " (builtins.attrNames p)')
