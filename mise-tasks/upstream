@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#MISE description="Find a line in the nixpkgs installer templates and show the comment above it"
+#USAGE arg "<text>" help="Text to search for, for example allowUnfree"
+#USAGE arg "[host]" help="Host name" default="desktop"
+set -euo pipefail
+
+src=$(nix eval --raw ".#nixosConfigurations.${usage_host?}.config.nixpkgs.flake.source")
+grep -rnF -B2 -- "${usage_text?}" "$src/nixos/modules/installer" "$src/pkgs/by-name/ca/calamares-nixos-extensions"

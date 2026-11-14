@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Show the upstream description and source file of a NixOS option"
+#USAGE arg "<option>" help="Option path, for example boot.loader.limine.maxGenerations"
+#USAGE arg "[host]" help="Host name" default="desktop"
+set -euo pipefail
+
+nix eval --raw ".#nixosConfigurations.${usage_host?}.options.${usage_option?}.description" --apply 'd: if builtins.isAttrs d then d.text else d'
+echo
+nix eval --raw ".#nixosConfigurations.${usage_host?}.options.${usage_option?}.declarations" --apply 'd: builtins.concatStringsSep "\n" (map toString d)'

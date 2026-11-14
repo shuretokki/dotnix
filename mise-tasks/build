@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#MISE description="Build a system without activating it"
+#USAGE arg "[host]" help="Host name" default="desktop"
+set -euo pipefail
+
+nix build ".#nixosConfigurations.${usage_host?}.config.system.build.toplevel" --no-link

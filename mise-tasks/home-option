@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Show the upstream description and source file of a Home Manager option"
+#USAGE arg "<option>" help="Option path, for example programs.git.enable"
+#USAGE arg "[host]" help="Host name" default="desktop"
+set -euo pipefail
+
+nix eval --raw ".#nixosConfigurations.${usage_host?}.options.home-manager.users.type.getSubOptions" --apply "f: let d = (f [ \"user\" ]).${usage_option?}.description; in if builtins.isAttrs d then d.text else d"
+echo
+nix eval --raw ".#nixosConfigurations.${usage_host?}.options.home-manager.users.type.getSubOptions" --apply "f: builtins.concatStringsSep \"\\n\" (map toString (f [ \"user\" ]).${usage_option?}.declarations)"
