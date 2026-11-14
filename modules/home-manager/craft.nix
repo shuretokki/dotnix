@@ -10,16 +10,22 @@ let
         printf '"/></svg>'
       } > $out
     '';
+
+  withCleanIcon =
+    package: id:
+    pkgs.symlinkJoin {
+      inherit (package) name meta;
+      paths = [ package ];
+      postBuild = ''
+        rm $out/share/icons/hicolor/scalable/apps/${id}.svg
+        cp ${cleanIcon package id} $out/share/icons/hicolor/scalable/apps/${id}.svg
+      '';
+    };
 in
 {
-  home.packages = with pkgs; [
-    photocraft
-    pdfcraft
-    wordcraft
+  home.packages = [
+    (withCleanIcon pkgs.photocraft "ai.storyteller.photocraft")
+    (withCleanIcon pkgs.pdfcraft "ai.storyteller.pdfcraft")
+    pkgs.wordcraft
   ];
-
-  theme.appIcons = {
-    "ai.storyteller.pdfcraft" = "${cleanIcon pkgs.pdfcraft "ai.storyteller.pdfcraft"}";
-    "ai.storyteller.photocraft" = "${cleanIcon pkgs.photocraft "ai.storyteller.photocraft"}";
-  };
 }
