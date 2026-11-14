@@ -17,9 +17,6 @@ hl.layer_rule({ name = "macshot",  match = { namespace = "macshot"  }, no_anim =
 local qs = "qs -c MacShell ipc call "
 
 hl.bind("SUPER + Z",          hl.dsp.exec_cmd(qs .. "settings toggle"))
-hl.bind("SUPER + SHIFT + V",  hl.dsp.exec_cmd(qs .. "spotlight clipboard"))
-hl.bind("SUPER + period",     hl.dsp.exec_cmd(qs .. "spotlight emoji"))
-hl.bind("SUPER + SPACE",      hl.dsp.exec_cmd(qs .. "spotlight toggle"))
 hl.bind("ALT + TAB",          hl.dsp.exec_cmd(qs .. "switcher next"))
 hl.bind("CTRL + ALT + W",     hl.dsp.exec_cmd(qs .. "wallpapers toggle"))
 
