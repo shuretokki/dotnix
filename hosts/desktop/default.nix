@@ -13,8 +13,14 @@
   networking.hostName = "desktop"; # Define your hostname.
 
   networking.firewall.interfaces.enp37s0 = {
-    allowedTCPPorts = [ 47821 ];
-    allowedUDPPorts = [ 5353 ];
+    allowedTCPPorts = [
+      47821
+      53317
+    ];
+    allowedUDPPorts = [
+      5353
+      53317
+    ];
   };
 
   system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;

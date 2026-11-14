@@ -11,6 +11,7 @@
     ./hyprland.nix
     ./keyring.nix
     ./locale.nix
+    ./localsend.nix
     ./login.nix
     ./network.nix
     ./nh.nix
