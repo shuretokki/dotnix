@@ -12,6 +12,11 @@
 
   networking.hostName = "desktop"; # Define your hostname.
 
+  networking.firewall.interfaces.enp37s0 = {
+    allowedTCPPorts = [ 47821 ];
+    allowedUDPPorts = [ 5353 ];
+  };
+
   system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
   system.nixos.tags = [ (inputs.self.shortRev or inputs.self.dirtyShortRev or "dirty") ];
 

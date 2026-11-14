@@ -1,6 +1,7 @@
 {
   imports = [
     ./audio.nix
+    ./bin-bash.nix
     ./bluetooth.nix
     ./boot.nix
     ./dns.nix
