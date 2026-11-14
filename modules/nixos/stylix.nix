@@ -20,8 +20,8 @@ in
         name = "JetBrainsMono Nerd Font";
       };
       sansSerif = {
-        package = pkgs.inter;
-        name = "Inter";
+        package = (import ../../pkgs pkgs).open-runde;
+        name = "Open Runde";
       };
     };
 

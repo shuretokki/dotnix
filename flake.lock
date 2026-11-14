@@ -91,6 +91,26 @@
         "type": "github"
       }
     },
+    "coucou": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794598704,
+        "narHash": "sha256-jEjAhn2aMX0kwkaXbMcRMWjdpWO6ErYXZSLMxCAzW14=",
+        "owner": "Louis-CFM",
+        "repo": "coucou",
+        "rev": "0d7fe58884d99f275f3238e8dbe29ddee69fa9e8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Louis-CFM",
+        "repo": "coucou",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1790899423,
@@ -446,6 +466,7 @@
     "root": {
       "inputs": {
         "chillpill-shell": "chillpill-shell",
+        "coucou": "coucou",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
         "framr": "framr",

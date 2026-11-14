@@ -1,9 +1,11 @@
 {
   imports = [
+    ./app-icons.nix
     ./browser.nix
     ./claude.nix
     ./cli.nix
     ./comma.nix
+    ./coucou.nix
     ./craft.nix
     ./discord.nix
     ./editor.nix

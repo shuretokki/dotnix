@@ -1,0 +1,11 @@
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -5539,7 +5539,7 @@
+                                     id: customBarLogo
+                                     visible: mt.modelData.id === "apple" && root.barLogoMode === "custom" && root.barCustomLogoUrl !== ""
+                                     anchors.centerIn: parent
+-                                    width: 17; height: 17
++                                    width: 24; height: 24
+                                     source: root.barCustomLogoUrl
+                                     sourceSize: Qt.size(64, 64)
+                                     fillMode: Image.PreserveAspectFit
