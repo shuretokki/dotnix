@@ -1,5 +1,10 @@
 { lib, pkgs, ... }:
 {
+  programs.mcp = {
+    enable = true;
+    servers.scrapling.command = "scrapling-mcp";
+  };
+
   home.packages = [
     (pkgs.writeShellApplication {
       name = "scrapling-mcp";
