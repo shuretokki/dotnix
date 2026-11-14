@@ -30,6 +30,8 @@ let
       libnotify
       inotify-tools
       zenity
+      imagemagick
+      ddcutil
       kdePackages.qtshadertools
     ];
     text = ''
