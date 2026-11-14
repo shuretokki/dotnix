@@ -16,9 +16,7 @@
     ./gnome-apps.nix
     ./hyprland
     ./lean-ctx.nix
-    # ./mactahoe.nix
     ./mail.nix
-    ./marea.nix
     ./media.nix
     ./mime.nix
     ./notification-sounds.nix

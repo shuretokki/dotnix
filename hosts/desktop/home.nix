@@ -13,11 +13,6 @@
     stateVersion = "25.11";
   };
 
-  # theme.mactahoe = {
-  #   enable = true;
-  #   zen.enable = true;
-  # };
-
   programs.zapfast.enable = true;
   programs.framr.enable = true;
 
