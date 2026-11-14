@@ -75,7 +75,6 @@ in
           macdock = look // {
             dockEnabled = true;
             desktopIcons = false;
-            showRunningApps = false;
           };
           macbar = look // {
             barStyle = "liquid";
