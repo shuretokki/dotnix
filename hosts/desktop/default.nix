@@ -14,10 +14,13 @@
 
   networking.firewall.interfaces.enp37s0 = {
     allowedTCPPorts = [
+      1716
       47821
       53317
     ];
     allowedUDPPorts = [
+      1716
+      4716
       5353
       53317
     ];
