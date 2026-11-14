@@ -20,6 +20,7 @@
     ./mail.nix
     ./media.nix
     ./mime.nix
+    ./notification-sounds.nix
     ./playerctl.nix
     ./polkit.nix
     ./proton.nix

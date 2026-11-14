@@ -24,6 +24,7 @@ stdenvNoCC.mkDerivation {
     ./patches/menubar-logo-size.patch
     ./patches/icon-tile.patch
     ./patches/dock-running-apps.patch
+    ./patches/notification-sound.patch
   ];
 
   postPatch = ''
