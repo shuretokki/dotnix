@@ -29,6 +29,8 @@ stdenvNoCC.mkDerivation {
     ./patches/icon-clip-and-rim-setting.patch
     ./patches/icon-scale.patch
     ./patches/settings-layout.patch
+    ./patches/menubar-logo-color.patch
+    ./patches/bar-tone-file.patch
   ];
 
   postPatch = ''
