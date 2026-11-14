@@ -338,27 +338,6 @@
         "type": "github"
       }
     },
-    "marea": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "pleamar": "pleamar"
-      },
-      "locked": {
-        "lastModified": 1793274813,
-        "narHash": "sha256-mfMhkuhZnMExBYIZN5YKjQ8pHx2CzaGw+c30NHZiElk=",
-        "owner": "k4ditano",
-        "repo": "marea-plm",
-        "rev": "d0cad02814f761531cd3a365ac48e549df03f8b0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "k4ditano",
-        "repo": "marea-plm",
-        "type": "github"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -484,26 +463,6 @@
         "type": "github"
       }
     },
-    "pleamar": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1792825599,
-        "narHash": "sha256-bwuhNZnWCQ7uyFgMmrwfeMJWCYV0FFzVio3wM9YaZC4=",
-        "owner": "k4ditano",
-        "repo": "pleamar",
-        "rev": "f2689bb76906ba3e0b8f279fd196640a0cf9b600",
-        "type": "github"
-      },
-      "original": {
-        "owner": "k4ditano",
-        "repo": "pleamar",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "chillpill-shell": "chillpill-shell",
@@ -513,7 +472,6 @@
         "framr": "framr",
         "home-manager": "home-manager",
         "hylki": "hylki",
-        "marea": "marea",
         "nix-index-database": "nix-index-database",
         "nixcord": "nixcord",
         "nixpkgs": "nixpkgs",
