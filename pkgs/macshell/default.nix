@@ -26,6 +26,7 @@ stdenvNoCC.mkDerivation {
     ./patches/dock-running-apps.patch
     ./patches/notification-sound.patch
     ./patches/settings-toggles.patch
+    ./patches/icon-clip-and-rim-setting.patch
   ];
 
   postPatch = ''
@@ -37,6 +38,7 @@ stdenvNoCC.mkDerivation {
     cp -r MacShell MacLock $out/share/quickshell/
     cp ${./IconClass.qml} $out/share/quickshell/MacShell/IconClass.qml
     qsb --qt6 -o $out/share/quickshell/MacShell/iconrim.frag.qsb ${./iconrim.frag}
+    qsb --qt6 -o $out/share/quickshell/MacShell/iconclip.frag.qsb ${./iconclip.frag}
   '';
 
   meta = {

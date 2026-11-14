@@ -1,0 +1,93 @@
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -194,6 +194,7 @@
+     property bool showIndicators: true   // dots under running apps
+     property bool showRunningApps: true   // icons of running apps that are not pinned
+     property bool iconTile: true   // rounded tile, dominant color and edge light behind the dock icons
++    property real iconRim: 1.0   // strength of the edge light on the dock icons
+     onShowRunningAppsChanged: rebuild()
+     property bool bounceOnLaunch: true
+     property bool showThumbs: true       // open windows get a live preview cell next to the Trash
+@@ -2454,6 +2455,18 @@
+                                 title: I18n.tr("Show a tile behind application icons")
+                                 subtitle: I18n.tr("Sizes every icon to the same grid, fills the gaps with the icon color and adds a light edge")
+                                 SSwitch { t: pal; checked: root.iconTile; onToggled: v => root.iconTile = v }
++                                }
++                                SRow {
++                                    t: pal
++                                    title: I18n.tr("Edge light on application icons")
++                                    SSlider {
++                                        t: pal
++                                        from: 0; to: 2; stepSize: 0.05
++                                        value: root.iconRim
++                                        leftLabel: I18n.tr("Off"); rightLabel: I18n.tr("Strong")
++                                        resetValue: 1
++                                        onMoved: v => root.iconRim = v
++                                    }
+                     }
+                     SRow {
+                         t: pal
+@@ -4236,13 +4249,13 @@
+         darkMode = true; appearanceMode = "dark"; glassOpacity = 0.42; glassBlur = 5; glassLiquid = 1.0; dockStyle = "blur"; accent = "#0a84ff"; fontFamily = "Open Runde";
+         iconTint = false; iconTintColor = "#0a84ff"; iconTintStrength = 1.0;
+         hideMode = "smart"; hideDelay = 450; monitor = "";
+-        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
++        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
+     }
+ 
+     // ── settings persistence (~/.config/macdock/settings.json) ──
+     readonly property string settingsSig: [dockEnabled, settingsEnabled, desktopIcons, desktopIconSize, iconSize, magnification, magnificationEnabled, spacing, margin,
+         cornerRadius, darkMode, appearanceMode, glassOpacity, glassBlur, glassLiquid, dockStyle, wallpaperPath, String(accent), fontFamily, hideMode, hideDelay, monitor,
+-        showTrash, showLabels, showIndicators, bounceOnLaunch, showThumbs, windowCapture, glassLive, iconTint, iconTintColor, iconTintStrength, showRunningApps, iconTile].join("|")
++        showTrash, showLabels, showIndicators, bounceOnLaunch, showThumbs, windowCapture, glassLive, iconTint, iconTintColor, iconTintStrength, showRunningApps, iconTile, iconRim].join("|")
+     property bool settingsReady: false
+     onSettingsSigChanged: if (settingsReady) saveTimer.restart()
+     onShowTrashChanged: { rebuild(); if (showTrash) trashCheck(); }
+@@ -4257,7 +4270,7 @@
+             glassRim: glassRim, glassGrain: glassGrain, glassLiquid: glassLiquid, glassBlur: glassBlur,
+             accent: String(accent), fontFamily: fontFamily,
+             hideMode: hideMode, hideDelay: hideDelay, monitor: monitor,
+-            showTrash: showTrash, showLabels: showLabels, showIndicators: showIndicators, showRunningApps: showRunningApps, iconTile: iconTile,
++            showTrash: showTrash, showLabels: showLabels, showIndicators: showIndicators, showRunningApps: showRunningApps, iconTile: iconTile, iconRim: iconRim,
+             bounceOnLaunch: bounceOnLaunch, showThumbs: showThumbs, windowCapture: windowCapture, glassLive: glassLive,
+             iconTint: iconTint, iconTintColor: iconTintColor, iconTintStrength: iconTintStrength
+         };
+@@ -4268,7 +4281,7 @@
+         if (!o || typeof o !== "object") return;
+         var keys = ["dockEnabled", "settingsEnabled", "desktopIcons", "desktopIconSize", "iconSize", "magnification", "magnificationEnabled", "spacing", "margin", "cornerRadius",
+                     "darkMode", "appearanceMode", "glassOpacity", "dockStyle", "wallpaperPath", "glassDebug", "glassRim", "glassGrain", "glassLiquid", "glassBlur", "accent", "fontFamily", "hideMode", "hideDelay", "monitor",
+-                    "showTrash", "showLabels", "showIndicators", "showRunningApps", "iconTile", "bounceOnLaunch", "showThumbs", "windowCapture", "glassLive", "iconTint", "iconTintColor", "iconTintStrength"];
++                    "showTrash", "showLabels", "showIndicators", "showRunningApps", "iconTile", "iconRim", "bounceOnLaunch", "showThumbs", "windowCapture", "glassLive", "iconTint", "iconTintColor", "iconTintStrength"];
+         for (var i = 0; i < keys.length; i++) {
+             if (o[keys[i]] === undefined) continue;
+             try { root[keys[i]] = o[keys[i]]; } catch (err) { }
+@@ -5853,7 +5866,7 @@
+                                     visible: !cell.isSep && !cell.thumbReady
+                                 scale: !root.iconTile ? 1 : ((domCanvas.proper || domCanvas.square) ? 0.805 : 0.66) / (domCanvas.art >= 0.8 ? domCanvas.art : (domCanvas.proper ? 0.88 : 1.0))
+                                 z: 1
+-                                maskEnabled: domCanvas.square
++                                opacity: (root.iconTile && domCanvas.square) ? 0 : 1
+                                 maskSource: tileMask
+                                 maskThresholdMin: 0.5
+                                 maskSpreadAtMin: 1.0
+@@ -5905,9 +5918,20 @@
+                                 z: 2
+                                 property vector2d itemSize: Qt.vector2d(width, height)
+                                 property real cornerR: width * 0.245
++                                property real strength: root.iconRim
+                                 fragmentShader: Qt.resolvedUrl("iconrim.frag.qsb")
+                                 opacity: root.iconTile ? 1 : 0
+                             }
++                                ShaderEffect {
++                                    visible: root.iconTile && domCanvas.square && !cell.isSep && !cell.thumbReady
++                                    anchors.fill: img
++                                    z: 1
++                                    scale: 0.805 / (domCanvas.art >= 0.8 ? domCanvas.art : 1.0)
++                                    property variant source: img
++                                    property vector2d itemSize: Qt.vector2d(width, height)
++                                    property real cornerR: width * 0.245
++                                    fragmentShader: Qt.resolvedUrl("iconclip.frag.qsb")
++                                }
+                             // ── window thumbnail (same box as the icon, so magnification just works) ──
+                                 Item {
+                                     id: th
