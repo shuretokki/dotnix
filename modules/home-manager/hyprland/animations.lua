@@ -8,3 +8,5 @@ hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.49, bezier = "line
 hl.animation({ leaf = "workspaces", enabled = true, speed = 1.94, spring = "smooth", style = "slide" })
 hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, spring = "smooth", style = "slide" })
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, spring = "smooth", style = "slide" })
+hl.animation({ leaf = "border", enabled = false })
+hl.animation({ leaf = "borderangle", enabled = false })
