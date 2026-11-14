@@ -21,6 +21,12 @@ let
       # Delete this replacement to get the black island again.
       substituteInPlace src/style.css \
         --replace-fail 'background: #000;' 'background: #${colors.base00}40;'
+
+      # The closed and the active island are 32 px high, and the menu bar is 28 px high.
+      # This sets the height to the bar height, so the island does not hang below it.
+      # Delete this replacement to get the 32 px island again.
+      substituteInPlace src/core/layout.ts \
+        --replace-fail 'export const NOTCH_H = 32;' 'export const NOTCH_H = 28;'
     '';
   });
 in
