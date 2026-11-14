@@ -45,6 +45,45 @@ let
         --replace-fail '--indigo: #6366f1;' '--indigo: #${colors.base0D};' \
         --replace-fail '--pink: #f472b6;' '--pink: #${colors.base0E};'
 
+      # The menu bar changes its text between light and dark to match the wallpaper, and writes the result to a file.
+      # This adds a command that reads the file, a timer that asks it every second, and style rules for the bright case.
+      # Delete this block to keep the island text light at all times.
+      substituteInPlace src-tauri/src/lib.rs \
+        --replace-fail '#[tauri::command]
+      fn boot(' '#[tauri::command]
+      fn bar_tone() -> bool {
+          std::env::var_os("XDG_RUNTIME_DIR")
+              .map(|dir| std::path::Path::new(&dir).join("macshell-bar-tone"))
+              .and_then(|path| std::fs::read_to_string(path).ok())
+              .is_some_and(|text| text.trim() == "dark")
+      }
+
+      #[tauri::command]
+      fn boot(' \
+        --replace-fail '        .invoke_handler(tauri::generate_handler![
+                  boot,' '        .invoke_handler(tauri::generate_handler![
+                  boot,
+                  bar_tone,'
+      substituteInPlace src/main.ts \
+        --replace-fail 'import "./style.css";' 'import "./style.css";
+      import { invoke as invokeBarTone } from "@tauri-apps/api/core";
+      setInterval(() => {
+        invokeBarTone<boolean>("bar_tone")
+          .then((bright) => document.documentElement.classList.toggle("bar-bright", bright))
+          .catch(() => {});
+      }, 1000);'
+      cat >> src/style.css <<'CSS'
+      html.bar-bright #island-closed,
+      html.bar-bright #island-clock,
+      html.bar-bright #compact-plan {
+        color: #${colors.base00};
+      }
+      html.bar-bright #bot-canvas,
+      html.bar-bright #island-closed .mini canvas {
+        filter: brightness(0.35);
+      }
+      CSS
+
       # The closed and the active island are 32 px high, and the menu bar is 28 px high.
       # This sets the height to the bar height, so the island does not hang below it.
       # Delete this replacement to get the 32 px island again.
