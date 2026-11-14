@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#MISE description="Show memory use: totals and the programs that use the most (proportional set size)"
+set -uo pipefail
+
+awk '/MemTotal|MemAvailable|AnonPages|Shmem:|Slab/ { printf "%-13s %6.0f MB\n", $1, $2 / 1024 }' /proc/meminfo
+echo
+for dir in /proc/[0-9]*; do
+  [ -r "$dir/smaps_rollup" ] || continue
+  name=$(cut -d' ' -f1 "$dir/comm" 2>/dev/null) || continue
+  awk -v n="$name" '/^Pss:/ { print $2, n }' "$dir/smaps_rollup" 2>/dev/null
+done | awk '{ pss[$2] += $1; cnt[$2]++ } END { for (n in pss) printf "%8.0f MB  %3d  %s\n", pss[n] / 1024, cnt[n], n }' | sort -rn | head -n "${1:-20}"
+echo
+echo "PSS counts a shared page once, split between the programs that share it."
+echo "Processes of other users, such as root services, cannot be read and are left out."
