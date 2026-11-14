@@ -45,6 +45,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lightpanda.url = "github:lightpanda-io/browser";
+
     coucou = {
       url = "github:Louis-CFM/coucou";
       inputs.nixpkgs.follows = "nixpkgs";

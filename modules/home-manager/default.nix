@@ -16,6 +16,7 @@
     ./gnome-apps.nix
     ./hyprland
     ./lean-ctx.nix
+    ./lightpanda.nix
     ./mail.nix
     ./media.nix
     ./mime.nix
