@@ -19,6 +19,7 @@
     ./mail.nix
     ./media.nix
     ./mime.nix
+    ./opencode
     ./notification-sounds.nix
     ./playerctl.nix
     ./polkit.nix
