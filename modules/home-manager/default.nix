@@ -1,5 +1,6 @@
 {
   imports = [
+    ./app-icons.nix
     ./browser.nix
     ./claude.nix
     ./cli.nix
