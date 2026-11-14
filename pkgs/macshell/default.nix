@@ -27,6 +27,7 @@ stdenvNoCC.mkDerivation {
     ./patches/notification-sound.patch
     ./patches/settings-toggles.patch
     ./patches/icon-clip-and-rim-setting.patch
+    ./patches/icon-scale.patch
   ];
 
   postPatch = ''

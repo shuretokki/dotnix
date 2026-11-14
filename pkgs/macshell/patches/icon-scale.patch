@@ -1,0 +1,79 @@
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -195,6 +195,7 @@
+     property bool showRunningApps: true   // icons of running apps that are not pinned
+     property bool iconTile: true   // rounded tile, dominant color and edge light behind the dock icons
+     property real iconRim: 1.0   // strength of the edge light on the dock icons
++    property real iconScale: 1.0   // size of the dock icons inside their cells
+     onShowRunningAppsChanged: rebuild()
+     property bool bounceOnLaunch: true
+     property bool showThumbs: true       // open windows get a live preview cell next to the Trash
+@@ -2075,6 +2076,19 @@
+                     }
+                     SRow {
+                         t: pal
++                        title: I18n.tr("Icon size in the Dock")
++                        subtitle: I18n.tr("Scales the icons inside their cells and keeps the Dock size and the gaps")
++                        SSlider {
++                            t: pal
++                            from: 0.5; to: 1.2; stepSize: 0.01
++                            value: root.iconScale
++                            leftLabel: I18n.tr("Small"); rightLabel: I18n.tr("Large")
++                            resetValue: 1
++                            onMoved: v => root.iconScale = v
++                        }
++                    }
++                    SRow {
++                        t: pal
+                         title: I18n.tr("Magnification")
+                         subtitle: I18n.tr("Enlarge icons as the pointer moves over them")
+                         SSwitch {
+@@ -4249,13 +4263,13 @@
+         darkMode = true; appearanceMode = "dark"; glassOpacity = 0.42; glassBlur = 5; glassLiquid = 1.0; dockStyle = "blur"; accent = "#0a84ff"; fontFamily = "Open Runde";
+         iconTint = false; iconTintColor = "#0a84ff"; iconTintStrength = 1.0;
+         hideMode = "smart"; hideDelay = 450; monitor = "";
+-        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
++        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconScale = 1.0; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
+     }
+ 
+     // ── settings persistence (~/.config/macdock/settings.json) ──
+     readonly property string settingsSig: [dockEnabled, settingsEnabled, desktopIcons, desktopIconSize, iconSize, magnification, magnificationEnabled, spacing, margin,
+         cornerRadius, darkMode, appearanceMode, glassOpacity, glassBlur, glassLiquid, dockStyle, wallpaperPath, String(accent), fontFamily, hideMode, hideDelay, monitor,
+-        showTrash, showLabels, showIndicators, bounceOnLaunch, showThumbs, windowCapture, glassLive, iconTint, iconTintColor, iconTintStrength, showRunningApps, iconTile, iconRim].join("|")
++        showTrash, showLabels, showIndicators, bounceOnLaunch, showThumbs, windowCapture, glassLive, iconTint, iconTintColor, iconTintStrength, showRunningApps, iconTile, iconRim, iconScale].join("|")
+     property bool settingsReady: false
+     onSettingsSigChanged: if (settingsReady) saveTimer.restart()
+     onShowTrashChanged: { rebuild(); if (showTrash) trashCheck(); }
+@@ -4270,7 +4284,7 @@
+             glassRim: glassRim, glassGrain: glassGrain, glassLiquid: glassLiquid, glassBlur: glassBlur,
+             accent: String(accent), fontFamily: fontFamily,
+             hideMode: hideMode, hideDelay: hideDelay, monitor: monitor,
+-            showTrash: showTrash, showLabels: showLabels, showIndicators: showIndicators, showRunningApps: showRunningApps, iconTile: iconTile, iconRim: iconRim,
++            showTrash: showTrash, showLabels: showLabels, showIndicators: showIndicators, showRunningApps: showRunningApps, iconTile: iconTile, iconRim: iconRim, iconScale: iconScale,
+             bounceOnLaunch: bounceOnLaunch, showThumbs: showThumbs, windowCapture: windowCapture, glassLive: glassLive,
+             iconTint: iconTint, iconTintColor: iconTintColor, iconTintStrength: iconTintStrength
+         };
+@@ -4281,7 +4295,7 @@
+         if (!o || typeof o !== "object") return;
+         var keys = ["dockEnabled", "settingsEnabled", "desktopIcons", "desktopIconSize", "iconSize", "magnification", "magnificationEnabled", "spacing", "margin", "cornerRadius",
+                     "darkMode", "appearanceMode", "glassOpacity", "dockStyle", "wallpaperPath", "glassDebug", "glassRim", "glassGrain", "glassLiquid", "glassBlur", "accent", "fontFamily", "hideMode", "hideDelay", "monitor",
+-                    "showTrash", "showLabels", "showIndicators", "showRunningApps", "iconTile", "iconRim", "bounceOnLaunch", "showThumbs", "windowCapture", "glassLive", "iconTint", "iconTintColor", "iconTintStrength"];
++                    "showTrash", "showLabels", "showIndicators", "showRunningApps", "iconTile", "iconRim", "iconScale", "bounceOnLaunch", "showThumbs", "windowCapture", "glassLive", "iconTint", "iconTintColor", "iconTintStrength"];
+         for (var i = 0; i < keys.length; i++) {
+             if (o[keys[i]] === undefined) continue;
+             try { root[keys[i]] = o[keys[i]]; } catch (err) { }
+@@ -5849,11 +5863,12 @@
+                                     // icon art drawn at ~99%: the dock and the cells keep their size. Whole pixels only: at rest this was
+                                     // 51.48 px wide and centred on a fractional x, so the GPU re-sampled the icon texture (blurry) until the
+                                     // magnification made it big enough that the blur was no longer noticeable
+-                                    width: Math.max(1, Math.round(root.iconSize * 0.99 * cell.s * cell.appear))
++                                    readonly property real full: Math.max(1, Math.round(root.iconSize * 0.99 * cell.s * cell.appear))
++                                    width: cell.useThumb ? full : Math.max(1, Math.round(full * root.iconScale))
+                                     height: width
+                                     x: Math.round((parent.width - width) / 2)
+                                     anchors.bottom: parent.bottom
+-                                    anchors.bottomMargin: Math.round(lift)
++                                    anchors.bottomMargin: Math.round(lift) + Math.round((full - width) / 2)
+                                     source: cell.isSep ? "" : root.cellIconSrc(cell.modelData)
+                                     sourceSize: Qt.size(Math.ceil(root.iconSize * root.magnification * 1.25),
+                                                         Math.ceil(root.iconSize * root.magnification * 1.25))
