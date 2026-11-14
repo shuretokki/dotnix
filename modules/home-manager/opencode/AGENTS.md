@@ -19,7 +19,7 @@ Return short results, because the lead pays for every token you send back.
 ## Scraping
 
 - Prefer a script or skill that already exists. The `dicoding-skills` skill reads Dicoding lessons.
-- Start with plain HTTP. Use a browser only when the site blocks you or needs JavaScript.
+- Start with plain HTTP. The Scrapling HTTP tools work, but its browser tools do not run on this system, so do not call them.
 - Read only the pages the owner names. Do not bulk-download a course or a site.
 - Never start a proctored exam, and never solve a quiz unless the owner asked for it by name.
 - Stop when a login expires. Tell the owner, and do not try to sign in yourself.
