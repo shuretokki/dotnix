@@ -25,6 +25,7 @@ stdenvNoCC.mkDerivation {
     ./patches/icon-tile.patch
     ./patches/dock-running-apps.patch
     ./patches/notification-sound.patch
+    ./patches/settings-toggles.patch
   ];
 
   postPatch = ''
