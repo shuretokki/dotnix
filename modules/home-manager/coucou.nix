@@ -22,6 +22,29 @@ let
       substituteInPlace src/style.css \
         --replace-fail 'background: #000;' 'background: #${colors.base00}00;'
 
+      # The cards, the pills and the text take their colors from the variables at the top of the style sheet.
+      # This sets those variables to the Stylix palette, so the parts that are not see-through follow the theme.
+      # Delete this replacement to get the grey palette of Coucou again.
+      substituteInPlace src/style.css \
+        --replace-fail '--ink: #f5f6f8;' '--ink: #${colors.base05};' \
+        --replace-fail '--ink-2: #f1f2f4;' '--ink-2: #${colors.base05};' \
+        --replace-fail '--dim: #9398a1;' '--dim: #${colors.base04};' \
+        --replace-fail '--dim-2: #8e939c;' '--dim-2: #${colors.base04};' \
+        --replace-fail '--dim-3: #6b7079;' '--dim-3: #${colors.base03};' \
+        --replace-fail '--dim-4: #5f646d;' '--dim-4: #${colors.base03};' \
+        --replace-fail '--dim-5: #4b5563;' '--dim-5: #${colors.base03};' \
+        --replace-fail '--card: #141518;' '--card: #${colors.base01};' \
+        --replace-fail '--card-flat: #0e0f11;' '--card-flat: #${colors.base00};' \
+        --replace-fail '--tab-on: #1d1f23;' '--tab-on: #${colors.base02};' \
+        --replace-fail '--red: #f4505e;' '--red: #${colors.base08};' \
+        --replace-fail '--red-text: #ff8d97;' '--red-text: #${colors.base08};' \
+        --replace-fail '--green: #22c55e;' '--green: #${colors.base0B};' \
+        --replace-fail '--green-2: #34d399;' '--green-2: #${colors.base0B};' \
+        --replace-fail '--amber: #f5a524;' '--amber: #${colors.base0A};' \
+        --replace-fail '--cyan: #22d3ee;' '--cyan: #${colors.base0C};' \
+        --replace-fail '--indigo: #6366f1;' '--indigo: #${colors.base0D};' \
+        --replace-fail '--pink: #f472b6;' '--pink: #${colors.base0E};'
+
       # The closed and the active island are 32 px high, and the menu bar is 28 px high.
       # This sets the height to the bar height, so the island does not hang below it.
       # Delete this replacement to get the 32 px island again.
