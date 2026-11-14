@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Format all Nix files"
+set -euo pipefail
+
+nix fmt

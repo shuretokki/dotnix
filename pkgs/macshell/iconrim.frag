@@ -8,6 +8,7 @@ layout(std140, binding = 0) uniform buf {
     float qt_Opacity;
     vec2 itemSize;
     float cornerR;
+    float strength;
 };
 
 float sdRoundRect(vec2 p, vec2 halfSize, float r)
@@ -33,7 +34,7 @@ void main()
     float bounce = pow(max(-key, 0.0), 2.5);
 
     float a = line * (0.08 + 0.42 * lit + 0.18 * bounce) + sheen * (0.07 * lit + 0.02 * bounce);
-    a = clamp(a, 0.0, 1.0);
+    a = clamp(a * strength, 0.0, 1.0);
 
     fragColor = vec4(vec3(a), a) * qt_Opacity;
 }

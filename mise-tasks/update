@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#MISE description="Update everything, or one custom package or flake input"
+#USAGE arg "[name]" help="Package in pkgs/ or flake input, for example cap"
+set -euo pipefail
+
+sys=$(nix eval --raw --impure --expr builtins.currentSystem)
+pkgs=$(nix eval --raw ".#packages.$sys" --apply 'p: builtins.concatStringsSep " " (builtins.attrNames p)')
+bump() { nix run nixpkgs#nix-update -- --flake "$1" --version=stable --build; }
+if [ -z "${usage_name:-}" ]; then
+  nix flake update
+  for p in $pkgs; do bump "$p"; done
+elif [[ " $pkgs " == *" $usage_name "* ]]; then
+  bump "$usage_name"
+else
+  nix flake update "$usage_name"
+fi
