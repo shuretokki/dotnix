@@ -27,15 +27,6 @@ let
       # Delete this replacement to get the 32 px island again.
       substituteInPlace src/core/layout.ts \
         --replace-fail 'export const NOTCH_H = 32;' 'export const NOTCH_H = 28;'
-
-      # The pills, the plan bar and the cards have solid dark fills, so the island still looks black.
-      # This turns them into a faint white veil, so the blur shows through the whole island.
-      # Delete this replacement to get the solid pills again.
-      substituteInPlace src/style.css \
-        --replace-fail '--card: #141518;' '--card: #ffffff0f;' \
-        --replace-fail '--card-flat: #0e0f11;' '--card-flat: #ffffff0d;' \
-        --replace-fail 'background: #0e0f11;' 'background: #ffffff0d;' \
-        --replace-fail 'background: #0b0c0e;' 'background: #00000066;'
     '';
   });
 in
