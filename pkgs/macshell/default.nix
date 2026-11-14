@@ -28,6 +28,7 @@ stdenvNoCC.mkDerivation {
     ./patches/settings-toggles.patch
     ./patches/icon-clip-and-rim-setting.patch
     ./patches/icon-scale.patch
+    ./patches/settings-layout.patch
   ];
 
   postPatch = ''
