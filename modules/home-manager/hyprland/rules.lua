@@ -26,3 +26,10 @@ hl.window_rule({
 
     ["hyprbars:no_bar"] = true,
 })
+
+hl.window_rule({
+    name  = "border-flicker-opacity",
+    match = { class = ".*" },
+
+    opacity = "0.999 0.999",
+})
