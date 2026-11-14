@@ -4,6 +4,7 @@
     ./browser.nix
     ./claude.nix
     ./cli.nix
+    ./clipcat.nix
     ./comma.nix
     ./coucou.nix
     ./craft.nix
@@ -20,9 +21,10 @@
     ./mail.nix
     ./media.nix
     ./mime.nix
-    ./opencode
     ./notification-sounds.nix
+    ./opencode
     ./playerctl.nix
+    ./pocketdesk.nix
     ./polkit.nix
     ./proton.nix
     ./runtimes.nix
