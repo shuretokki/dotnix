@@ -83,6 +83,7 @@ in
             barGlass = false;
             barBgOpacity = 0.25;
             barLogoMode = "custom";
+            spotlightEnabled = false;
             barCustomLogoPath = "${./nixos-logomark.svg}";
           };
         }
