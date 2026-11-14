@@ -6,8 +6,14 @@
 }:
 let
   colors = config.lib.stylix.colors;
+  lucideIcons = (import ../../pkgs pkgs).nordend-lucide-icons;
   nordend = inputs.nordend.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
+      # The outline icons are a font of Tabler glyphs that is compiled into the program.
+      # This swaps it for a font of Lucide glyphs that has the same glyph names, so every icon keeps its place.
+      # Delete this line to get the Tabler icons again.
+      cp --no-preserve=mode ${lucideIcons}/tabler-icons.ttf third_party/tabler-icons/tabler-icons.ttf
+
       # The window outline is a fixed black at 18 percent opacity.
       # This draws it in the border color of the theme instead, at 60 percent so it is not brighter than the compositor border.
       # Raise the 0.6F to make the outline brighter, or delete this replacement to get the black outline again.
