@@ -31,10 +31,15 @@ rustPlatform.buildRustPackage {
     owner = "Rick007110";
     repo = "Explorist";
     rev = "4b6e983c71a7631f2bb9124e6d0fc5b5aff2133a";
-    hash = lib.fakeHash;
+    hash = "sha256-+pKOmkllBHqk/pfaLJG71hdo9hm+Tz/lf8jpxpSkbjs=";
   };
 
-  cargoHash = lib.fakeHash;
+  cargoHash = "sha256-HiYjo1Opt+5wbUCH9wamh1XIy5ptLef5RJXEIbhKGIs=";
+
+  # The test reads the home directory, and the build sandbox has none.
+  # This skips that one test.
+  # Delete this line to run it again.
+  checkFlags = [ "--skip=fs::path_input::tests::tilde_is_home" ];
 
   nativeBuildInputs = [
     pkg-config

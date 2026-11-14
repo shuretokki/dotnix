@@ -17,5 +17,8 @@ let
   });
 in
 {
-  home.packages = [ nordend ];
+  home.packages = [
+    nordend
+    (import ../../pkgs pkgs).explorist
+  ];
 }
