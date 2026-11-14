@@ -1,0 +1,15 @@
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -4161,10 +4161,11 @@
+     // System notifications get the UI sound; apps (Discord, Spotify, browsers…) play their own, so they stay silent here
+     readonly property var systemNotifApps: ["", "macbar", "macshell", "settings", "system", "notify-send", "networkmanager", "network",
+         "power", "upower", "battery", "udiskie", "udisks", "disks", "polkit", "systemd", "screenshot", "grim", "hyprland", "bluetooth", "blueman", "updates", "pacman"]
++    readonly property var ownSoundApps: ["discord", "vesktop", "legcord", "spotify", "firefox", "zen", "zen-browser", "chromium", "google-chrome", "telegram-desktop", "signal", "slack", "thunderbird"]
+     function isSystemNotif(n) {
+         var app = (n.appName || "").toLowerCase();
+         try { if (n.hints && (n.hints["sound-file"] || n.hints["sound-name"])) return false; } catch (e) {}
+-        return systemNotifApps.indexOf(app) >= 0;
++        return ownSoundApps.indexOf(app) < 0;
+     }
+     function notifReceive(n) {
+         n.tracked = true;

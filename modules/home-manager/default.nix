@@ -6,7 +6,7 @@
     ./cli.nix
     ./comma.nix
     ./coucou.nix
-    # ./craft.nix
+    ./craft.nix
     ./discord.nix
     ./editor.nix
     ./fastfetch.nix
@@ -20,6 +20,7 @@
     ./mail.nix
     ./media.nix
     ./mime.nix
+    ./notification-sounds.nix
     ./playerctl.nix
     ./polkit.nix
     ./proton.nix

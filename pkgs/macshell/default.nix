@@ -23,6 +23,9 @@ stdenvNoCC.mkDerivation {
     ./patches/tray-chevron.patch
     ./patches/menubar-logo-size.patch
     ./patches/icon-tile.patch
+    ./patches/dock-running-apps.patch
+    ./patches/notification-sound.patch
+    ./patches/settings-toggles.patch
   ];
 
   postPatch = ''
@@ -33,7 +36,6 @@ stdenvNoCC.mkDerivation {
     mkdir -p $out/share/quickshell
     cp -r MacShell MacLock $out/share/quickshell/
     cp ${./IconClass.qml} $out/share/quickshell/MacShell/IconClass.qml
-    cp ${./IconTile.qml} $out/share/quickshell/MacShell/IconTile.qml
     qsb --qt6 -o $out/share/quickshell/MacShell/iconrim.frag.qsb ${./iconrim.frag}
   '';
 

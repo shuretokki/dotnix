@@ -1,38 +1,10 @@
---- a/MacShell/MacBar.qml
-+++ b/MacShell/MacBar.qml
-@@ -9687,7 +9687,11 @@
-                                         Image {
-                                             visible: rr.ico !== ""
-                                             anchors.fill: parent
--                                            source: rr.ico
-+                                            source: ""
-+                            IconTile {
-+                                anchors.fill: parent
-+                                source: rr.ico
-+                            }
-                                             sourceSize: Qt.size(64, 64)
-                                             fillMode: Image.PreserveAspectFit
-                                             asynchronous: true
-@@ -10336,7 +10340,11 @@
-                                                         anchors.horizontalCenter: parent.horizontalCenter
-                                                         y: 10
-                                                         width: 56; height: 56
--                                                        source: root.iconSrc(cell.e.icon)
-+                                                        source: ""
-+                            IconTile {
-+                                anchors.fill: parent
-+                                source: root.iconSrc(cell.e.icon)
-+                            }
-                                                         sourceSize: Qt.size(128, 128)
-                                                         fillMode: Image.PreserveAspectFit
-                                                         asynchronous: true
 --- a/MacShell/MacDock.qml
 +++ b/MacShell/MacDock.qml
 @@ -5829,9 +5829,15 @@
                                  }
                                  MultiEffect {
                                      visible: !cell.isSep && !cell.thumbReady
-+                                scale: ((domCanvas.proper || domCanvas.square) ? 0.805 : 0.58) / domCanvas.art
++                                scale: ((domCanvas.proper || domCanvas.square) ? 0.805 : 0.66) / (domCanvas.art >= 0.8 ? domCanvas.art : (domCanvas.proper ? 0.88 : 1.0))
 +                                z: 1
 +                                maskEnabled: domCanvas.square
 +                                maskSource: tileMask
