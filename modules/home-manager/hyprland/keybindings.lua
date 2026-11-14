@@ -1,5 +1,5 @@
 local terminal    = "warp-terminal"
-local fileManager = "nautilus"
+local fileManager = "nordend"
 local browser     = "zen-beta"
 local menu        = "vicinae toggle"
 

@@ -40,6 +40,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nordend = {
+      url = "github:pankaspe/nordend-fm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     coucou = {
       url = "github:Louis-CFM/coucou";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -2,7 +2,6 @@
 {
   services.gnome.gnome-online-accounts.enable = true;
   services.gnome.evolution-data-server.enable = true;
-  services.gnome.sushi.enable = true;
 
   environment.systemPackages = [
     pkgs.gnome-control-center

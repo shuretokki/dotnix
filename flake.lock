@@ -438,6 +438,26 @@
         "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst"
       }
     },
+    "nordend": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794666926,
+        "narHash": "sha256-wUi7vgan7FHVXdPPje1gUkVegfE860cKL/4Z91RDkBw=",
+        "owner": "pankaspe",
+        "repo": "nordend-fm",
+        "rev": "61b5836da70dc5475c3fbaf69e73085106a166e6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pankaspe",
+        "repo": "nordend-fm",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -475,6 +495,7 @@
         "nix-index-database": "nix-index-database",
         "nixcord": "nixcord",
         "nixpkgs": "nixpkgs",
+        "nordend": "nordend",
         "sonora": "sonora",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix_2",
