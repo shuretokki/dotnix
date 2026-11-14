@@ -74,13 +74,12 @@ let
       }, 1000);'
       cat >> src/style.css <<'CSS'
       html.bar-bright #island-closed,
-      html.bar-bright #island-clock,
-      html.bar-bright #compact-plan {
+      html.bar-bright #island-clock {
         color: #${colors.base00};
       }
       html.bar-bright #bot-canvas,
       html.bar-bright #island-closed .mini canvas {
-        filter: brightness(0.35);
+        filter: brightness(0.6);
       }
       CSS
 
