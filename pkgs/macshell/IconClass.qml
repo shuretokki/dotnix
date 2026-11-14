@@ -13,6 +13,7 @@ Canvas {
     onSourceChanged: if (source !== "") loadImage(source)
     Component.onCompleted: if (source !== "") loadImage(source)
     onImageLoaded: requestPaint()
+    onPainted: if (source !== "" && !isImageLoaded(source)) console.log("[iconclass] not loaded", source)
     onPaint: {
         if (source === "" || !isImageLoaded(source)) return;
         var N = 32;
@@ -64,5 +65,6 @@ Canvas {
             var m = cnt[bestKey];
             dom = Qt.rgba(m.r / m.n / 255, m.g / m.n / 255, m.b / m.n / 255, 1);
         }
+        console.log("[iconclass]", source, "art", art.toFixed(2), "fill", fill.toFixed(3), "corner", corner, "proper", proper, "square", square, "box", bw + "x" + bh);
     }
 }
