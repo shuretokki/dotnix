@@ -4,7 +4,7 @@
     ./browser.nix
     ./claude.nix
     ./cli.nix
-    ./clipcat.nix
+    ./clipboard-notify.nix
     ./comma.nix
     ./coucou.nix
     ./craft.nix
