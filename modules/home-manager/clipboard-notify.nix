@@ -12,10 +12,30 @@ let
       types=$(wl-paste --list-types)
       case "$types" in
         *x-kde-passwordManagerHint*) exit 0 ;;
-        *image/*) notify-send --app-name Clipboard --icon edit-copy "Image copied" ;;
+      esac
+
+      sample=$(mktemp)
+      trap 'rm -f "$sample"' EXIT
+      head -c 600 > "$sample"
+
+      state="''${XDG_RUNTIME_DIR:-/tmp}/clipboard-notify.last"
+      key=$(printf '%s' "$types" | cat - "$sample" | sha256sum | cut -d' ' -f1)
+      now=$(date +%s)
+      if [ -f "$state" ]; then
+        read -r old_key old_time < "$state" || true
+        if [ "''${old_key:-}" = "$key" ] && [ $((now - ''${old_time:-0})) -le 2 ]; then
+          exit 0
+        fi
+      fi
+      echo "$key $now" > "$state"
+
+      case "$types" in
+        *image/*) notify-send --app-name "Clipboard Copied" --icon edit-copy "Image" ;;
         *text/*)
-          text=$(head -c 600 | tr -s '[:space:]' ' ' | cut -c1-200 | sed 's/&/\&amp;/g; s/</\&lt;/g')
-          [ -n "$text" ] && notify-send --app-name Clipboard --icon edit-copy "Copied" "$text"
+          text=$(tr -s '[:space:]' ' ' < "$sample" | cut -c1-200 | sed 's/&/\&amp;/g; s/</\&lt;/g')
+          if [ -n "$text" ]; then
+            notify-send --app-name "Clipboard Copied" --icon edit-copy "$text"
+          fi
           ;;
       esac
       exit 0
