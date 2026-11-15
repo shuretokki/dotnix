@@ -38,5 +38,10 @@ hl.layer_rule({
     name  = "vicinae-liquid-glass",
     match = { namespace = "vicinae" },
 
+    blur = true,
+    ignore_alpha = 0.2,
     ["hyprliquid:effect"] = "liquid_glass",
+    ["hyprliquid:corner_radius"] = 32,
+    ["hyprliquid:highlight_style"] = 3,
+    ["hyprliquid:glass_thickness"] = 3000,
 })
