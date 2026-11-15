@@ -39,4 +39,5 @@ hl.layer_rule({
     match = { namespace = "vicinae" },
 
     ["hyprliquid:effect"] = "liquid_glass",
+    ["hyprliquid:corner_radius"] = 10,
 })
