@@ -27,6 +27,20 @@ let
         --replace-fail '{.row = 28.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' '{.row = 34.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' \
         --replace-fail '{.row = 34.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},' '{.row = 40.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},'
 
+      # The columns keep the icon 14 px from the left edge and the name or arrow 12 px from the right edge.
+      # This keeps the icon 22 px and the right side 20 px from the edge, and the highlight 8 px from the edge, so the rows have more room at the sides.
+      # Delete this replacement to get the tight columns again.
+      substituteInPlace src/views/src/column.cpp \
+        --replace-fail 'constexpr float kRowInset = 6.0F;' 'constexpr float kRowInset = 8.0F;' \
+        --replace-fail 'constexpr float kIconX = 14.0F;' 'constexpr float kIconX = 22.0F;' \
+        --replace-fail 'constexpr float kRightPadding = 12.0F;' 'constexpr float kRightPadding = 20.0F;'
+
+      # The scrollbar thumb is the text color at 45 percent opacity in every view.
+      # This draws it in the border color of the theme.
+      # Delete this replacement to get the text colored thumb again.
+      substituteInPlace src/views/src/column.cpp src/views/src/column_view.cpp src/views/src/details_view.cpp src/views/src/grid_view.cpp \
+        --replace-fail 'palette.on_surface_variant.with_alpha(0.45F)' 'ui::Color::rgb(0x${colors.base02})'
+
       # The separators of the sidebar and the header are 18 percent of the text color over the background.
       # That is brighter than the compositor border, so this draws them in the same border color of the theme.
       # Delete this replacement to get the mixed separators again.
