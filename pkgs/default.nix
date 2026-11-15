@@ -8,4 +8,5 @@ pkgs: {
   open-runde = pkgs.callPackage ./open-runde.nix { };
   pocketdesk = pkgs.callPackage ./pocketdesk.nix { };
   qylock-sddm = pkgs.callPackage ./qylock-sddm.nix { };
+  vicinae-lucide-icons = pkgs.callPackage ./vicinae-lucide-icons { };
 }
