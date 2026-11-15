@@ -40,4 +40,5 @@ hl.layer_rule({
 
     ["hyprliquid:effect"] = "liquid_glass",
     ["hyprliquid:corner_radius"] = 10,
+    ["hyprliquid:highlight_style"] = 4,
 })
