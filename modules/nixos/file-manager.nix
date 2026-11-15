@@ -27,13 +27,15 @@ let
         --replace-fail '{.row = 28.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' '{.row = 34.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' \
         --replace-fail '{.row = 34.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},' '{.row = 40.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},'
 
-      # The columns keep the icon 14 px from the left edge and the name or arrow 12 px from the right edge.
-      # This keeps the icon 22 px and the right side 20 px from the edge, and the highlight 8 px from the edge, so the rows have more room at the sides.
+      # The row highlight of a column ends 6 px from the right edge, where the scrollbar is, so they almost touch.
+      # This ends the highlight 18 px from the right edge, which leaves a gap before the scrollbar, and moves the icon, the name and the arrow in with it.
       # Delete this replacement to get the tight columns again.
       substituteInPlace src/views/src/column.cpp \
-        --replace-fail 'constexpr float kRowInset = 6.0F;' 'constexpr float kRowInset = 8.0F;' \
+        --replace-fail 'constexpr float kRowInset = 6.0F;' 'constexpr float kRowInset = 8.0F;
+      constexpr float kRowInsetRight = 18.0F;' \
+        --replace-fail 'bounds.width - (2.0F * kRowInset),' 'bounds.width - kRowInset - kRowInsetRight,' \
         --replace-fail 'constexpr float kIconX = 14.0F;' 'constexpr float kIconX = 22.0F;' \
-        --replace-fail 'constexpr float kRightPadding = 12.0F;' 'constexpr float kRightPadding = 20.0F;'
+        --replace-fail 'constexpr float kRightPadding = 12.0F;' 'constexpr float kRightPadding = 28.0F;'
 
       # The scrollbar thumb is the text color at 45 percent opacity in every view.
       # This draws it in the border color of the theme.
