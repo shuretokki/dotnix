@@ -21,11 +21,11 @@ let
         --replace-fail 'kBlack.with_alpha(0.18F));' 'Color::rgb(0x${colors.base02}).with_alpha(0.6F));'
 
       # The rows of the columns and the details are 28 px high at the usual size, which looks tight.
-      # This makes the usual row 34 px and the next zoom step 40 px, so the steps stay different.
+      # This makes the usual row 30 px and the next zoom step 36 px, so the steps stay different.
       # Delete this replacement to get the 28 px rows again.
       substituteInPlace src/views/include/nordend/views/list_size.hpp \
-        --replace-fail '{.row = 28.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' '{.row = 34.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' \
-        --replace-fail '{.row = 34.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},' '{.row = 40.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},'
+        --replace-fail '{.row = 28.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' '{.row = 30.0F, .icon = 18.0F, .text = 14.0F, .detail = 13.0F},' \
+        --replace-fail '{.row = 34.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},' '{.row = 36.0F, .icon = 22.0F, .text = 15.0F, .detail = 13.0F},'
 
       # The row highlight of a column ends 6 px from the right edge, where the scrollbar is, so they almost touch.
       # This ends the highlight 18 px from the right edge, which leaves a gap before the scrollbar, and moves the icon, the name and the arrow in with it.
@@ -34,8 +34,37 @@ let
         --replace-fail 'constexpr float kRowInset = 6.0F;' 'constexpr float kRowInset = 8.0F;
       constexpr float kRowInsetRight = 18.0F;' \
         --replace-fail 'bounds.width - (2.0F * kRowInset),' 'bounds.width - kRowInset - kRowInsetRight,' \
-        --replace-fail 'constexpr float kIconX = 14.0F;' 'constexpr float kIconX = 22.0F;' \
-        --replace-fail 'constexpr float kRightPadding = 12.0F;' 'constexpr float kRightPadding = 28.0F;'
+        --replace-fail 'constexpr float kIconX = 14.0F;' 'constexpr float kIconX = 16.0F;' \
+        --replace-fail 'constexpr float kRightPadding = 12.0F;' 'constexpr float kRightPadding = 24.0F;'
+
+      # Folder icons, the icons of the sidebar places and the folder icon of the info pane use the accent color.
+      # This draws them in the quiet text color of the theme, the same as the file icons.
+      # Delete this replacement to get the accent colored icons again.
+      substituteInPlace src/views/src/item_style.hpp \
+        --replace-fail 'entry.is_directory() ? palette.primary : palette.on_surface_variant' 'palette.on_surface_variant'
+      substituteInPlace src/views/src/sidebar.cpp \
+        --replace-fail 'ui::Color icon = place.disk.mounted ? palette.primary : palette.on_surface_variant;' 'ui::Color icon = palette.on_surface_variant;'
+      substituteInPlace src/views/src/info_pane.cpp \
+        --replace-fail 'icon("folder", palette.primary);' 'icon("folder", palette.on_surface_variant);'
+
+      # The icons of the sidebar are 18 px.
+      # This makes them 16 px and moves them 1 px right, so they stay in line with the names.
+      # Delete this replacement to get the 18 px icons again.
+      substituteInPlace src/views/src/sidebar.cpp \
+        --replace-fail 'constexpr float kIconSize = 18.0F;' 'constexpr float kIconSize = 16.0F;' \
+        --replace-fail 'constexpr float kIconLeft = 18.0F;' 'constexpr float kIconLeft = 19.0F;'
+
+      # The scrollbar thumb of a column sits 2 px from the edge, in the same space as the rows.
+      # This draws a thin separator line 14 px from the edge of every column that has entries, and puts the thumb in the strip next to it.
+      # Delete this replacement to get the thumb over the rows area again.
+      substituteInPlace src/views/src/column.cpp \
+        --replace-fail '    // Scrollbar: a thin thumb, only when there is something to scroll.' '    if (!entries.empty()) {
+        renderer.draw_box({bounds.right() - 14.0F, bounds.y, 1.0F, bounds.height},
+                          {.fill = palette.outline_variant});
+      }
+
+      // Scrollbar: a thin thumb, only when there is something to scroll.' \
+        --replace-fail '{bounds.right() - kScrollbarWidth - 2.0F, thumb_y, kScrollbarWidth, thumb}' '{bounds.right() - kScrollbarWidth - 5.0F, thumb_y, kScrollbarWidth, thumb}'
 
       # The scrollbar thumb is the text color at 45 percent opacity in every view.
       # This draws it in the border color of the theme.
