@@ -3,6 +3,7 @@
   programs.uv.enable = true;
 
   home.packages = [
+    pkgs.devenv
     pkgs.nodejs
     pkgs.python3
   ];

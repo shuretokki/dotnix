@@ -78,18 +78,14 @@
       url = "github:clementpoiret/hylki-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    chillpill-shell = {
-      url = "github:LUCKYS1NGHH/ChillPill-Shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
   };
 
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ inputs.treefmt-nix.flakeModule ];
+      imports = [
+        inputs.treefmt-nix.flakeModule
+      ];
 
       systems = [ "x86_64-linux" ];
 
