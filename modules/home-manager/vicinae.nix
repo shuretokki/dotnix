@@ -8,8 +8,8 @@ in
     systemd.enable = true;
     package = pkgs.vicinae.overrideAttrs (old: {
       postPatch = (old.postPatch or "") + ''
-        # The built-in icons are white SVG files that are compiled into the program.
-        # This replaces the ones that have a Lucide twin with the Lucide icon of the same name.
+        # The built-in icons are white SVG files, compiled into the program.
+        # This replaces the ones with a Lucide twin by the Lucide icon of same name.
         # Delete this replacement to get the original icons again.
         cp --no-preserve=mode ${lucideIcons}/*.svg src/server/icons/
       '';
