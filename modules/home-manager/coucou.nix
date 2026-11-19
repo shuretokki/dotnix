@@ -8,23 +8,23 @@ let
   colors = config.lib.stylix.colors;
   coucou = inputs.coucou.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
     postPatch = (old.postPatch or "") + ''
-      # The music pill follows the bus named org.mpris.MediaPlayer2.spotify.
-      # Sonora uses its own bus name, so this swaps in org.mpris.MediaPlayer2.sonora.
+      # The music pill follows the bus org.mpris.MediaPlayer2.spotify.
+      # Sonora has its own bus name, so this swaps in org.mpris.MediaPlayer2.sonora.
       # The pill also looks for spotify on the path to count as installed, so this looks for sonora.
       # Delete this replacement to follow Spotify again.
       substituteInPlace src-tauri/src/spotify.rs \
         --replace-fail org.mpris.MediaPlayer2.spotify org.mpris.MediaPlayer2.sonora \
         --replace-fail 'find_on_path("spotify")' 'find_on_path("sonora")'
 
-      # The island is a solid black surface that hangs under the menu bar.
-      # This makes it fully see-through, so the island looks like part of the menu bar.
+      # The island is solid black surface, hanging under the menu bar.
+      # This makes it fully see-through, so it looks like part of the menu bar.
       # Delete this replacement to get the black island again.
       substituteInPlace src/style.css \
         --replace-fail 'background: #000;' 'background: #${colors.base00}00;'
 
       # The cards, the pills and the text take their colors from the variables at the top of the style sheet.
-      # This sets those variables to the Stylix palette, so the parts that are not see-through follow the theme.
-      # Delete this replacement to get the grey palette of Coucou again.
+      # This sets those variables to the Stylix palette, so the parts that aren't see-through follow the theme.
+      # Delete this replacement to get the grey Coucou palette again.
       substituteInPlace src/style.css \
         --replace-fail '--ink: #f5f6f8;' '--ink: #${colors.base05};' \
         --replace-fail '--ink-2: #f1f2f4;' '--ink-2: #${colors.base05};' \
@@ -45,9 +45,9 @@ let
         --replace-fail '--indigo: #6366f1;' '--indigo: #${colors.base0D};' \
         --replace-fail '--pink: #f472b6;' '--pink: #${colors.base0E};'
 
-      # The menu bar changes its text between light and dark to match the wallpaper, and writes the result to a file.
+      # The menu bar switches its text between light and dark to match the wallpaper, and writes the result to a file.
       # This adds a command that reads the file, a timer that asks it every second, and style rules for the bright case.
-      # Delete this block to keep the island text light at all times.
+      # Delete this block to keep the island text light all the time.
       substituteInPlace src-tauri/src/lib.rs \
         --replace-fail '#[tauri::command]
       fn boot(' '#[tauri::command]
@@ -83,13 +83,13 @@ let
       }
       CSS
 
-      # The closed and the active island are 32 px high, and the menu bar is 28 px high.
-      # This sets the height to the bar height, so the island does not hang below it.
+      # Closed and active island are 32 px high, but the menu bar is 28 px.
+      # This sets the height to the bar height, so the island doesn't hang below it.
       # Delete this replacement to get the 32 px island again.
       substituteInPlace src/core/layout.ts \
         --replace-fail 'export const NOTCH_H = 32;' 'export const NOTCH_H = 28;'
 
-      # The expanded island starts its tab and tool row 8 px below the top and makes it 34 px high.
+      # The expanded island starts its tab and tool row 8 px below the top, and makes it 34 px high.
       # That puts the row lower than the closed island, near the bottom edge of the menu bar.
       # This starts the row at the top with the bar height and keeps the content below it in place.
       # Delete this replacement to get the lower row again.
