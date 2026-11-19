@@ -31,6 +31,7 @@ stdenvNoCC.mkDerivation {
     ./patches/settings-layout.patch
     ./patches/menubar-logo-color.patch
     ./patches/bar-tone-file.patch
+    ./patches/icon-shape.patch
   ];
 
   postPatch = ''
