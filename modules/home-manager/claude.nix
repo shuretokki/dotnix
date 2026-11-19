@@ -1,1 +1,6 @@
-{ programs.claude-code.enable = true; }
+{
+  programs.claude-code = {
+    enable = true;
+    enableMcpIntegration = true;
+  };
+}
