@@ -20,7 +20,6 @@
     ./online-accounts.nix
     ./performance.nix
     ./storage.nix
-    ./snapshots.nix
     ./stylix.nix
     ./udisks2.nix
     ./unfree.nix
