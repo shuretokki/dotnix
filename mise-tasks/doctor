@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#MISE description="Check for failed units, the polkit agent, the Windows drive mounts and snapper"
+#MISE description="Check for failed units, the polkit agent, the Windows drive mounts"
 set -uo pipefail
 
 echo "== failed system units"
@@ -10,7 +10,5 @@ echo "== polkit agent"
 pgrep -a hyprpolkitagent || echo "WARN: no polkit agent is running"
 echo "== mounts"
 for m in /mnt/c /mnt/d /mnt/e; do findmnt -rn -o TARGET,SOURCE,FSTYPE "$m" || echo "WARN: $m is not mounted"; done
-echo "== snapper"
-systemctl list-timers 'snapper-*' --no-legend --no-pager
 echo "== disk"
 df -h / | tail -n 1
