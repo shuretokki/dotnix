@@ -4,7 +4,7 @@
      property bool magnificationEnabled: true
      property bool showLabels: true       // hover tooltips
      property bool showIndicators: true   // dots under running apps
-+    property bool showRunningApps: true   // icons of running apps that are not pinned
++    property bool showRunningApps: true   // icons of running apps that aren't pinned
 +    onShowRunningAppsChanged: rebuild()
      property bool bounceOnLaunch: true
      property bool showThumbs: true       // open windows get a live preview cell next to the Trash

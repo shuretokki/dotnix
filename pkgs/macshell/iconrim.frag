@@ -7,14 +7,24 @@ layout(std140, binding = 0) uniform buf {
     mat4 qt_Matrix;
     float qt_Opacity;
     vec2 itemSize;
-    float cornerR;
+    float power;
     float strength;
+    vec4 radii;
 };
 
-float sdRoundRect(vec2 p, vec2 halfSize, float r)
+float shapeSd(vec2 p, vec2 hs)
 {
-    vec2 q = abs(p) - halfSize + r;
-    return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - r;
+    if (power > 2.01) {
+        vec2 a = max(abs(p) / hs, vec2(1e-4));
+        float f = pow(a.x, power) + pow(a.y, power);
+        float F = pow(f, 1.0 / power) - 1.0;
+        vec2 g = pow(f, 1.0 / power - 1.0) * pow(a, vec2(power - 1.0)) / hs;
+        return max(F / max(length(g), 1e-4), -min(hs.x, hs.y));
+    }
+    float r = p.x < 0.0 ? (p.y < 0.0 ? radii.x : radii.w) : (p.y < 0.0 ? radii.y : radii.z);
+    r = min(r * 2.0 * hs.x, min(hs.x, hs.y));
+    vec2 q = abs(p) - hs + r;
+    return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r;
 }
 
 void main()
@@ -22,7 +32,7 @@ void main()
     vec2 p = qt_TexCoord0 * itemSize;
     vec2 c = itemSize * 0.5;
     vec2 rel = p - c;
-    float d = sdRoundRect(rel, c, cornerR);
+    float d = shapeSd(rel, c);
     float inside = 1.0 - smoothstep(-0.3, 0.6, d);
 
     float line = exp(-max(-d, 0.0) / 1.1) * inside;

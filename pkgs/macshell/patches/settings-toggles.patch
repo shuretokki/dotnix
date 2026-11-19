@@ -4,8 +4,8 @@
      property bool showSeconds: false
      property bool showBatteryPercent: true
      property bool showTray: true
-+    property bool trayCollapse: true   // fold the tray icons behind an arrow
-+    property bool notifSoundAll: true   // the notification sound also plays for apps that are not system senders
++    property bool trayCollapse: true   // hide tray icons behind an arrow
++    property bool notifSoundAll: true   // sound also plays for apps that aren't system senders
      property bool showSearch: true
      property bool weekStartsMonday: false
      property string terminal: "kitty"
@@ -59,8 +59,8 @@
 @@ -193,6 +193,7 @@
      property bool showLabels: true       // hover tooltips
      property bool showIndicators: true   // dots under running apps
-     property bool showRunningApps: true   // icons of running apps that are not pinned
-+    property bool iconTile: true   // rounded tile, dominant color and edge light behind the dock icons
+     property bool showRunningApps: true   // icons of running apps that aren't pinned
++    property bool iconTile: true   // rounded tile, dominant color and edge light behind dock icons
      onShowRunningAppsChanged: rebuild()
      property bool bounceOnLaunch: true
      property bool showThumbs: true       // open windows get a live preview cell next to the Trash
