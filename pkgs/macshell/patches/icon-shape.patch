@@ -228,7 +228,7 @@ index 65d3857..51932df 100644
                              }
                              ShaderEffect {
                                  visible: !cell.isSep && !cell.thumbReady
-@@ -5938,19 +6010,29 @@ Scope {
+@@ -5938,19 +6010,32 @@ Scope {
                                  height: width
                                  z: 2
                                  property vector2d itemSize: Qt.vector2d(width, height)
@@ -244,6 +244,8 @@ index 65d3857..51932df 100644
 +                                    sourceItem: iconFx
 +                                    hideSource: root.iconTile
 +                                    live: true
++                                    smooth: true
++                                    mipmap: true
 +                                    visible: false
 +                                }
                                  ShaderEffect {
@@ -253,12 +255,13 @@ index 65d3857..51932df 100644
                                      z: 1
 -                                    scale: 0.805 / (domCanvas.art >= 0.8 ? domCanvas.art : 1.0)
 -                                    property variant source: img
-+                                    scale: 0.805 / box
++                                    scale: ((domCanvas.proper || domCanvas.square) ? 0.805 : 0.66) / norm
 +                                    property variant source: iconTex
                                      property vector2d itemSize: Qt.vector2d(width, height)
 -                                    property real cornerR: width * 0.245
 +                                    property real power: root.iconPower
-+                                    property real box: domCanvas.art >= 0.8 ? domCanvas.art : (domCanvas.proper ? 0.88 : 1.0)
++                                    property real norm: domCanvas.art >= 0.8 ? domCanvas.art : (domCanvas.proper ? 0.88 : 1.0)
++                                    property real box: (domCanvas.proper || domCanvas.square) ? norm : 2.0
 +                                    property vector4d radii: root.iconRadii
                                      fragmentShader: Qt.resolvedUrl("iconclip.frag.qsb")
                                  }
