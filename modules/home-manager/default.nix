@@ -21,6 +21,7 @@
     ./mail.nix
     ./media.nix
     ./mime.nix
+    ./minecraft.nix
     ./notification-sounds.nix
     ./opencode
     ./playerctl.nix

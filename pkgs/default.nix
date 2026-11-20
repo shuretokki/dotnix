@@ -4,6 +4,7 @@ pkgs: {
   lean-ctx = pkgs.callPackage ./lean-ctx.nix { };
   mactahoe-icon-theme = pkgs.callPackage ./mactahoe-icon-theme.nix { };
   macshell = pkgs.callPackage ./macshell { };
+  millida-launcher = pkgs.callPackage ./millida-launcher.nix { };
   nordend-lucide-icons = pkgs.callPackage ./nordend-lucide-icons { };
   open-runde = pkgs.callPackage ./open-runde.nix { };
   pocketdesk = pkgs.callPackage ./pocketdesk.nix { };
