@@ -33,6 +33,7 @@ stdenvNoCC.mkDerivation {
     ./patches/bar-tone-file.patch
     ./patches/icon-shape.patch
     ./patches/icon-pixel-snap.patch
+    ./patches/icon-edge-setting.patch
   ];
 
   postPatch = ''

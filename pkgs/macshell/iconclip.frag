@@ -9,6 +9,7 @@ layout(std140, binding = 0) uniform buf {
     vec2 itemSize;
     float power;
     float box;
+    float soft;
     vec4 radii;
 };
 
@@ -35,6 +36,7 @@ void main()
     vec2 halfSize = itemSize * 0.5;
     float d = shapeSd(qt_TexCoord0 * itemSize - halfSize, halfSize * box);
     float px = max(fwidth(d), 1e-4);
-    float m = 1.0 - smoothstep(-1.6 * px, -0.4 * px, d);
+    float w = 1.2 * max(soft, 0.1);
+    float m = 1.0 - smoothstep(-(w + 0.4) * px, -0.4 * px, d);
     fragColor = c * m * qt_Opacity;
 }

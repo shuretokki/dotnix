@@ -1,0 +1,90 @@
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -195,6 +195,7 @@
+     property bool showRunningApps: true   // icons of running apps that aren't pinned
+     property bool iconTile: true   // rounded tile, dominant color and edge light behind dock icons
+     property real iconRim: 1.0   // strength of edge light on dock icons
++    property real iconEdge: 1.0   // softness of the icon edge
+     property real iconScale: 1.0   // how big the icon is inside its cell
+     property string iconShape: "rounded"   // rounded, squircle, teardrop or leaf
+     property real iconCorner: 0.245   // corner radius of rounded shape, as fraction of icon width
+@@ -2177,6 +2178,21 @@
+                             onMoved: v => root.iconRim = v
+                         }
+                     }
++                    SRow {
++                        t: pal
++                        title: I18n.tr("Edge smoothness")
++                        subtitle: I18n.tr("How softly the edge of every icon fades. Higher is smoother but a little blurrier")
++                        opacity: root.iconTile ? 1 : 0.45
++                        SSlider {
++                            t: pal
++                            enabled: root.iconTile
++                            from: 0.5; to: 3; stepSize: 0.1
++                            value: root.iconEdge
++                            leftLabel: I18n.tr("Sharp"); rightLabel: I18n.tr("Soft")
++                            resetValue: 1
++                            onMoved: v => root.iconEdge = v
++                        }
++                    }
+                 }
+ 
+                 SLabel { t: pal; header: true; text: I18n.tr("Icon Tint") }
+@@ -4312,13 +4328,13 @@
+         darkMode = true; appearanceMode = "dark"; glassOpacity = 0.42; glassBlur = 5; glassLiquid = 1.0; dockStyle = "blur"; accent = "#0a84ff"; fontFamily = "Open Runde";
+         iconTint = false; iconTintColor = "#0a84ff"; iconTintStrength = 1.0;
+         hideMode = "smart"; hideDelay = 450; monitor = "";
+-        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconScale = 1.0; iconShape = "rounded"; iconCorner = 0.245; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
++        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconEdge = 1.0; iconScale = 1.0; iconShape = "rounded"; iconCorner = 0.245; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
+     }
+ 
+     // ── settings persistence (~/.config/macdock/settings.json) ──
+     readonly property string settingsSig: [dockEnabled, settingsEnabled, desktopIcons, desktopIconSize, iconSize, magnification, magnificationEnabled, spacing, margin,
+         cornerRadius, darkMode, appearanceMode, glassOpacity, glassBlur, glassLiquid, dockStyle, wallpaperPath, String(accent), fontFamily, hideMode, hideDelay, monitor,
+-        showTrash, showLabels, showIndicators, bounceOnLaunch, showThumbs, windowCapture, glassLive, iconTint, iconTintColor, iconTintStrength, showRunningApps, iconTile, iconRim, iconScale, iconShape, iconCorner].join("|")
++        showTrash, showLabels, showIndicators, bounceOnLaunch, showThumbs, windowCapture, glassLive, iconTint, iconTintColor, iconTintStrength, showRunningApps, iconTile, iconRim, iconEdge, iconScale, iconShape, iconCorner].join("|")
+     property bool settingsReady: false
+     onSettingsSigChanged: if (settingsReady) saveTimer.restart()
+     onShowTrashChanged: { rebuild(); if (showTrash) trashCheck(); }
+@@ -4333,7 +4349,7 @@
+             glassRim: glassRim, glassGrain: glassGrain, glassLiquid: glassLiquid, glassBlur: glassBlur,
+             accent: String(accent), fontFamily: fontFamily,
+             hideMode: hideMode, hideDelay: hideDelay, monitor: monitor,
+-            showTrash: showTrash, showLabels: showLabels, showIndicators: showIndicators, showRunningApps: showRunningApps, iconTile: iconTile, iconRim: iconRim, iconScale: iconScale, iconShape: iconShape, iconCorner: iconCorner,
++            showTrash: showTrash, showLabels: showLabels, showIndicators: showIndicators, showRunningApps: showRunningApps, iconTile: iconTile, iconRim: iconRim, iconEdge: iconEdge, iconScale: iconScale, iconShape: iconShape, iconCorner: iconCorner,
+             bounceOnLaunch: bounceOnLaunch, showThumbs: showThumbs, windowCapture: windowCapture, glassLive: glassLive,
+             iconTint: iconTint, iconTintColor: iconTintColor, iconTintStrength: iconTintStrength
+         };
+@@ -4344,7 +4360,7 @@
+         if (!o || typeof o !== "object") return;
+         var keys = ["dockEnabled", "settingsEnabled", "desktopIcons", "desktopIconSize", "iconSize", "magnification", "magnificationEnabled", "spacing", "margin", "cornerRadius",
+                     "darkMode", "appearanceMode", "glassOpacity", "dockStyle", "wallpaperPath", "glassDebug", "glassRim", "glassGrain", "glassLiquid", "glassBlur", "accent", "fontFamily", "hideMode", "hideDelay", "monitor",
+-                    "showTrash", "showLabels", "showIndicators", "showRunningApps", "iconTile", "iconRim", "iconScale", "iconShape", "iconCorner", "bounceOnLaunch", "showThumbs", "windowCapture", "glassLive", "iconTint", "iconTintColor", "iconTintStrength"];
++                    "showTrash", "showLabels", "showIndicators", "showRunningApps", "iconTile", "iconRim", "iconEdge", "iconScale", "iconShape", "iconCorner", "bounceOnLaunch", "showThumbs", "windowCapture", "glassLive", "iconTint", "iconTintColor", "iconTintStrength"];
+         for (var i = 0; i < keys.length; i++) {
+             if (o[keys[i]] === undefined) continue;
+             try { root[keys[i]] = o[keys[i]]; } catch (err) { }
+@@ -6001,6 +6017,7 @@
+                                 property vector2d itemSize: Qt.vector2d(width, height)
+                                 property real power: root.iconPower
+                                 property real box: 1.0
++                                property real soft: root.iconEdge
+                                 property vector4d radii: root.iconRadii
+                                 fragmentShader: Qt.resolvedUrl("iconclip.frag.qsb")
+                             }
+@@ -6014,6 +6031,7 @@
+                                 property real power: root.iconPower
+                                 property vector4d radii: root.iconRadii
+                                 property real strength: root.iconRim
++                                property real soft: root.iconEdge
+                                 fragmentShader: Qt.resolvedUrl("iconrim.frag.qsb")
+                                 opacity: root.iconTile ? 1 : 0
+                             }
+@@ -6036,6 +6054,7 @@
+                                     property real power: root.iconPower
+                                     property real norm: domCanvas.art >= 0.8 ? domCanvas.art : (domCanvas.proper ? 0.88 : 1.0)
+                                     property real box: (domCanvas.proper || domCanvas.square) ? norm : 2.0
++                                    property real soft: root.iconEdge
+                                     property vector4d radii: root.iconRadii
+                                     fragmentShader: Qt.resolvedUrl("iconclip.frag.qsb")
+                                 }
