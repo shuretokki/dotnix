@@ -41,6 +41,7 @@ stdenvNoCC.mkDerivation {
     ./patches/motion-polish.patch
     ./patches/chevron-morph.patch
     ./patches/tray-no-autoclose.patch
+    ./patches/icon-fill-uniform.patch
   ];
 
   postPatch = ''

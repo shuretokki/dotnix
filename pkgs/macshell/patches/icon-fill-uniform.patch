@@ -1,0 +1,11 @@
+diff -ruN a/MacShell/MacDock.qml b/MacShell/MacDock.qml
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -6195,6 +6195,7 @@
+                                 property real power: root.iconPower
+                                 property real box: 1.0
+                                 property real soft: root.iconEdge
++                                property real fillCorner: 0.0
+                                 property vector4d radii: root.iconRadii
+                                 fragmentShader: Qt.resolvedUrl("iconclip.frag.qsb")
+                             }
