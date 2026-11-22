@@ -20,7 +20,7 @@ hl.bind("SUPER + Z",          hl.dsp.exec_cmd(qs .. "settings toggle"))
 hl.bind("ALT + TAB",          hl.dsp.exec_cmd(qs .. "switcher next"))
 hl.bind("CTRL + ALT + W",     hl.dsp.exec_cmd(qs .. "wallpapers toggle"))
 
-hl.bind("SUPER + L",          hl.dsp.exec_cmd("sh ~/.config/quickshell/MacLock/lock-via-ipc.sh"))
+hl.bind("SUPER + L",          hl.dsp.exec_cmd("macshell-lock"))
 
 -- MacShell handles them itself and shows its on-screen display. If the shell is not running, wpctl / brightnessctl do the work instead.
 -- "locked" keeps the keys working on the lock screen. Any earlier bind on the same key is dropped first, so a key never fires twice.

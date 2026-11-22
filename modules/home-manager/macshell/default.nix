@@ -15,6 +15,11 @@ let
     glassOpacity = 0.42;
   };
 
+  qtEnv = ''
+    export QML2_IMPORT_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/qml''${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
+    export QT_PLUGIN_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/plugins''${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+  '';
+
   macshell-start = pkgs.writeShellApplication {
     name = "macshell-start";
     runtimeInputs = with pkgs; [
@@ -36,18 +41,27 @@ let
     ];
     text = ''
       export QS_ICON_THEME=${config.stylix.icons.dark}
-      export QML2_IMPORT_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/qml''${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
-      export QT_PLUGIN_PATH="${pkgs.qt6.qtmultimedia}/lib/qt-6/plugins''${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+      ${qtEnv}
       while true; do
         qs -c MacShell || true
         sleep 3
       done
     '';
   };
+
+  macshell-lock = pkgs.writeShellApplication {
+    name = "macshell-lock";
+    runtimeInputs = [ pkgs.quickshell ];
+    text = ''
+      ${qtEnv}
+      exec sh "$HOME/.config/quickshell/MacLock/lock-via-ipc.sh"
+    '';
+  };
 in
 {
   home.packages = [
     macshell-start
+    macshell-lock
     pkgs.quickshell
     pkgs.awww
   ];

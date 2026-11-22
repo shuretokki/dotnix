@@ -9,7 +9,8 @@ local ctrlAlt = "CTRL + ALT"
 
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(ctrlAlt .. " + SHIFT + W", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm stop"))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("sonora"))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("uwsm stop"))
 hl.bind(altMod .. " + Q", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(altMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
