@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #MISE description="Activate a system and make it the boot default, then tag a clean commit"
+#MISE depends=["guard"]
 #USAGE arg "[host]" help="Host name" default="desktop"
 #USAGE flag "--note <note>" help="Subject line for the tag"
 set -euo pipefail

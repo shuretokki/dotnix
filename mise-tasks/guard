@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#MISE description="Stop when the branch does not contain main"
+#MISE hide=true
+set -euo pipefail
+
+if [ "${STALE_BRANCH_OK:-}" = 1 ]; then
+  exit 0
+fi
+
+if ! git merge-base --is-ancestor main HEAD; then
+  echo "This branch does not contain main, so the system would lose later changes." >&2
+  echo "Run: git rebase main    (or set STALE_BRANCH_OK=1 to apply it anyway)" >&2
+  exit 1
+fi

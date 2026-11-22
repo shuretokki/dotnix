@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #MISE description="Make a system the boot default without activating it, with a change diff"
+#MISE depends=["guard"]
 #USAGE arg "[host]" help="Host name" default="desktop"
 set -euo pipefail
 
