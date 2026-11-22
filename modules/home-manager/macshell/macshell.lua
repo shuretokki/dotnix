@@ -18,7 +18,7 @@ local qs = "qs -c MacShell ipc call "
 
 hl.bind("SUPER + Z",          hl.dsp.exec_cmd(qs .. "settings toggle"))
 hl.bind("ALT + TAB",          hl.dsp.exec_cmd(qs .. "switcher next"))
-hl.bind("CTRL + ALT + W",     hl.dsp.exec_cmd(qs .. "wallpapers toggle"))
+hl.bind("CTRL + ALT + E",     hl.dsp.exec_cmd(qs .. "wallpapers toggle"))
 
 hl.bind("SUPER + L",          hl.dsp.exec_cmd("macshell-lock"))
 

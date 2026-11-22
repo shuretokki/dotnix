@@ -15,6 +15,7 @@
 
   programs.zapfast.enable = true;
   programs.framr.enable = true;
+  programs.undershell.enable = true;
 
   wayland.windowManager.hyprland.extraLuaFiles.monitor = ./monitor.lua;
 }

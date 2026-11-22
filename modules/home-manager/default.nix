@@ -35,6 +35,7 @@
     ./sonora.nix
     ./terminal.nix
     ./tools.nix
+    ./undershell
     ./vicinae.nix
     ./zapfast.nix
   ];
