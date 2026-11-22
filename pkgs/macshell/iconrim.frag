@@ -32,8 +32,10 @@ void main()
     vec2 p = qt_TexCoord0 * itemSize;
     vec2 c = itemSize * 0.5;
     vec2 rel = p - c;
-    float d = shapeSd(rel, c);
-    float inside = 1.0 - smoothstep(-0.3, 0.6, d);
+    float d0 = shapeSd(rel, c);
+    float px = max(fwidth(d0), 1e-4);
+    float d = d0 + px;
+    float inside = 1.0 - smoothstep(-0.6 * px, 0.6 * px, d);
 
     float line = exp(-max(-d, 0.0) / 1.1) * inside;
     float sheen = exp(-max(-d, 0.0) / 7.0) * inside;

@@ -1,0 +1,37 @@
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -5915,6 +5915,7 @@
+                                     readonly property real full: Math.max(1, Math.round(root.iconSize * 0.99 * cell.s * cell.appear))
+                                     width: cell.useThumb ? full : Math.max(1, Math.round(full * root.iconScale))
+                                     height: width
++                                    readonly property real tile: width - 2 * Math.round(width * 0.0975) + 2
+                                     x: Math.round((parent.width - width) / 2)
+                                     anchors.bottom: parent.bottom
+                                     anchors.bottomMargin: Math.round(lift) + Math.round((full - width) / 2)
+@@ -5966,7 +5967,7 @@
+                             }
+                             Rectangle {
+                                 id: tileFill
+-                                width: img.width * 0.805
++                                width: img.tile
+                                 height: width
+                                 color: domCanvas.dom
+                                 visible: false
+@@ -6006,7 +6007,7 @@
+                             ShaderEffect {
+                                 visible: !cell.isSep && !cell.thumbReady
+                                 anchors.centerIn: img
+-                                width: img.width * 0.805
++                                width: img.tile
+                                 height: width
+                                 z: 2
+                                 property vector2d itemSize: Qt.vector2d(width, height)
+@@ -6029,7 +6030,7 @@
+                                     visible: root.iconTile && !cell.isSep && !cell.thumbReady
+                                     anchors.fill: img
+                                     z: 1
+-                                    scale: ((domCanvas.proper || domCanvas.square) ? 0.805 : 0.66) / norm
++                                    scale: ((domCanvas.proper || domCanvas.square) ? img.tile / img.width : 0.66) / norm
+                                     property variant source: iconTex
+                                     property vector2d itemSize: Qt.vector2d(width, height)
+                                     property real power: root.iconPower

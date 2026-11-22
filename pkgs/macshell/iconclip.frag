@@ -34,6 +34,7 @@ void main()
     vec4 c = texture(source, qt_TexCoord0);
     vec2 halfSize = itemSize * 0.5;
     float d = shapeSd(qt_TexCoord0 * itemSize - halfSize, halfSize * box);
-    float m = 1.0 - smoothstep(-0.5, 0.5, d);
+    float px = max(fwidth(d), 1e-4);
+    float m = 1.0 - smoothstep(-1.6 * px, -0.4 * px, d);
     fragColor = c * m * qt_Opacity;
 }
