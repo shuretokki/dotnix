@@ -4,7 +4,7 @@
      property bool showRunningApps: true   // icons of running apps that aren't pinned
      property bool iconTile: true   // rounded tile, dominant color and edge light behind dock icons
      property real iconRim: 1.0   // strength of edge light on dock icons
-+    property real iconEdge: 1.0   // softness of the icon edge
++    property real iconEdge: 2.0   // softness of the icon edge
      property real iconScale: 1.0   // how big the icon is inside its cell
      property string iconShape: "rounded"   // rounded, squircle, teardrop or leaf
      property real iconCorner: 0.245   // corner radius of rounded shape, as fraction of icon width
@@ -23,7 +23,7 @@
 +                            from: 0.5; to: 3; stepSize: 0.1
 +                            value: root.iconEdge
 +                            leftLabel: I18n.tr("Sharp"); rightLabel: I18n.tr("Soft")
-+                            resetValue: 1
++                            resetValue: 2
 +                            onMoved: v => root.iconEdge = v
 +                        }
 +                    }
@@ -35,7 +35,7 @@
          iconTint = false; iconTintColor = "#0a84ff"; iconTintStrength = 1.0;
          hideMode = "smart"; hideDelay = 450; monitor = "";
 -        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconScale = 1.0; iconShape = "rounded"; iconCorner = 0.245; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
-+        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconEdge = 1.0; iconScale = 1.0; iconShape = "rounded"; iconCorner = 0.245; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
++        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconEdge = 2.0; iconScale = 1.0; iconShape = "rounded"; iconCorner = 0.245; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
      }
  
      // ── settings persistence (~/.config/macdock/settings.json) ──
