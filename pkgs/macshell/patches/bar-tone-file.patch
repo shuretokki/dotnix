@@ -1,9 +1,10 @@
---- a/MacShell/MacBar.qml	2026-11-15 03:50:28.232681175 +0700
-+++ b/MacShell/MacBar.qml	2026-11-15 03:50:34.844689378 +0700
-@@ -559,6 +559,10 @@
-     // normal colour unreadable (panelTone). Colours cross-fade (ptk / btk: 1 = white text, 0 = dark text).
+diff -ruN a/MacShell/MacBar.qml b/MacShell/MacBar.qml
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -666,6 +666,10 @@
      property int barTone: 0                   // measured behind the bar strip: 1 bright, -1 dark, 0 not measured yet
-     readonly property bool barTextDark: barTone === 1 ? true : (barTone === -1 ? false : !darkMode)
+     // The top bar is always dark: white text / glyphs and a dark shade, in Light mode too (no light bar, no measuring behind it).
+     readonly property bool barTextDark: false
 +    Process { id: barToneFile }
 +    function writeBarTone() { barToneFile.command = ["sh", "-c", "printf %s " + (barTextDark ? "dark" : "light") + " > \"$XDG_RUNTIME_DIR/macshell-bar-tone\""]; barToneFile.running = true; }
 +    onBarTextDarkChanged: writeBarTone()

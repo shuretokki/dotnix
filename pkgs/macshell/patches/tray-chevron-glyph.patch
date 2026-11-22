@@ -1,0 +1,32 @@
+diff -ruN a/MacShell/MacBar.qml b/MacShell/MacBar.qml
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -919,6 +919,12 @@
+                 ctx.globalAlpha = 1;
+                 ctx.lineWidth = 1.5;
+                 if (flag) line(2.5, 2.5, 15.5, 15.5);
++            } else if (k === "chevrons") {
++                if (flag) { ctx.translate(18, 0); ctx.scale(-1, 1); }
++                ctx.lineWidth = 1.8;
++                poly([7.8, 4.5, 4.3, 9, 7.8, 13.5], false);
++                poly([13.3, 4.5, 9.8, 9, 13.3, 13.5], false);
++                ctx.lineWidth = 1.5;
+             } else if (k === "bluetooth") {
+                 ctx.lineWidth = 2.1;
+                 poly([5, 5.5, 13, 12.5, 9, 16, 9, 2, 13, 5.5, 5, 12.5], false);
+@@ -5948,11 +5954,12 @@
+     visible: root.showTray && root.trayCollapse && SystemTray.items.values.length > 0
+     width: visible ? 24 : 0
+     height: 28
+-    Text {
++    Glyph {
+         anchors.centerIn: parent
+-        text: ui.trayExpanded ? "›" : "‹"
++        width: 16; height: 16
++        kind: "chevrons"
++        flag: ui.trayExpanded
+         color: bpal.fg2
+-        font.pixelSize: 20
+     }
+     MouseArea {
+         anchors.fill: parent

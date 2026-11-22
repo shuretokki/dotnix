@@ -6,13 +6,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "macshell";
-  version = "0.5.1";
+  version = "0.5.3";
 
   src = fetchFromGitHub {
     owner = "0-ss";
     repo = "MacShell";
-    tag = "0.5.1";
-    hash = "sha256-sDJ9HtdXYKNrU/VEHgC4olgMzd7MTcIoKn3IeJvXULI=";
+    tag = "0.5.3";
+    hash = "sha256-iTkJU2LLsUt0vpAs0r9ohwOokiQUZma7QMWYlqO0DgE=";
   };
 
   nativeBuildInputs = [ qt6.qtshadertools ];
@@ -34,6 +34,13 @@ stdenvNoCC.mkDerivation {
     ./patches/icon-shape.patch
     ./patches/icon-pixel-snap.patch
     ./patches/icon-edge-setting.patch
+    ./patches/icon-settings-tidy.patch
+    ./patches/icon-corner-fit.patch
+    ./patches/icon-settings-order.patch
+    ./patches/tray-chevron-glyph.patch
+    ./patches/motion-polish.patch
+    ./patches/chevron-morph.patch
+    ./patches/tray-no-autoclose.patch
   ];
 
   postPatch = ''
@@ -44,6 +51,7 @@ stdenvNoCC.mkDerivation {
     mkdir -p $out/share/quickshell
     cp -r MacShell MacLock $out/share/quickshell/
     cp ${./IconClass.qml} $out/share/quickshell/MacShell/IconClass.qml
+    cp ${./IconTile.qml} $out/share/quickshell/MacShell/IconTile.qml
     qsb --qt6 -o $out/share/quickshell/MacShell/iconrim.frag.qsb ${./iconrim.frag}
     qsb --qt6 -o $out/share/quickshell/MacShell/iconclip.frag.qsb ${./iconclip.frag}
   '';

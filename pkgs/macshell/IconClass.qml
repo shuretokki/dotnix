@@ -6,6 +6,29 @@ Canvas {
     property color dom: Qt.rgba(0.22, 0.22, 0.24, 1)
     property bool proper: false
     property bool square: false
+    property real aspect: 1
+    property real corner: 0.245
+    property real power: 2.0
+    readonly property real fit: {
+        if (proper || square) return 1;
+        var h = 0.47;
+        var px = 0.407;
+        var py = 0.407 * aspect;
+        var s = 1;
+        if (power > 2.01) {
+            s = h / Math.pow(Math.pow(px, power) + Math.pow(py, power), 1 / power);
+        } else {
+            var r = Math.max(Math.min(corner, 0.5) - 0.03, 0);
+            var c = h - r;
+            if (px > c && py > c) {
+                var a = px * px + py * py;
+                var b = -2 * c * (px + py);
+                var k = 2 * c * c - r * r;
+                s = (-b + Math.sqrt(Math.max(b * b - 4 * a * k, 0))) / (2 * a);
+            }
+        }
+        return Math.min(1, s);
+    }
     width: 32
     height: 32
     visible: false
@@ -39,6 +62,7 @@ Canvas {
         var corner = Math.max(d[(y0 * N + x0) * 4 + 3], d[(y0 * N + x1) * 4 + 3], d[(y1 * N + x0) * 4 + 3], d[(y1 * N + x1) * 4 + 3]);
         var squareish = Math.abs(bw - bh) <= 2;
         art = Math.max(bw, bh) / N;
+        aspect = Math.min(bw, bh) / Math.max(bw, bh);
         proper = squareish && fill >= 0.90 && fill <= 0.985 && corner < 100;
         square = squareish && fill > 0.985 && corner >= 100 && bw >= 0.9 * N;
         var useEdge = fill >= 0.7;

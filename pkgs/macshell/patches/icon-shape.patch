@@ -18,14 +18,14 @@ index 65d3857..51932df 100644
 @@ -2105,6 +2111,74 @@ Scope {
                      }
                  }
- 
+
 +                SLabel { t: pal; header: true; text: I18n.tr("Icon Style") }
 +                SCard {
 +                    t: pal
 +                    SRow {
 +                        t: pal
 +                        title: I18n.tr("Unified icon grid")
-+                        subtitle: I18n.tr("Sizes every icon to the same grid, clips it to one shape and fills the gaps with the icon colour")
++                        subtitle: I18n.tr("Sizes every icon to the same grid")
 +                        SSwitch { t: pal; checked: root.iconTile; onToggled: v => root.iconTile = v }
 +                    }
 +                    SRow {
@@ -142,7 +142,7 @@ index 65d3857..51932df 100644
 -        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconScale = 1.0; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
 +        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconScale = 1.0; iconShape = "rounded"; iconCorner = 0.245; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
      }
- 
+
      // ── settings persistence (~/.config/macdock/settings.json) ──
      readonly property string settingsSig: [dockEnabled, settingsEnabled, desktopIcons, desktopIconSize, iconSize, magnification, magnificationEnabled, spacing, margin,
          cornerRadius, darkMode, appearanceMode, glassOpacity, glassBlur, glassLiquid, dockStyle, wallpaperPath, String(accent), fontFamily, hideMode, hideDelay, monitor,

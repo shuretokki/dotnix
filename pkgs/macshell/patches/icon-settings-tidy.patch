@@ -1,0 +1,63 @@
+diff -ruN a/MacShell/MacDock.qml b/MacShell/MacDock.qml
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -209,12 +209,10 @@
+     property real iconRim: 1.0   // strength of edge light on dock icons
+     property real iconEdge: 2.0   // softness of the icon edge
+     property real iconScale: 1.0   // how big the icon is inside its cell
+-    property string iconShape: "rounded"   // rounded, squircle, teardrop or leaf
++    property string iconShape: "rounded"   // rounded or squircle
+     property real iconCorner: 0.245   // corner radius of rounded shape, as fraction of icon width
+     readonly property real iconPower: iconShape === "squircle" ? 5.0 : 2.0
+-    readonly property vector4d iconRadii: iconShape === "teardrop" ? Qt.vector4d(0.5, 0.04, 0.5, 0.5)
+-        : iconShape === "leaf" ? Qt.vector4d(0.5, 0.06, 0.5, 0.06)
+-        : Qt.vector4d(iconCorner, iconCorner, iconCorner, iconCorner)
++    readonly property vector4d iconRadii: Qt.vector4d(iconCorner, iconCorner, iconCorner, iconCorner)
+     onShowRunningAppsChanged: rebuild()
+     property bool bounceOnLaunch: true
+     property bool showThumbs: true       // open windows get a live preview cell next to the Trash
+@@ -2136,7 +2134,7 @@
+                     }
+                 }
+
+-                SLabel { t: pal; header: true; text: I18n.tr("Icon Style") }
++                SLabel { t: pal; header: true; text: I18n.tr("Dock Icon Style") }
+                 SCard {
+                     t: pal
+                     SRow {
+@@ -2152,8 +2150,8 @@
+                         SSegmented {
+                             t: pal
+                             enabled: root.iconTile
+-                            property var ids: ["rounded", "squircle", "teardrop", "leaf"]
+-                            model: [I18n.tr("Rounded"), I18n.tr("Squircle"), I18n.tr("Teardrop"), I18n.tr("Leaf")]
++                            property var ids: ["rounded", "squircle"]
++                            model: [I18n.tr("Rounded"), I18n.tr("Squircle")]
+                             segWidth: 80
+                             current: ids.indexOf(root.iconShape)
+                             onPicked: i => root.iconShape = ids[i]
+@@ -2176,13 +2174,13 @@
+                     }
+                     SRow {
+                         t: pal
+-                        title: I18n.tr("Icon size")
+-                        subtitle: I18n.tr("Scales the icons inside their cells and keeps the Dock size and the gaps")
++                        title: I18n.tr("Icon fill")
++                        subtitle: I18n.tr("How much of its cell each icon fills")
+                         SSlider {
+                             t: pal
+                             from: 0.5; to: 1.2; stepSize: 0.01
+                             value: root.iconScale
+-                            leftLabel: I18n.tr("Small"); rightLabel: I18n.tr("Large")
++                            leftLabel: I18n.tr("Less"); rightLabel: I18n.tr("More")
+                             resetValue: 1
+                             onMoved: v => root.iconScale = v
+                         }
+@@ -2285,7 +2283,6 @@
+                     }
+                 }
+
+-                SLabel { t: pal; header: true; text: I18n.tr("Dock") }
+                 SCard {
+                     t: pal
+                     SRow {

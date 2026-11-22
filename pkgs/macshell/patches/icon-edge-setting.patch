@@ -15,7 +15,7 @@
 +                    SRow {
 +                        t: pal
 +                        title: I18n.tr("Edge smoothness")
-+                        subtitle: I18n.tr("How softly the edge of every icon fades. Higher is smoother but a little blurrier")
++                        subtitle: I18n.tr("How softly the edge of every icon fades")
 +                        opacity: root.iconTile ? 1 : 0.45
 +                        SSlider {
 +                            t: pal
@@ -28,7 +28,7 @@
 +                        }
 +                    }
                  }
- 
+
                  SLabel { t: pal; header: true; text: I18n.tr("Icon Tint") }
 @@ -4312,13 +4328,13 @@
          darkMode = true; appearanceMode = "dark"; glassOpacity = 0.42; glassBlur = 5; glassLiquid = 1.0; dockStyle = "blur"; accent = "#0a84ff"; fontFamily = "Open Runde";
@@ -37,7 +37,7 @@
 -        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconScale = 1.0; iconShape = "rounded"; iconCorner = 0.245; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
 +        showTrash = true; showLabels = true; showIndicators = true; showRunningApps = true; iconTile = true; iconRim = 1.0; iconEdge = 2.0; iconScale = 1.0; iconShape = "rounded"; iconCorner = 0.245; bounceOnLaunch = true; showThumbs = true; windowCapture = true; glassLive = true;
      }
- 
+
      // ── settings persistence (~/.config/macdock/settings.json) ──
      readonly property string settingsSig: [dockEnabled, settingsEnabled, desktopIcons, desktopIconSize, iconSize, magnification, magnificationEnabled, spacing, margin,
          cornerRadius, darkMode, appearanceMode, glassOpacity, glassBlur, glassLiquid, dockStyle, wallpaperPath, String(accent), fontFamily, hideMode, hideDelay, monitor,

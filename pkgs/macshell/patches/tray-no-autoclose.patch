@@ -1,0 +1,15 @@
+diff -ruN a/MacShell/MacBar.qml b/MacShell/MacBar.qml
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -5973,11 +5973,6 @@
+         anchors.fill: parent
+         onClicked: ui.trayExpanded = !ui.trayExpanded
+     }
+-    Timer {
+-        interval: 10000
+-        running: ui.trayExpanded
+-        onTriggered: ui.trayExpanded = false
+-    }
+ }
+ // Bluetooth has its own optional widget; it remains visible when the radio is off.
+                         Item {

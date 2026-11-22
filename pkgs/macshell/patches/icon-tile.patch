@@ -1,6 +1,7 @@
+diff -ruN a/MacShell/MacDock.qml b/MacShell/MacDock.qml
 --- a/MacShell/MacDock.qml
 +++ b/MacShell/MacDock.qml
-@@ -5829,9 +5829,15 @@
+@@ -5975,11 +5975,16 @@
                                  }
                                  MultiEffect {
                                      visible: !cell.isSep && !cell.thumbReady
@@ -12,12 +13,14 @@
 +                                maskSpreadAtMin: 1.0
                                      source: img
                                      anchors.fill: img
+                                     rotation: img.wob
+-                                    transformOrigin: Item.Bottom
 -                                    shadowEnabled: true
 +                                    shadowEnabled: false
                                      shadowColor: "black"
                                      shadowOpacity: 0.32
                                      shadowBlur: 0.55
-@@ -5844,7 +5850,42 @@
+@@ -5992,7 +5997,42 @@
                                      colorizationColor: root.iconTintColor
                                  }
  

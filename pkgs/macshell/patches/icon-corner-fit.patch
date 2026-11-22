@@ -1,0 +1,53 @@
+diff -ruN a/MacShell/MacDock.qml b/MacShell/MacDock.qml
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -2077,7 +2077,24 @@
+                                     smooth: true
+                                     mipmap: true
+                                 }
++                                IconTile {
++                                    anchors.fill: parent
++                                    visible: root.iconTile
++                                    source: pimg.source.toString()
++                                    iconScale: root.iconScale
++                                    corner: root.iconCorner
++                                    power: root.iconPower
++                                    edge: root.iconEdge
++                                    rim: root.iconRim
++                                    tint: root.iconTint
++                                    tintStrength: root.iconTintStrength
++                                    tintColor: root.iconTintColor
++                                    transformOrigin: Item.Bottom
++                                    scale: root.magnificationEnabled ? 1 + (root.magnification - 1) * pi.f : 1
++                                    Behavior on scale { NumberAnimation { duration: 120 } }
++                                }
+                                 MultiEffect {
++                                    visible: !root.iconTile
+                                     anchors.fill: pimg
+                                     source: pimg
+                                     saturation: root.iconTint ? -0.75 * root.iconTintStrength : 0.0
+@@ -6112,6 +6129,8 @@
+                                 IconClass {
+                                 id: domCanvas
+                                 source: img.source.toString()
++                                corner: root.iconCorner
++                                power: root.iconPower
+                             }
+                             Item {
+                                 id: tileMask
+@@ -6192,13 +6211,14 @@
+                                     visible: root.iconTile && !cell.isSep && !cell.thumbReady
+                                     anchors.fill: img
+                                     z: 1
+-                                    scale: ((domCanvas.proper || domCanvas.square) ? img.tile / img.width : 0.66) / norm
++                                    scale: ((domCanvas.proper || domCanvas.square) ? img.tile / img.width : 0.66 * domCanvas.fit) / norm
+                                     property variant source: iconTex
+                                     property vector2d itemSize: Qt.vector2d(width, height)
+                                     property real power: root.iconPower
+                                     property real norm: domCanvas.art >= 0.8 ? domCanvas.art : (domCanvas.proper ? 0.88 : 1.0)
+                                     property real box: (domCanvas.proper || domCanvas.square) ? norm : 2.0
+                                     property real soft: root.iconEdge
++                                    property real fillCorner: domCanvas.proper ? 1.0 : 0.0
+                                     property vector4d radii: root.iconRadii
+                                     fragmentShader: Qt.resolvedUrl("iconclip.frag.qsb")
+                                 }

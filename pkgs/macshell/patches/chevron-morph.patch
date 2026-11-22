@@ -1,0 +1,29 @@
+diff -ruN a/MacShell/MacBar.qml b/MacShell/MacBar.qml
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -920,10 +920,11 @@
+                 ctx.lineWidth = 1.5;
+                 if (flag) line(2.5, 2.5, 15.5, 15.5);
+             } else if (k === "chevrons") {
+-                if (flag) { ctx.translate(18, 0); ctx.scale(-1, 1); }
++                var mt = Math.max(0, Math.min(1, level));
++                var mTip = 4.3 + 3.5 * mt, mArm = 7.8 - 3.5 * mt;
+                 ctx.lineWidth = 1.8;
+-                poly([7.8, 4.5, 4.3, 9, 7.8, 13.5], false);
+-                poly([13.3, 4.5, 9.8, 9, 13.3, 13.5], false);
++                poly([mArm, 4.5, mTip, 9, mArm, 13.5], false);
++                poly([mArm + 5.5, 4.5, mTip + 5.5, 9, mArm + 5.5, 13.5], false);
+                 ctx.lineWidth = 1.5;
+             } else if (k === "bluetooth") {
+                 ctx.lineWidth = 2.1;
+@@ -5964,8 +5965,8 @@
+         anchors.centerIn: parent
+         width: 16; height: 16
+         kind: "chevrons"
+-        rotation: ui.trayExpanded ? 180 : 0
+-        Behavior on rotation { NumberAnimation { duration: root.reduceMotion ? 0 : 260; easing.type: Easing.OutCubic } }
++        level: ui.trayExpanded ? 1 : 0
++        Behavior on level { NumberAnimation { duration: root.reduceMotion ? 0 : 260; easing.type: Easing.OutCubic } }
+         color: bpal.fg2
+     }
+     MouseArea {

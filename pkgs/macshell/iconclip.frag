@@ -11,6 +11,7 @@ layout(std140, binding = 0) uniform buf {
     float box;
     float soft;
     vec4 radii;
+    float fillCorner;
 };
 
 layout(binding = 1) uniform sampler2D source;
@@ -33,6 +34,10 @@ float shapeSd(vec2 p, vec2 hs)
 void main()
 {
     vec4 c = texture(source, qt_TexCoord0);
+    if (fillCorner > 0.5 && c.a < 0.999) {
+        vec4 f = texture(source, qt_TexCoord0 + (vec2(0.5) - qt_TexCoord0) * 0.2);
+        if (f.a > 0.9) c = c + (1.0 - c.a) * vec4(f.rgb / f.a, 1.0);
+    }
     vec2 halfSize = itemSize * 0.5;
     float d = shapeSd(qt_TexCoord0 * itemSize - halfSize, halfSize * box);
     float px = max(fwidth(d), 1e-4);

@@ -1,0 +1,83 @@
+diff -ruN a/MacShell/MacBar.qml b/MacShell/MacBar.qml
+--- a/MacShell/MacBar.qml
++++ b/MacShell/MacBar.qml
+@@ -5914,11 +5914,17 @@
+ 
+                         // tray
+                         Repeater {
+-                            model: root.showTray && (ui.trayExpanded || !root.trayCollapse) ? SystemTray.items : null
++                            model: root.showTray ? SystemTray.items : null
+                             delegate: Item {
+                                 id: tray
+                                 required property var modelData
+-                                width: 26; height: 28
++                                readonly property bool shown: ui.trayExpanded || !root.trayCollapse
++                                width: shown ? 26 : 0; height: 28
++                                opacity: shown ? 1 : 0
++                                clip: true
++                                enabled: shown
++                                Behavior on width { NumberAnimation { duration: root.reduceMotion ? 0 : 220; easing.type: Easing.OutCubic } }
++                                Behavior on opacity { NumberAnimation { duration: root.reduceMotion ? 0 : 180; easing.type: Easing.OutCubic } }
+                                 Rectangle {
+                                     anchors.centerIn: parent
+                                     width: parent.width - 2
+@@ -5958,7 +5964,8 @@
+         anchors.centerIn: parent
+         width: 16; height: 16
+         kind: "chevrons"
+-        flag: ui.trayExpanded
++        rotation: ui.trayExpanded ? 180 : 0
++        Behavior on rotation { NumberAnimation { duration: root.reduceMotion ? 0 : 260; easing.type: Easing.OutCubic } }
+         color: bpal.fg2
+     }
+     MouseArea {
+diff -ruN a/MacShell/MacDock.qml b/MacShell/MacDock.qml
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -5489,6 +5489,9 @@
+                 }
+                 function endDrag() {
+                     var from = dragIndex, to = dragTarget;
++                    var dropKey = dragKey;
++                    var dropOff = dragDelta - (to - from) * dragShiftW;
++                    dropSettle = true;
+                     dragging = false;
+                     dragKey = "";
+                     dragIndex = -1;
+@@ -5498,7 +5501,18 @@
+                     justDragged = true;
+                     Qt.callLater(function () { ui.justDragged = false; });
+                     if (to !== from) root.reorderPinned(from, to);
++                    var dropCell = null;
++                    for (var di = 0; di < rep.count; di++) {
++                        var dc = rep.itemAt(di);
++                        if (dc && dc.key === dropKey) { dropCell = dc; break; }
++                    }
++                    if (dropCell) dropCell.dropX = dropOff;
++                    Qt.callLater(function () {
++                        ui.dropSettle = false;
++                        if (dropCell) dropCell.dropX = 0;
++                    });
+                 }
++                property bool dropSettle: false
+ 
+                 SequentialAnimation {
+                     id: tearLaunch
+@@ -6032,14 +6046,15 @@
+                                 readonly property bool useThumb: thumbWin !== null
+                                 readonly property bool thumbReady: useThumb && (sv.hasContent === undefined || sv.hasContent === true)
+ 
++                                property real dropX: 0
+                                 property real dx: {
+-                                    if (!ui.dragging) return 0;
++                                    if (!ui.dragging) return dropX;
+                                     if (isSep && !ui.dragTail) return 0;
+                                     if (isDragged) return ui.dragDelta;
+                                     return ui.shiftFor(index);
+                                 }
+                                 Behavior on dx {
+-                                    enabled: !cell.isDragged
++                                    enabled: !cell.isDragged && !ui.dropSettle
+                                     NumberAnimation { duration: 160; easing.type: Easing.OutCubic }
+                                 }
+                                 transform: Translate { x: cell.dx }

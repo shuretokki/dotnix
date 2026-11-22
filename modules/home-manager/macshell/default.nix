@@ -37,6 +37,7 @@ let
       zenity
       imagemagick
       ddcutil
+      glib
       kdePackages.qtshadertools
     ];
     text = ''

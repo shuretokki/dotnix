@@ -1,0 +1,105 @@
+diff -ruN a/MacShell/MacDock.qml b/MacShell/MacDock.qml
+--- a/MacShell/MacDock.qml
++++ b/MacShell/MacDock.qml
+@@ -2151,7 +2151,6 @@
+                     }
+                 }
+ 
+-                SLabel { t: pal; header: true; text: I18n.tr("Dock Icon Style") }
+                 SCard {
+                     t: pal
+                     SRow {
+@@ -2232,6 +2231,46 @@
+                             onMoved: v => root.iconEdge = v
+                         }
+                     }
++                    SRow {
++                        t: pal
++                        title: I18n.tr("Icon spacing")
++                        SSlider {
++                            t: pal
++                            from: 0; to: 20; stepSize: 1
++                            value: root.spacing
++                            leftLabel: I18n.tr("Tight"); rightLabel: I18n.tr("Loose")
++                            resetValue: 6
++                            onMoved: v => root.spacing = Math.round(v)
++                        }
++                    }
++                }
++
++                SCard {
++                    t: pal
++                    SRow {
++                        t: pal
++                        title: I18n.tr("Distance from screen edge")
++                        SSlider {
++                            t: pal
++                            from: 0; to: 40; stepSize: 1
++                            value: root.margin
++                            leftLabel: I18n.tr("Flush"); rightLabel: I18n.tr("Floating")
++                            resetValue: 6
++                            onMoved: v => root.margin = Math.round(v)
++                        }
++                    }
++                    SRow {
++                        t: pal
++                        title: I18n.tr("Corner radius")
++                        SSlider {
++                            t: pal
++                            from: 0; to: 32; stepSize: 1
++                            value: root.cornerRadius
++                            leftLabel: I18n.tr("Square"); rightLabel: I18n.tr("Round")
++                            resetValue: 18
++                            onMoved: v => root.cornerRadius = Math.round(v)
++                        }
++                    }
+                 }
+ 
+                 SLabel { t: pal; header: true; text: I18n.tr("Icon Tint") }
+@@ -2299,46 +2338,6 @@
+                         }
+                     }
+                 }
+-
+-                SCard {
+-                    t: pal
+-                    SRow {
+-                        t: pal
+-                        title: I18n.tr("Icon spacing")
+-                        SSlider {
+-                            t: pal
+-                            from: 0; to: 20; stepSize: 1
+-                            value: root.spacing
+-                            leftLabel: I18n.tr("Tight"); rightLabel: I18n.tr("Loose")
+-                            resetValue: 6
+-                            onMoved: v => root.spacing = Math.round(v)
+-                        }
+-                    }
+-                    SRow {
+-                        t: pal
+-                        title: I18n.tr("Distance from screen edge")
+-                        SSlider {
+-                            t: pal
+-                            from: 0; to: 40; stepSize: 1
+-                            value: root.margin
+-                            leftLabel: I18n.tr("Flush"); rightLabel: I18n.tr("Floating")
+-                            resetValue: 6
+-                            onMoved: v => root.margin = Math.round(v)
+-                        }
+-                    }
+-                    SRow {
+-                        t: pal
+-                        title: I18n.tr("Corner radius")
+-                        SSlider {
+-                            t: pal
+-                            from: 0; to: 32; stepSize: 1
+-                            value: root.cornerRadius
+-                            leftLabel: I18n.tr("Square"); rightLabel: I18n.tr("Round")
+-                            resetValue: 18
+-                            onMoved: v => root.cornerRadius = Math.round(v)
+-                        }
+-                    }
+-                }
+                 SLabel { t: pal; text: I18n.tr("Changes apply to the Dock immediately.") }
+             }
+         }
